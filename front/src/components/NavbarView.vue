@@ -15,6 +15,9 @@
         <ul>
           <li>
             <router-link class="p-2 px-6" to="/followUp">FollowUp</router-link>
+            <div class="ml-3 items-center absolute left-[48vw] top-[10px]">
+                            <small class="bg-red-400 text-white rounded-lg px-[0.30rem] border">1</small>
+                        </div>
           </li>
         </ul>
         <ul>
@@ -64,5 +67,8 @@ export default {
 </script>
 
 <style>
-
+nav a.router-link-exact-active {
+  background: orange;
+  border-radius:4px;
+}
 </style>
