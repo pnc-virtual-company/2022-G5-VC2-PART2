@@ -1,5 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <TeacherForm />
 </template>
+
+<script>
+// @ is an alias to /src
+import TeacherForm from "@/components/teacher/TeacherForm.vue";
+
+export default {
+  components: {
+    TeacherForm,
+  }
+}
+</script>
