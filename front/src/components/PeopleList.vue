@@ -1,14 +1,14 @@
 <template>
         <table class="table-auto justify-between w-full rounded shadow p-4">
           <thead>
-            <tr class=" p-4 bg-slate-400">
+            <tr class=" p-4 bg-blue-400 shadow">
               <th class="text-center px-4 p-2 w-32 ">Profile</th>
               <th class="text-center p-2 w-40 ">First Name</th>
               <th class="text-center p-2 w-40">Last Name</th>
               <th class="text-center p-2 w-64 ">Email</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="bg-slate-100">
             <tr
               class="text-center relative p-2 h-16 hover:bg-slate-200 cursor-pointer"
               v-for="teacher of peopleList"

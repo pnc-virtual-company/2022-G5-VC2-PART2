@@ -1,13 +1,13 @@
 <template>
-  <div class="home">
+  <div class="mt-24">
     <teacher/>
     <student/>
   </div>
 </template>
 
 <script>
-import teacher from "./Admin/teacher/TeacherView.vue";
-import student from "./Admin/student/StudentView.vue";
+import teacher from "./teacher/TeacherView.vue"
+import student from "./student/StudentView.vue"
 export default {
   components:{
     teacher,
@@ -15,4 +15,3 @@ export default {
   }
 }
 </script>
-

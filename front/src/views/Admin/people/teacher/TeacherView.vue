@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TeacherList from "../../../components/TeacherList.vue";
+import TeacherList from "../../../../components/teacher/TeacherList.vue";
 export default {
   components: {
     "teacher-list": TeacherList,
