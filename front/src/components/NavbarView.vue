@@ -1,9 +1,9 @@
 <template>
   <div class="bg-blue-500 w-full fixed top-0 z-50">
-    <nav class="flex w-full text-white justify-between items-center px-4">
+    <nav class="flex w-full p-2 text-white justify-between items-center px-4">
       <ul>
         <li>
-          <img src="../assets/logo.png" alt="logo" class="w-[40px] ">
+          <img src="../assets/logo.png" alt="logo" class="w-[50px] ">
         </li>
       </ul>
       <div class="flex">
