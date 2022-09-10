@@ -17,7 +17,7 @@ use App\Http\Controllers\StudentController;
 
 
 // route students //
-Route::get("/students", [StudentController::class , 'index']);
+Route::get("/students", [StudentController::class ,  'index']);
 Route::get("/students/{id}", [StudentController::class , 'show']);
 Route::post("/students", [StudentController::class , 'store']);
 Route::post("/students/{id}", [StudentController::class , 'update']);

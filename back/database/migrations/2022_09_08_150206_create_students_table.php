@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("gender");
             $table->string("class");
             $table->integer("batch");
-            $table->string("phone");
+            $table->string("phone"); 
             $table->timestamps();
         });
     }
