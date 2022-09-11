@@ -10,7 +10,9 @@ module.exports = {
       warning: '#FF6B00',
       primary: '#0081CA',
       dark: '#192331',
-    },},
+    },
+    display: ["group-hover"],
+  },
   },
   plugins: [],
 }
