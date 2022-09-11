@@ -30,7 +30,7 @@
         <label for="">Search</label>
         <input
           type="text"
-          class="rounded p-2 shadow ml-3"
+          class="shadow appearance-none border ml-2  rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           placeholder="search student"
         />
       </div>
