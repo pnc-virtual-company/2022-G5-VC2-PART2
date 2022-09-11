@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('roles');
             $table->string("gender");
             $table->string('profile')->nullable();
-            $table->foreignId('student_id')->onDelete('CASCADE')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -117,6 +117,7 @@
       </div>
     </form>
   </div>
+</div>
 </template>
 <script>
 export default{
@@ -142,7 +143,6 @@ export default{
         password: this.generatePassword(),
         gender: this.gender,
         roles: 'STUDENT',
-        student_id: this.studentId,
       };
       let studentData = {
         student_id: this.studentId,
