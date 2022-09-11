@@ -1,4 +1,4 @@
-<template>
+template>
   <div
     class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
   >

@@ -156,15 +156,16 @@ export default {
     };
   },
   watch: {
-    firstName: function(newValue) {
-      this.email = newValue + '.' + this.lastname + '@passerellesnumeriques.org';
+    firstName: function (newValue) {
+      this.email =
+        newValue + "." + this.lastname + "@passerellesnumeriques.org";
     },
-    lastName: function(newValue) {
-      this.email = this.firstname + '.' + newValue + '@passerellesnumeriques.org';
-    }
+    lastName: function (newValue) {
+      this.email =
+        this.firstname + "." + newValue + "@passerellesnumeriques.org";
+    },
   },
   methods: {
-
     submit() {
       let userData = {
         first_name: this.firstname,
@@ -172,16 +173,17 @@ export default {
         email: this.email,
         password: this.generatePassword(),
         gender: this.gender,
-        phone: this.phone
-      }
-      this.$emit('requestCreateTeacher',userData);
+        phone: this.phone,
+      };
+      this.$emit("requestCreateTeacher", userData);
     },
     generatePassword() {
-      let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      let chars =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       let stringLength = 8;
       let randomString = "";
       for (let i = 0; i < stringLength; i++) {
-        let rnum = Math.floor(Math.random() * chars.length)
+        let rnum = Math.floor(Math.random() * chars.length);
         randomString += chars.substring(rnum, rnum + 1);
       }
       this.password = randomString;

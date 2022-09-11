@@ -23,9 +23,20 @@ export default {
   opacity: 0;
   transform: translateX(50px);
 }
-
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.3s ease-out;
 }
+/*nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+} */
+
+/* nav a.router-link-exact-active {
+  color: #42b983;
+} */
 </style>

@@ -15,6 +15,7 @@ export default {
       listStudents: [
         {
           id: "1",
+          role: "student",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "John",
@@ -25,6 +26,7 @@ export default {
         },
         {
           id: "2",
+          role: "student",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "John",
@@ -35,6 +37,7 @@ export default {
         },
         {
           id: "3",
+          role: "student",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "nana",
@@ -45,6 +48,7 @@ export default {
         },
         {
           id: "4",
+          role: "student",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "sreyka",
