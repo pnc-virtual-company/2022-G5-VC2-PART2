@@ -1,9 +1,10 @@
 <template>
   <nav>
+    <navbar-view/>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
+    <router-view/>
   </nav>
-  <router-view/>
 </template>
 <script>
 import NavBar from './components/NavbarView.vue'
