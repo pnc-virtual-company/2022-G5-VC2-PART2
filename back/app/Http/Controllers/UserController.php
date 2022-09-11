@@ -14,7 +14,7 @@ class UserController extends Controller
 
 
     // Create New User 
-    public function signUp(Request $request) {
+    public function registerUser(Request $request) {
         // Validation sign Up user
         $customMessage = [
             'required' => 'You forgot put this feild!',
@@ -36,6 +36,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->roles = $request->roles;
+        $user->gender = $request->gender;
         $user->student_id = $request->student_id;
         $user->profile = 'boy.png';
 
@@ -61,11 +62,24 @@ class UserController extends Controller
     // Update user
     public function update(Request $request,$id) {
         $user = User::findOrFail($id);
+        // Validation sign Up user
+        $customMessage = [
+            'required' => 'You forgot put this feild!',
+            'max' => 'You must put max 15 charater!',
+        ];
+
+        $this->validate($request, [
+            'first_name' => 'required|max:15',
+            'last_name' => 'required|max:15',
+            'roles' => 'required|string',
+            'gender' => 'required|string',
+        ],$customMessage);
+
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
-
+        $user->gender = $request->gender;
         $user->save();
         return response()->json(['message' => 'Updated Success!']);
     }

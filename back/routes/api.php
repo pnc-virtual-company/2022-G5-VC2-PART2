@@ -17,16 +17,22 @@ use App\Http\Controllers\StudentController;
 
 
 // route students //
-Route::get("/students", [StudentController::class ,  'index']);
-Route::get("/students/{id}", [StudentController::class , 'show']);
-Route::post("/students", [StudentController::class , 'store']);
-Route::post("/students/{id}", [StudentController::class , 'update']);
-Route::delete("/students/{id}", [StudentController::class ,'destroy']);
+Route::prefix('/students')->group(function() {
+    
+    Route::post("/", [StudentController::class , 'store']);
+    Route::post("/{id}", [StudentController::class , 'update']);
+    Route::delete("/delete/{id}", [StudentController::class ,'destroy']);
+    Route::get('/getLastId',[StudentController::class, 'getLastId']);
+});
+
 
 // Route User(teacher and student)
-Route::post('/users',[UserController::class,'signUp']);
-Route::post('/users/{id}',[UserController::class,'update']);
-Route::get('/users/studentOnly',[UserController::class,'studentOnly']);
-Route::get('/users/teacherOnly',[UserController::class,'teacherOnly']);
-Route::get('/users/{id}',[UserController::class,'show']);
-Route::delete('users/{id}',[UserController::class,'destroy']);
+Route::prefix('/users')->group(function() {
+    Route::post('/',[UserController::class,'registerUser']);
+    Route::post('/{id}',[UserController::class,'update']);
+    Route::get('/students',[UserController::class,'studentOnly']);
+    Route::get('/teachers',[UserController::class,'teacherOnly']);
+    Route::get('/{id}',[UserController::class,'show']);
+    Route::delete('/delete/{id}',[UserController::class,'destroy']);
+});
+

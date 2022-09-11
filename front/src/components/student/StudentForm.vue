@@ -3,13 +3,13 @@
   <div class="main-form w-[40%] ">
     <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
       <p></p>
-      <h2>Create Student</h2>
+      <h2><b>Create Student</b></h2>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm')">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
 
     </div>
-    <form class="shadow p-4 bg-white">
+    <form class="shadow p-4 bg-white" @submit.prevent="submit">
       <div class="flex w-full justify-between  mb-2">
         <div class="w-full mr-2 mb-2">
           <b><label for="firstNameInput">First name</label></b>
@@ -20,6 +20,7 @@
             name="firstNameInput"
             id="firstNameInput"
             placeholder="First name ..."
+            v-model="firstName"
           />
         </div>
         <div class="w-full">
@@ -31,6 +32,7 @@
             class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="lastNameInput"
             placeholder="Last name ..."
+            v-model="lastName"
           />
         </div>
       </div>
@@ -43,6 +45,7 @@
           class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           id="emailInput"
           placeholder="Email ..."
+          :value= email
         />
       </div>
       <div class="phone mb-2">
@@ -54,6 +57,7 @@
           class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           id="phoneInput"
           placeholder="Phone ..."
+          v-model="phoneNumber"
         />
       </div>
       <div class="flex mb-2 box-border relative">
@@ -61,11 +65,12 @@
           <b><label for="batchInput">Batch</label></b>
           <br />
           <input
-            type="text"
+            type="number"
             name="batchInput"
             class="shadow appearance-none border mr-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="batchInput"
             placeholder="Batch ..."
+            v-model="batch"
           />
         </div>
         <div>
@@ -77,6 +82,7 @@
             class="shadow appearance-none ml-1 border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="classInput"
             placeholder="Class ..."
+            v-model="classes"
           />
         </div>
         <div>
@@ -88,6 +94,7 @@
             class="shadow appearance-none border ml-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="studentIdInput"
             placeholder="Id ..."
+            v-model="studentId"
           />
         </div>
       </div>
@@ -95,11 +102,11 @@
         <b>Gender</b>
         <div class="mt-2 flex">
           <div class="male">
-            <input type="radio" class="ml-2 cursor-pointer" name="gender" id="maleClick" />
+            <input type="radio" class="ml-2 cursor-pointer" name="gender" value="Male" id="maleClick" v-model="gender"/>
             <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
           </div>
           <div class="female ml-8">
-            <input type="radio" class="ml-2 cursor-pointer" name="gender" id="femaleClick" />
+            <input type="radio" class="ml-2 cursor-pointer" name="gender" value="Female" id="femaleClick" v-model="gender"/>
             <label for="femaleClick" class="ml-2 cursor-pointer">Female </label>
           </div>
         </div>
@@ -112,3 +119,69 @@
   </div>
 </div>
 </template>
+<script>
+export default{
+  emits: ['requestCreateStudent'],
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      email: '',
+      batch: '',
+      classes: '',
+      studentId: null,
+      gender: 'Male',
+      phoneNumber: null
+    }
+  },
+  methods: {
+    submit() {
+      let userData = {
+        first_name: this.firstName,
+        last_name: this.lastName,
+        email: this.email,
+        password: this.generatePassword(),
+        gender: this.gender,
+        roles: 'STUDENT',
+        student_id: this.studentId,
+      };
+      let studentData = {
+        student_id: this.studentId,
+        class: this.classes,
+        batch: this.batch,
+        phone: this.phoneNumber
+      };
+      this.$emit('requestCreateStudent',userData,studentData);
+    },
+    generatePassword() {
+      let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      let stringLength = 8;
+      let randomString = "";
+      for (let i = 0; i < stringLength; i++) {
+        let rnum = Math.floor(Math.random() * chars.length)
+        randomString += chars.substring(rnum, rnum + 1);
+      }
+      this.password = randomString;
+      return this.password;
+    },
+  },
+  watch: {
+    firstName: function(newValue) {
+      if (newValue !='') {
+        this.email = newValue + '.' + this.lastName  + '@student.passerellesnumeriques.org';
+      }else{
+        this.email = '';
+      }
+    },
+    lastName: function(newValue) {
+      if (newValue != '') {
+        this.email = this.firstName + '.' + newValue + '@student.passerellesnumeriques.org';
+      }else{
+        this.email = '';
+      }
+    }
+  },
+}
+
+</script>
+
