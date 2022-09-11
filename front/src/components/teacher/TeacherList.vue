@@ -44,15 +44,18 @@
     </div>
   </div>
     <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" />
+
 </template>
 
 <script>
 import peopleList from "../PeopleList.vue"
 import teacherForm from "./TeacherForm.vue";
+
 export default {
     components:{
         "people-list": peopleList,
         "teacher-form":teacherForm,
+        
     },
     props: {
         listTeachers: Array,
@@ -61,6 +64,7 @@ export default {
       return {
         isShowForm:false,
         dataToShow: 6,
+        
       }
     },
     methods: {
