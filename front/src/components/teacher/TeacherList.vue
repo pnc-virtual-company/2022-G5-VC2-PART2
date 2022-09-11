@@ -43,10 +43,11 @@
         </div>
     </div>
   </div>
-    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" />
+    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @requestCreateTeacher="createTeacher" :userData="user"/>
 </template>
 
 <script>
+import axiosHttp from "../../axios-http";
 import peopleList from "../PeopleList.vue"
 import teacherForm from "./TeacherForm.vue";
 export default {
@@ -59,12 +60,18 @@ export default {
     },
     data(){
       return {
-        isShowForm:false
+        isShowForm:false,
+        user: [],
       }
     },
     methods: {
       showTeacherForm(){
         this.isShowForm = true;
+      },
+      createTeacher(userData) {
+        axiosHttp.post('/users',userData).then(res => {
+          console.log(res.data);
+        })
       }
     }
 };
