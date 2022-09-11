@@ -1,5 +1,5 @@
 <template>
-  <teacher-list :listTeachers="listTeachers" />
+  <teacher-list :listTeachers="listTeachers" @show-detail="showDetail"/>
 </template>
 
 <script>
@@ -8,6 +8,7 @@ export default {
   components: {
     "teacher-list": TeacherList,
   },
+  emits:['show-detail'],
   data() {
     return {
       listTeachers: [
@@ -47,37 +48,15 @@ export default {
           lastName: "Pho",
           email: "sreykea.reun@student.passerellesnumeriques.com",
         },
-        {
-          id: "4",
-          roles: "teacher",
-          profile:
-            "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
-          firstName: "Mengheang",
-          lastName: "Pho",
-          email: "sreykea.reun@student.passerellesnumeriques.com",
-        },
-        {
-          id: "4",
-          roles: "teacher",
-          profile:
-            "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
-          firstName: "Mengheang",
-          lastName: "Pho",
-          email: "sreykea.reun@student.passerellesnumeriques.com",
-        },
-        {
-          id: "4",
-          roles: "teacher",
-          profile:
-            "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
-          firstName: "Mengheang",
-          lastName: "Pho",
-          email: "sreykea.reun@student.passerellesnumeriques.com",
-        },
         
       ],
     };
   },
+  methods:{
+    showDetail(){
+      this.$emit('show-detail');
+    }
+  }
 };
 </script>
 

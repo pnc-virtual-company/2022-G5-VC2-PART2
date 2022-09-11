@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[90%] m-auto mt-4">
+  <div class="w-[90%] m-auto mt-6 bg-white p-4 rounded">
     <div class="flex justify-between">
       <h2 class="text-2xl">Teachers</h2>
       <div class="relative">
@@ -35,7 +35,7 @@
         />
       </div>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="listTeachers"/>
+        <people-list :peopleList="listTeachers" @showDetail="showDetail"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -57,28 +57,32 @@ import peopleList from "../PeopleList.vue";
 import teacherForm from "./TeacherForm.vue";
 
 export default {
-    components:{
-        "people-list": peopleList,
-        "teacher-form":teacherForm,
-        
-    },
+  components:{
+      "people-list": peopleList,
+      "teacher-form":teacherForm,
+      
+  },
+  emits:['show-detail'],
   props: {
     listTeachers: Array,
+  },
+  data(){
+    return {
+      isShowForm:false,
+      
+    }
   },
     createTeacher(userData) {
       axiosHttp.post("/users", userData).then((res) => {
         console.log(res.data);
       });
     },
-    data(){
-      return {
-        isShowForm:false,
-        
-      }
-    },
     methods: {
       showTeacherForm(){
         this.isShowForm = true;
+      },
+      showDetail(){
+          this.$emit('show-detail');
       }
     }
 };

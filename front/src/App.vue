@@ -18,6 +18,10 @@ export default {
 #app {
   font-family: sans-serif;
 }
+body{
+  background: #eee;
+
+}
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

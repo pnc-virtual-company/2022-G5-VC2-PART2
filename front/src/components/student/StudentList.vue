@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[90%] m-auto mt-6">
+  <div class="w-[90%] m-auto mt-6 bg-white p-4 rounded">
     <div class="flex justify-between">
       <h2 class="text-2xl">Students</h2>
       <div class="relative">
@@ -35,7 +35,7 @@
         />
       </div>
       <div class="flex justify-center mt-4 w-full">
-        <people-list :peopleList="listStudents"/>
+        <people-list :peopleList="listStudents" @showDetail="showDetail"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -65,6 +65,7 @@ export default {
   props: {
     listStudents: Array,
   },
+  emits:['show-detail'],
   data() {
     return {
       isShowForm: false,
@@ -74,6 +75,9 @@ export default {
     showStudentForm() {
       this.isShowForm = true;
     },
+    showDetail(){
+      this.$emit('show-detail');
+    }
   },
 };
 </script>
