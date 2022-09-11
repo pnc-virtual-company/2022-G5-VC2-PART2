@@ -13,11 +13,11 @@
           :key="person.id">
           <td class="text-center">
             <div class="flex items-cener justify-center">
-              <img alt="Vue logo" :src="person.profile" class="w-10 h-10 rounded-full" />
+              <img  :src="person.profile" class="w-10 h-10 rounded-full" />
             </div>
           </td>
-          <td class="text-center">{{ person.firstName }}</td>
-          <td class="text-center">{{ person.lastName }}</td>
+          <td class="text-center">{{ person.first_name }}</td>
+          <td class="text-center">{{ person.last_name }}</td>
           <td class="text-left flex justify-between mt-5">
             {{ person.email }}
             <div class="flex absolute  justify-end right-2 z-50" @click="deletePerson(person.id)">

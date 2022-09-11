@@ -26,13 +26,16 @@
       </div>
     </div>
     <div class="rounded shadow p-4 mt-2">
-      <div class="flex justify-end items-center">
+      <div class="flex justify-end items-center relative">
         <label for="">Search</label>
         <input
           type="text"
-          class="shadow appearance-none border ml-2 rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-          placeholder="search student"
+          class="shadow appearance-none w-36 focus:w-64 duration-200 ease-in-out border ml-2 rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+          placeholder="Student name.."
         />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute top-2 text-gray-400 right-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
       </div>
       <div class="flex justify-center mt-4 w-full">
         <people-list :peopleList="listStudents" @showDetail="showDetail"/>
@@ -47,39 +50,65 @@
         </div>
     </div>
   </div>
-  <student-form
-    v-if="isShowForm"
-    @closeForm="isShowForm = false"
-      />
+    <student-form v-if="isShowForm" @closeForm="isShowForm=false" @create-student="createStudent" :userData="user" :studentData="user"/>
 </template>
 
 <script>
-import peopleList from "../PeopleList.vue";
-import studentForm from "./StudentForm.vue";
+import axiosHttp from '../../axios-http';
+import peopleList from "../PeopleList.vue"
+import studentForm from './StudentForm.vue';
 export default {
   components: {
     "people-list": peopleList,
     "student-form": studentForm,
   },
-
-  props: {
-    listStudents: Array,
-  },
   emits:['show-detail'],
   data() {
     return {
       isShowForm: false,
+      messageError: "",
+      listStudents:[]
     };
   },
   methods: {
-    showStudentForm() {
+      getStudentData(){
+        axiosHttp.get("/users/students").then((res)=>{
+          console.log(res.data);
+          this.listStudents = res.data;
+        })
+      },
+    showStudentForm(){
       this.isShowForm = true;
     },
     showDetail(){
       this.$emit('show-detail');
+    },  
+    createStudent(userData,studentData) {
+      axiosHttp.post('/users',userData).then((res) => {
+        console.log(res.data);
+        this.isShowForm = false;
+      }).catch((error) =>{
+        if (error.response.status === 401){
+          this.messageError = error.response.data.message;
+          console.log(this.messageError)
+        }
+        });
+      axiosHttp.post('/students',studentData).then((res) => {
+        console.log(res);
+        this.isShowForm = false;
+        this.getStudentData();
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          this.messageError = error.response.data.message;
+        }
+      });
     }
   },
+  mounted(){
+    this.getStudentData();
+  }
 };
+
 </script>
 
 <style>

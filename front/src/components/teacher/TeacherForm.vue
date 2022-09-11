@@ -24,7 +24,7 @@
           />
         </svg>
       </div>
-      <form class="shadow p-4 bg-white">
+      <form class="shadow p-4 bg-white" @submit.prevent="createTeacher">
         <div class="flex w-full justify-between mr-2 mb-2">
           <div class="w-full mr-2 mb-2">
             <b><label for="firstNameInput">First name</label></b>
@@ -104,6 +104,7 @@
                 class="ml-2 cursor-pointer"
                 name="gender"
                 id="maleClick"
+                value="Male"
                 v-model="gender"
               />
               <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
@@ -113,6 +114,7 @@
                 type="radio"
                 class="ml-2 cursor-pointer"
                 name="gender"
+                value="Female"
                 id="femaleClick"
                 v-model="gender"
               />
@@ -156,26 +158,23 @@ export default {
     };
   },
   watch: {
-    firstName: function (newValue) {
-      this.email =
-        newValue + "." + this.lastname + "@passerellesnumeriques.org";
-    },
     lastName: function (newValue) {
       this.email =
-        this.firstname + "." + newValue + "@passerellesnumeriques.org";
+        this.firstName + "." + newValue + "@passerellesnumeriques.org";
     },
   },
   methods: {
-    submit() {
+    createTeacher() {
       let userData = {
-        first_name: this.firstname,
-        last_name: this.lastname,
+        first_name: this.firstName,
+        last_name: this.lastName,
         email: this.email,
         password: this.generatePassword(),
         gender: this.gender,
         phone: this.phone,
+        roles:this.roles
       };
-      this.$emit("requestCreateTeacher", userData);
+      this.$emit("create-teacher", userData);
     },
     generatePassword() {
       let chars =
