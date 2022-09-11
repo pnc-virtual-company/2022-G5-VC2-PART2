@@ -80,8 +80,8 @@ export default {
     showStudentForm(){
       this.isShowForm = true;
     },
-    showDetail(){
-      this.$emit('show-detail');
+    showDetail(id){
+      this.$emit('show-detail',id);
     },  
     createStudent(userData,studentData) {
       axiosHttp.post('/users',userData).then((res) => {

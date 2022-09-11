@@ -61,9 +61,8 @@ import teacherForm from "./TeacherForm.vue";
 
 export default {
   components:{
-      "people-list": peopleList,
-      "teacher-form":teacherForm,
-      
+    "people-list": peopleList,
+    "teacher-form":teacherForm,   
   },
   emits:['show-detail'],
   data(){

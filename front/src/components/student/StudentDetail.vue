@@ -14,9 +14,9 @@
                     <input type="file" id="image" hidden>
                 </div>
                 <div class="ml-5 leading-9 text-xl">
-                    <p>Bro Chhaiya</p>
-                    <p>brochhaiya@gmail.com</p>
-                    <p>0965555342</p>
+                    <p class="capitalize">{{userDetail.first_name}} {{userDetail.last_name}}</p>
+                    <p>{{userDetail.email}}</p>
+                    <p>{{userDetail.phone}}</p>
                 </div>
             </div>
         </div>
@@ -32,12 +32,12 @@
                     <p>Personal ID</p>
                 </div> 
                 <div class=" leading-9 text-xl ml-20">
-                    <p>Bro</p>
-                    <p>Chhaiya</p>
-                    <p>Male</p>
-                    <p>2022</p>
-                    <p>WEB B</p>
-                    <p>35</p>
+                    <p>{{userDetail.first_name}}</p>
+                    <p>{{userDetail.last_name}}</p>
+                    <p>{{userDetail.gender}}</p>
+                    <p>{{userDetail.batch}}</p>
+                    <p>{{userDetail.class}}</p>
+                    <p>{{userDetail.student_id}}</p>
                 </div> 
             </div>
         </div>
@@ -52,6 +52,9 @@ export default {
     components:{
         'form-edit':formEdit
     },
+    props:{
+        userDetail: Object
+    },
     data(){
         return{
             isEditStudent:false
@@ -62,7 +65,7 @@ export default {
         onUpdate(){
             this.isEditStudent = true;
         }
-    }
+    },
 }
 </script>
 
