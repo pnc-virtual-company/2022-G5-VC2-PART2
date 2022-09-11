@@ -1,13 +1,13 @@
 <template>
-  <nav>
-    <navbar-view/>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-view/>
-  </nav>
+  <navbar-view/>
+  <router-view  v-slot="{Component}">
+      <transition name="fade">
+        <component :is="Component" />
+      </transition>
+  </router-view>
 </template>
 <script>
-import NavBar from './components/NavbarView.vue'
+import NavBar from './components/navigation/NavbarView.vue'
 export default {
 components:{
   'navbar-view':NavBar
@@ -18,6 +18,11 @@ components:{
  #app {
   font-family: sans-serif;
 }
+.fade-enter-from, 
+  .fade-leave-to{
+    opacity: 0;
+    transform: translateX(50px)
+  }
 
 /*nav {
   padding: 30px;

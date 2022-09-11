@@ -1,18 +1,17 @@
 <template>
-    <div class="">
-        <student-detail></student-detail>
-    </div>
+  <div class="mt-24">
+    <teacher/>
+    <student/>
+  </div>
 </template>
 
 <script>
-import StudentDetail from  "@/components/StudentDetail.vue";
+import teacher from "./teacher/TeacherView.vue"
+import student from "./student/StudentView.vue"
 export default {
-    components: {
-        'student-detail': StudentDetail,
-    }
+  components:{
+    teacher,
+    student
+  }
 }
 </script>
-
-<style>
-
-</style>

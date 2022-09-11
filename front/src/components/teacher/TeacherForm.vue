@@ -1,10 +1,10 @@
 <template>
-<div class="w-full h-[100vh] flex items-center justify-center">
-  <div class="main-form w-[40%] ">
+<div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
+  <div class=" w-[40%] ">
     <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
       <p></p>
       <h2>Create Teacher</h2>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm')">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
 
@@ -58,7 +58,7 @@
           />
         </div>
       </div>
-      <div class="email mr-2 mb-2">
+      <div class="email mb-2">
         <b><label for="emailInput">Email</label></b>
         <br />
         <input
@@ -71,19 +71,19 @@
       </div>
       <div class="gender mr-2 mb-2">
         <b>Gender</b>
-        <div class="formGender flex">
+        <div class="mt-2 flex">
           <div class="male">
-            <input type="radio" name="gender" id="maleClick" />
-            <label for="maleClick">Male</label>
+            <input type="radio" class="ml-2 cursor-pointer" name="gender" id="maleClick" />
+            <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
           </div>
           <div class="female ml-8">
-            <input type="radio" name="gender" id="femaleClick" />
-            <label for="femaleClick">Female </label>
+            <input type="radio" class="ml-2 cursor-pointer" name="gender" id="femaleClick" />
+            <label for="femaleClick" class="ml-2 cursor-pointer">Female </label>
           </div>
         </div>
       </div>
       <div class="flex justify-end">
-        <button type="button" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
+        <button type="button" @click="$emit('closeForm')" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
         <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Add Student</button>
       </div>
     </form>

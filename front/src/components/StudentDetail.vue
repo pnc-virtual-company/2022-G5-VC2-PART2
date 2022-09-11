@@ -43,7 +43,7 @@
 
     <!-- popup to update student -->
     <div v-if="isOpen">
-        <div class="main-form flex h-screen absolute inset-0 items-center justify-center bg-gray-700 bg-opacity-50">
+        <div class="main-form flex h-screen absolute inset-0 items-center justify-center bg-gray-700 bg-opacity-50"> 
             <div>
                 <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
                     <p></p>
