@@ -117,7 +117,6 @@
       </div>
     </form>
   </div>
-</div>
 </template>
 <script>
 export default{
