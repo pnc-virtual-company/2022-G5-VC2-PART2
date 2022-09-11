@@ -21,8 +21,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('roles');
+            $table->string("gender");
             $table->string('profile')->nullable();
-            $table->integer('student_id')->nullable();
+            $table->foreignId('student_id')->onDelete('CASCADE')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,7 +1,8 @@
 <template>
-  <div class="mt-24">
+  <div class="mt-24 mb-24">
     <teacher/>
     <student/>
+
   </div>
 </template>
 
@@ -11,7 +12,7 @@ import student from "./student/StudentView.vue"
 export default {
   components:{
     teacher,
-    student
+    student,
   }
 }
 </script>
