@@ -169,7 +169,13 @@ export default{
     },
     getLastStudentId() {
       axiosHttp.get('/students/getLastStudent').then(res => {
-        this.studentId = res.data.id;
+        console.log(res.data);
+        if (res.data != null) {
+          this.studentId = res.data.id + 1;
+        }else{
+          this.studentId = 1;
+        }
+        console.log(this.studentId)
       })
     }
   },

@@ -1,5 +1,4 @@
 <template>
-
 <!-- popup to update student -->
     <div class="fixed flex w-full z-50 h-full inset-0 items-center justify-center bg-gray-700 bg-opacity-50"> 
         <div>
@@ -39,22 +38,22 @@
                     <b><label for="emailInput">Email</label></b>
                     <br />
                     <input
-                    type="email"
-                    name="emailInput"
-                    class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                    id="emailInput"
-                    placeholder="Email ..."
+                        type="email"
+                        name="emailInput"
+                        class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                        id="emailInput"
+                        placeholder="Email ..."
                     />
                 </div>
                 <div class="phone mr-2 mb-2">
                     <b><label for="phoneInput">Phone</label></b>
                     <br />
                     <input
-                    type="phone"
-                    name="phoneInput"
-                    class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                    id="phoneInput"
-                    placeholder="Phone ..."
+                        type="phone"
+                        name="phoneInput"
+                        class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                        id="phoneInput"
+                        placeholder="Phone ..."
                     />
                 </div>
                 <div class="flex justify-between mr-2 mb-2">
@@ -107,7 +106,7 @@
                 </div>
                 <div class="flex justify-end">
                     <button @click="$emit('closeForm')" type="button" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Add Student</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Update</button>
                 </div>
             </form>
         </div>
@@ -117,6 +116,11 @@
 
 <script>
 export default {
+    props:{
+        studentDetail:Object,
+        userDetail:Object,
+    }, 
+
     data(){
         return{
             isOpen: false,

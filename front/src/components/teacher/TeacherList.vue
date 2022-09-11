@@ -38,7 +38,7 @@
         </svg>
       </div>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="listTeachers" @showDetail="showDetail"/>
+        <people-list :peopleList="listTeachers"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -64,7 +64,6 @@ export default {
     "people-list": peopleList,
     "teacher-form":teacherForm,   
   },
-  emits:['show-detail'],
   data(){
     return {
       isShowForm:false,
@@ -80,9 +79,6 @@ export default {
       },
       showTeacherForm(){
         this.isShowForm = true;
-      },
-      showDetail(){
-        this.$emit('show-detail');
       },
       createTeacher(userData) {
         axiosHttp.post("/users", userData).then((res) => {
