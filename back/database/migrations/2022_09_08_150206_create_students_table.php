@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('id_student');
             $table->string("class");
             $table->integer("batch");
-            $table->string("phone")->nullable();
             $table->timestamps();
         });
     }

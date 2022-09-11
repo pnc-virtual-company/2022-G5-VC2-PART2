@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 /*
@@ -18,10 +17,6 @@ use App\Http\Controllers\StudentController;
 
 // route students //
 Route::prefix('/students')->group(function() {
-    Route::get('/lastId',[StudentController::class,'getLastStudent']);
-    Route::post("/", [StudentController::class , 'store']);
-    Route::post("/{id}", [StudentController::class , 'update']);
-    Route::delete("/delete/{id}", [StudentController::class ,'destroy']);
     Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
 });
 
@@ -32,7 +27,8 @@ Route::prefix('/users')->group(function() {
     Route::post('/{id}',[UserController::class,'update']);
     Route::get('/students',[UserController::class,'studentOnly']);
     Route::get('/teachers',[UserController::class,'teacherOnly']);
-    Route::get('/{id}',[UserController::class,'show']);
+    Route::get('/student/{id}',[UserController::class,'showOnStudent']);
+    Route::get('/teacher/{id}',[UserController::class,'showOnTeacher']);
     Route::delete('/delete/{id}',[UserController::class,'destroy']);
 });
 
