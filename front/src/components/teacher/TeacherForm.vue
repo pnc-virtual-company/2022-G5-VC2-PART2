@@ -62,6 +62,7 @@
               id="roleInput"
               placeholder="Role..."
               v-model="roles"
+              disabled
             />
           </div>
           <div class="w-full">
@@ -154,7 +155,7 @@ export default {
       roles: "TEACHER",
       phone: "",
       email: "",
-      gender: "",
+      gender: "Male",
     };
   },
   watch: {

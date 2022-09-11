@@ -18,11 +18,11 @@ use App\Http\Controllers\StudentController;
 
 // route students //
 Route::prefix('/students')->group(function() {
-    
+    Route::get('/lastId',[StudentController::class,'getLastStudent']);
     Route::post("/", [StudentController::class , 'store']);
     Route::post("/{id}", [StudentController::class , 'update']);
     Route::delete("/delete/{id}", [StudentController::class ,'destroy']);
-    Route::get('/getLastId',[StudentController::class, 'getLastId']);
+    Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
 });
 
 
