@@ -69,39 +69,29 @@ export default {
     };
   },
   methods: {
-    showStudentForm() {
-      this.isShowForm = true;
+    showStudentForm(){
+      this .isShowForm = true;
     },
-    data(){
-      return {
-        isShowForm:false,
-        messageError: '',
-        user: [],
-      }
-    },
-    methods: {
-      showStudentForm(){
-        this.isShowForm = true;
-      },
-      createStudent(userData,studentData) {
-        console.log(userData)
-        axiosHttp.post('/users',userData).then((res) => {
-          console.log(res.data);
-        }).catch((error) =>{
-          if (error.response.status === 401){
-            this.messageError = error.response.data.message;
-          }
+    createStudent(userData,studentData) {
+      console.log(userData)
+      axiosHttp.post('/users',userData).then((res) => {
+        console.log(res.data);
+      }).catch((error) =>{
+        if (error.response.status === 401){
+          this.messageError = error.response.data.message;
+          console.log(this.messageError)
+        }
         });
-        axiosHttp.post('/students',studentData).then((res) => {
-          console.log(res);
-          this.isShowForm = false;
-        }).catch((error) => {
-          if (error.response.status === 401) {
-            this.messageError = error.response.data.message;
-          }
-        });
-      }
+      axiosHttp.post('/students',studentData).then((res) => {
+        console.log(res);
+        this.isShowForm = false;
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          this.messageError = error.response.data.message;
+        }
+      });
     }
+  }
 }
 </script>
 

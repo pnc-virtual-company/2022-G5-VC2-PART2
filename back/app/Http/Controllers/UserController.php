@@ -37,7 +37,6 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->roles = $request->roles;
         $user->gender = $request->gender;
-        $user->student_id = $request->student_id;
         $user->profile = 'boy.png';
 
         $user->save();
