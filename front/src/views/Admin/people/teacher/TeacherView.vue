@@ -13,7 +13,7 @@ export default {
       listTeachers: [
         {
           id: "1",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Rady",
@@ -22,7 +22,7 @@ export default {
         },
         {
           id: "2",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Him",
@@ -31,7 +31,7 @@ export default {
         },
         {
           id: "3",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Ronan",
@@ -40,7 +40,7 @@ export default {
         },
         {
           id: "4",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Mengheang",
@@ -49,7 +49,7 @@ export default {
         },
         {
           id: "4",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Mengheang",
@@ -58,7 +58,7 @@ export default {
         },
         {
           id: "4",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Mengheang",
@@ -67,7 +67,7 @@ export default {
         },
         {
           id: "4",
-          role: "teacher",
+          roles: "teacher",
           profile:
             "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
           firstName: "Mengheang",
@@ -75,24 +75,6 @@ export default {
           email: "sreykea.reun@student.passerellesnumeriques.com",
         },
         
-        {
-          id: "4",
-          role: "teacher",
-          profile:
-            "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
-          firstName: "Mengheang",
-          lastName: "Phoerw",
-          email: "sreykea.reun@student.passerellesnumeriques.com",
-        },
-        {
-          id: "4",
-          role: "teacher",
-          profile:
-            "https://image.winudf.com/v2/image1/Y29tLmxha25haWRyaWFwcHMuZ2lybHNjYXJ0b29uX3NjcmVlbl80XzE2Mjg5NDQxNjBfMDM3/screen-4.jpg?fakeurl=1&type=.webp",
-          firstName: "Mengheang",
-          lastName: "Phodfdfe",
-          email: "sreykea.reun@student.passerellesnumeriques.com",
-        },
       ],
     };
   },
