@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-24">
+  <div class="mt-24 mb-24">
     <teacher/>
     <student/>
   </div>

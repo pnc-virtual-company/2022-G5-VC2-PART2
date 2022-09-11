@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[80%] m-auto mt-4">
+  <div class="w-[90%] m-auto mt-4">
     <div class="flex justify-between">
       <h2 class="text-2xl">Teachers</h2>
       <div class="relative">
@@ -31,10 +31,10 @@
         />
       </div>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="listTeachers" />
+        <people-list :peopleList="listTeachers" :dataToShow="dataToShow"/>
       </div>
-        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative">
-            <button class="flex shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white">
+        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listTeachers.length > dataToShow">
+            <button class="flex shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white" @click="dataToShow = listTeachers.length">
                 Views all
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -59,7 +59,8 @@ export default {
     },
     data(){
       return {
-        isShowForm:false
+        isShowForm:false,
+        dataToShow: 6,
       }
     },
     methods: {
