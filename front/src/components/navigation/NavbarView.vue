@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-500 w-full fixed top-0 z-50">
+  <div class="bg-primary w-full fixed top-0 z-50">
     <nav class="flex w-full p-2 text-white justify-between items-center px-4">
       <ul>
         <li>
@@ -13,18 +13,18 @@
         <li>
           <router-link class="p-2 px-6" exact-active-class="exact-active-link" to="/people">People</router-link>
         </li>
-        <li>
-          <router-link class="p-2 px-6" exact-active-class="exact-active-link" to="/followUp">FollowUp</router-link>
-          <div class="ml-3 items-center absolute right-[44vw] top-[10px]">
-            <small class="bg-red-400 text-white rounded-lg px-[0.30rem] border">1</small>
+        <li class="relative">
+          <router-link class="p-2 px-6" exact-active-class="exact-active-link" to="/followUp">Follow Up</router-link>
+          <div class="ml-3 items-center absolute right-0 -top-2">
+            <div class="bg-red-400 text-white rounded-full p-2 flex items-center justify-center w-5  h-5 "><small>1 </small></div>
           </div>
         </li>
       </ul>
       
       <li @click="show=!show" class="flex flex-col items-end min-w-[9rem] space-x-2 cursor-pointer">
         <div class="flex justify-center items-center">
-          <router-link class="p-2 px-6" to="/profile">coordinator</router-link>
-          <div class="w-15 h-15 ml-2">
+          <router-link class="p-2" to="/profile">coordinator</router-link>
+          <div class="w-15 h-15 ml-1">
             <img src="../../assets/avatar.png" alt="" class=" w-[50px] h-[50px] rounded-full">
           </div>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ export default {
 
 <style>
 .exact-active-link {
-  background: orange;
+  background: #FF6B00;
   border-radius: 4px;
 }
 </style>
