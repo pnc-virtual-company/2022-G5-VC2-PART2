@@ -67,23 +67,13 @@ export default {
     showDetail(){
       this.$emit('show-detail');
     },  
-    createStudent(userData,studentData) {
-      console.log(userData,studentData)
+    createStudent(userData) {
       axiosHttp.post('/users',userData).then((res) => {
         console.log(res.data);
+        this.getStudentData()
         this.isShowForm = false;
       }).catch((error) =>{
         if (error.response.status === 401){
-          this.messageError = error.response.data.message;
-          console.log(this.messageError)
-        }
-        });
-      axiosHttp.post('/students',studentData).then((res) => {
-        console.log(res);
-        this.isShowForm = false;
-        this.getStudentData();
-      }).catch((error) => {
-        if (error.response.status === 401) {
           this.messageError = error.response.data.message;
         }
       });

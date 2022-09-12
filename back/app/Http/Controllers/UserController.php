@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
-use Spatie\FlareClient\Http\Exceptions\NotFound;
+
 
 class UserController extends Controller
 {
