@@ -26,23 +26,14 @@
       </div>
     </div>
     <div class="rounded shadow p-4 relative mt-2">
-      <div class="flex justify-end items-center relative">
-        <label for="">Search</label>
-        <input
-          type="text"
-          class="shadow appearance-none w-36 focus:w-64 duration-200 ease-in-out border ml-2 rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-          placeholder="Teacher name.."
-        />
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute top-2 text-gray-400 right-2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-        </svg>
-      </div>
+      <searchbar-form @newKeyword="newKeyword"/>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="listTeachers" @showDetail="showDetail" @deletePerson="deletePerson"/>
+        <people-list :peopleList="filterTeacher" @showDetail="showDetail" @deletePerson="deletePerson"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
-            <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
-                Views all
+            <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
+                <p v-if="showShortList">View All</p>
+                <p v-else>Hide</p>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
@@ -59,11 +50,14 @@ import axiosHttp from "../../axios-http";
 import peopleList from "../PeopleList.vue";
 import teacherForm from "./TeacherForm.vue";
 import deleteAlert from "../delete/DeleteAlert.vue";
+import searchBar from '../search/SearchBar.vue'
+
 export default {
   components:{
       "people-list": peopleList,
       "teacher-form":teacherForm,
-      "delete-alert": deleteAlert
+      "delete-alert": deleteAlert,
+      "searchbar-form": searchBar
   },
   emits:['show-detail'],
   data(){
@@ -71,41 +65,63 @@ export default {
       isShowForm:false,
       listTeachers: [],
       isDeleteAlert:false,
-      userId:null
+      userId:null,
+      keyword:'',
+      dataToShow: 3,
+      showShortList: true,
     }
   },
-    methods: {
-      getTeacherData(){
-        axiosHttp.get("/users/teachers").then((res)=>{
-          console.log(res.data);
-          this.listTeachers = res.data;
-        })
-      },
-      showTeacherForm(){
-        this.isShowForm = true;
-      },
-      showDetail(){
-        this.$emit('show-detail');
-      },
-      deletedPerson(){
-        this.getTeacherData();
-        this.isDeleteAlert = false;
-      },
-      deletePerson(id){
-        this.isDeleteAlert = true;
-        this.userId = id;
-        console.log(id);
-      },
-      createTeacher(userData) {
-        axiosHttp.post("/users", userData).then(() => {
-          this.getTeacherData();
-          this.isShowForm = false;
-        });
-      },
-    },
-    mounted(){
-      this.getTeacherData();
+  computed:{
+    filterTeacher(){
+      let teacherToDisplay = this.listTeachers
+      if(this.keyword){
+        teacherToDisplay = this.listTeachers.filter((person) => (person.first_name +" "+ person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
+      }
+      if (this.showShortList){
+        teacherToDisplay = teacherToDisplay.slice(0,this.dataToShow);
+      }
+      return teacherToDisplay
     }
+
+  },
+  methods: {
+    getTeacherData(){
+      axiosHttp.get("/users/teachers").then((res)=>{
+        console.log(res.data);
+        this.listTeachers = res.data;
+      })
+    },
+    showTeacherForm(){
+      this.isShowForm = true;
+    },
+    showDetail(){
+      this.$emit('show-detail');
+    },
+    deletedPerson(){
+      this.getTeacherData();
+      this.isDeleteAlert = false;
+    },
+    deletePerson(id){
+      this.isDeleteAlert = true;
+      this.userId = id;
+      console.log(id);
+    },
+    createTeacher(userData) {
+      axiosHttp.post("/users", userData).then(() => {
+        this.getTeacherData();
+        this.isShowForm = false;
+      });
+    },
+    newKeyword(keyword){
+      this.keyword= keyword
+    },
+    showAll(){
+      this.showShortList = !this.showShortList;
+    }
+  },
+  mounted(){
+    this.getTeacherData();
+  }
 };
 </script>
 
