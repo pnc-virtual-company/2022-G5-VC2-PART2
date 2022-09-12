@@ -38,7 +38,7 @@
         </svg>
       </div>
       <div class="flex justify-center mt-4 w-full">
-        <people-list :peopleList="listStudents" @showDetail="showDetail"/>
+        <people-list :peopleList="listStudents" @showDetail="showDetail" @deletePerson="deletePerson"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -51,23 +51,28 @@
     </div>
   </div>
     <student-form v-if="isShowForm" @closeForm="isShowForm=false" @create-student="createStudent" :userData="user" :studentData="user"/>
+    <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
 </template>
 
 <script>
 import axiosHttp from '../../axios-http';
 import peopleList from "../PeopleList.vue"
 import studentForm from './StudentForm.vue';
+import deleteAlert from "../delete/DeleteAlert.vue";
 export default {
   components: {
     "people-list": peopleList,
     "student-form": studentForm,
+    "delete-alert": deleteAlert
   },
   emits:['show-detail'],
   data() {
     return {
       isShowForm: false,
       messageError: "",
-      listStudents:[]
+      listStudents:[],
+      isDeleteAlert:false,
+      userId:null
     };
   },
   methods: {
@@ -83,6 +88,15 @@ export default {
     showDetail(){
       this.$emit('show-detail');
     },  
+    deletedPerson(){
+      this.getStudentData();
+      this.isDeleteAlert = false;
+    },
+    deletePerson(id){
+        this.isDeleteAlert = true;
+        this.userId = id;
+        console.log(id);
+    },
     createStudent(userData,studentData) {
       axiosHttp.post('/users',userData).then((res) => {
         console.log(res.data);

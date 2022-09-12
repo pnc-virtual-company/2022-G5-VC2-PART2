@@ -38,7 +38,7 @@
         </svg>
       </div>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="listTeachers" @showDetail="showDetail"/>
+        <people-list :peopleList="listTeachers" @showDetail="showDetail" @deletePerson="deletePerson"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -51,25 +51,27 @@
     </div>
   </div>
     <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
-
+    <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
 </template>
 
 <script>
 import axiosHttp from "../../axios-http";
 import peopleList from "../PeopleList.vue";
 import teacherForm from "./TeacherForm.vue";
-
+import deleteAlert from "../delete/DeleteAlert.vue";
 export default {
   components:{
       "people-list": peopleList,
       "teacher-form":teacherForm,
-      
+      "delete-alert": deleteAlert
   },
   emits:['show-detail'],
   data(){
     return {
       isShowForm:false,
-      listTeachers: []
+      listTeachers: [],
+      isDeleteAlert:false,
+      userId:null
     }
   },
     methods: {
@@ -85,16 +87,24 @@ export default {
       showDetail(){
         this.$emit('show-detail');
       },
+      deletedPerson(){
+        this.getTeacherData();
+        this.isDeleteAlert = false;
+      },
+      deletePerson(id){
+        this.isDeleteAlert = true;
+        this.userId = id;
+        console.log(id);
+      },
       createTeacher(userData) {
-        axiosHttp.post("/users", userData).then((res) => {
-          console.log(res.data);
-          this.getTeacherData()
+        axiosHttp.post("/users", userData).then(() => {
+          this.getTeacherData();
           this.isShowForm = false;
         });
       },
     },
     mounted(){
-      this.getTeacherData()
+      this.getTeacherData();
     }
 };
 </script>

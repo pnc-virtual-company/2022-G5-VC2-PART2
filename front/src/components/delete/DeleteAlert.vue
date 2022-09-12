@@ -12,8 +12,25 @@
             </div>
             <div class="flex justify-center mt-6">
                 <button class="p-2 px-4 bg-gray-300 rounded cursor-pointer mr-1 hover:bg-gray-400 " @click="$emit('cancelDelete')">Cancel</button>
-                <button class="p-2 px-6 text-white bg-red-500 rounded cursor-pointer ml-1 hover:bg-red-400">OK</button>
+                <button class="p-2 px-6 text-white bg-red-500 rounded cursor-pointer ml-1 hover:bg-red-400" @click="deleteUser">OK</button>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import axiosHttp from "../../axios-http";
+
+export default({
+    props:{
+      userId: Number  
+    },
+    emits: ['delete-user'],
+    methods:{
+        deleteUser(){
+            axiosHttp.delete('/users/delete/'+ this.userId);
+            this.$emit('delete-user');
+        }
+    }
+})
+</script>
