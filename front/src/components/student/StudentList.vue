@@ -40,13 +40,15 @@
       <div class="flex justify-center mt-4 w-full">
         <people-list :peopleList="listStudents" @showDetail="showDetail" @deletePerson="deletePerson"/>
       </div>
-        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
-            <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
+        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative">
+          <div v-if="listStudents.length > 6">
+            <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" @click= "limitedList " >
                 Views all
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
             </button>   
+          </div>
         </div>
     </div>
   </div>
@@ -72,8 +74,9 @@ export default {
       messageError: "",
       listStudents:[],
       isDeleteAlert:false,
-      userId:null
-    };
+      userId:null,
+      showMoreData: 3,
+    }
   },
   methods: {
       getStudentData(){
@@ -98,7 +101,6 @@ export default {
         console.log(id);
     },
     createStudent(userData,studentData) {
-      console.log(userData,studentData)
       axiosHttp.post('/users',userData).then((res) => {
         console.log(res.data);
         this.isShowForm = false;
@@ -121,8 +123,16 @@ export default {
   },
   mounted(){
     this.getStudentData();
+  },
+  computed: {
+  limitedList() {
+      if (this.showShortList>6) {
+         return this.listStudents.slice(0, this.default_limit);
+     }
+    return this.listStudents;
+    }
   }
-};
+}
 
 </script>
 
