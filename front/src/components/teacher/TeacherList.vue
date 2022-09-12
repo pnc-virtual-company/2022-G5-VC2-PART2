@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[90%] m-auto mt-4">
+  <div class="w-[90%] m-auto mt-6 bg-white p-4 rounded">
     <div class="flex justify-between">
       <h2 class="text-2xl">Teachers</h2>
       <div class="relative">
@@ -26,16 +26,19 @@
       </div>
     </div>
     <div class="rounded shadow p-4 relative mt-2">
-      <div class="flex justify-end items-center">
+      <div class="flex justify-end items-center relative">
         <label for="">Search</label>
         <input
           type="text"
-          class="shadow appearance-none border ml-2 rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-          placeholder="search teacher"
+          class="shadow appearance-none w-36 focus:w-64 duration-200 ease-in-out border ml-2 rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+          placeholder="Teacher name.."
         />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute top-2 text-gray-400 right-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
       </div>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="listTeachers"/>
+        <people-list :peopleList="listTeachers" @showDetail="showDetail"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -47,7 +50,7 @@
         </div>
     </div>
   </div>
-    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" />
+    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
 
 </template>
 
@@ -57,29 +60,41 @@ import peopleList from "../PeopleList.vue";
 import teacherForm from "./TeacherForm.vue";
 
 export default {
-    components:{
-        "people-list": peopleList,
-        "teacher-form":teacherForm,
-        
-    },
-  props: {
-    listTeachers: Array,
+  components:{
+      "people-list": peopleList,
+      "teacher-form":teacherForm,
+      
   },
-    createTeacher(userData) {
-      axiosHttp.post("/users", userData).then((res) => {
-        console.log(res.data);
-      });
-    },
-    data(){
-      return {
-        isShowForm:false,
-        
-      }
-    },
+  emits:['show-detail'],
+  data(){
+    return {
+      isShowForm:false,
+      listTeachers: []
+    }
+  },
     methods: {
+      getTeacherData(){
+        axiosHttp.get("/users/teachers").then((res)=>{
+          console.log(res.data);
+          this.listTeachers = res.data;
+        })
+      },
       showTeacherForm(){
         this.isShowForm = true;
-      }
+      },
+      showDetail(){
+        this.$emit('show-detail');
+      },
+      createTeacher(userData) {
+        axiosHttp.post("/users", userData).then((res) => {
+          console.log(res.data);
+          this.getTeacherData()
+          this.isShowForm = false;
+        });
+      },
+    },
+    mounted(){
+      this.getTeacherData()
     }
 };
 </script>

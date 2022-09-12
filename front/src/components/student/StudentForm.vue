@@ -9,7 +9,7 @@
       </svg>
 
     </div>
-    <form class="shadow p-4 bg-white" @submit.prevent="submit">
+    <form class="shadow p-4 bg-white" @submit.prevent="createNewStudent">
       <div class="flex w-full justify-between  mb-2">
         <div class="w-full mr-2 mb-2">
           <b><label for="firstNameInput">First name</label></b>
@@ -121,7 +121,7 @@
 </template>
 <script>
 export default{
-  emits: ['requestCreateStudent'],
+  emits: ['create-student'],
   data() {
     return {
       firstName: '',
@@ -135,7 +135,7 @@ export default{
     }
   },
   methods: {
-    submit() {
+    createNewStudent() {
       let userData = {
         first_name: this.firstName,
         last_name: this.lastName,
@@ -150,7 +150,7 @@ export default{
         batch: this.batch,
         phone: this.phoneNumber
       };
-      this.$emit('requestCreateStudent',userData,studentData);
+      this.$emit('create-student',userData,studentData);
     },
     generatePassword() {
       let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -165,13 +165,6 @@ export default{
     },
   },
   watch: {
-    firstName: function(newValue) {
-      if (newValue !='') {
-        this.email = newValue + '.' + this.lastName  + '@student.passerellesnumeriques.org';
-      }else{
-        this.email = '';
-      }
-    },
     lastName: function(newValue) {
       if (newValue != '') {
         this.email = this.firstName + '.' + newValue + '@student.passerellesnumeriques.org';
