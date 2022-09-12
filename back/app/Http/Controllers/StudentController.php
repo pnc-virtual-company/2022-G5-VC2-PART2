@@ -12,16 +12,14 @@ class StudentController extends Controller
     {
         $customMessage = [
             'required' => 'You forgot put this feild!',
-            'unique' => 'This ID already exist!',
         ];
         $this->validate($request, [
             'class' => 'required|max:10',
             'batch' => 'required|integer',
-            'student_id' => 'required|string|unique:students',
         ],$customMessage);
 
         $student = new Student();
-        $student->student_id = $request->student_id;
+        $student->id_student = $request->id_student;
         $student->class = $request->class;
         $student->batch = $request->batch;
         $student->phone = $request->phone;
@@ -50,5 +48,9 @@ class StudentController extends Controller
     public function destroy($id)
     {
         return Student::destroy($id);
+    }
+
+    public function getLastStudent() {
+        return Student::latest()->first();
     }
 }

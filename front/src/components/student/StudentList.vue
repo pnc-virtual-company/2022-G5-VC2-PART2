@@ -98,6 +98,7 @@ export default {
         console.log(id);
     },
     createStudent(userData,studentData) {
+      console.log(userData,studentData)
       axiosHttp.post('/users',userData).then((res) => {
         console.log(res.data);
         this.isShowForm = false;
