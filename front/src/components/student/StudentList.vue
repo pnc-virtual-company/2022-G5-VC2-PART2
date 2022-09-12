@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[90%] m-auto mt-6 bg-white p-4 rounded">
+  <div class="w-[90%] m-auto mt-6  p-4 rounded">
     <div class="flex justify-between">
       <h2 class="text-2xl">Students</h2>
       <div class="relative">
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="rounded shadow p-4 mt-2">
+    <div class="rounded shadow p-4 mt-2 bg-white">
       <searchbar-form @newKeyword="updateKeyword"/>
       <div class="flex justify-center mt-4 w-full">
         <people-list :peopleList="filterStudent" @showDetail="showDetail" @deletePerson="deletePerson"/>
@@ -87,7 +87,6 @@ export default {
         this.$emit('show-detail');
       },  
       deletedPerson(){
-      this.getStudentData();
       this.isDeleteAlert = false;
       },
       deletePerson(id){
@@ -95,33 +94,22 @@ export default {
         this.userId = id;
         console.log(id);
       },
-      createStudent(userData,studentData) {
-        axiosHttp.post('/users',userData).then((res) => {
-          console.log(res.data);
-          this.isShowForm = false;
-        })
-        .catch((error) =>{
-          if (error.response.status === 401){
-            this.messageError = error.response.data.message;
-            console.log(this.messageError)
-          }
-          });
-        axiosHttp.post('/students',studentData).then((res) => {
-          console.log(res);
-          this.isShowForm = false;
-          this.getStudentData();
-        }).catch((error) => {
-          if (error.response.status === 401) {
-            this.messageError = error.response.data.message;
-          }
-        });
-      },
       updateKeyword(keyword){
         this.keyword = keyword
       },
       showAll(){
       this.showShortList = !this.showShortList;
-    }
+      },
+      createStudent(userData) {
+        axiosHttp.post('/users',userData).then(() => {
+          this.getStudentData()
+          this.isShowForm = false;
+        }).catch((error) =>{
+          if (error.response.status === 401){
+            this.messageError = error.response.data.message;
+          }
+        });
+      },
   },
   mounted(){
     this.getStudentData();

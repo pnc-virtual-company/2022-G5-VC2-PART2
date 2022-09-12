@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[90%] m-auto mt-6 bg-white p-4 rounded">
+  <div class="w-[90%] m-auto mt-6  p-4 rounded">
     <div class="flex justify-between">
       <h2 class="text-2xl">Teachers</h2>
       <div class="relative">
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="rounded shadow p-4 relative mt-2">
+    <div class="rounded shadow p-4 relative mt-2 bg-white">
       <searchbar-form @newKeyword="newKeyword"/>
       <div class="flex justify-center mt-4">
         <people-list :peopleList="filterTeacher" @showDetail="showDetail" @deletePerson="deletePerson"/>

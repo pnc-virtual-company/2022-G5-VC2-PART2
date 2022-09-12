@@ -29,6 +29,7 @@ export default({
     methods:{
         deleteUser(){
             axiosHttp.delete('/users/delete/'+ this.userId);
+            console.log('ok');
             this.$emit('delete-user');
         }
     }

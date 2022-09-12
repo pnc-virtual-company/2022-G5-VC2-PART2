@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+
 
 class UserController extends Controller
 {
@@ -36,7 +38,15 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->roles = $request->roles;
         $user->gender = $request->gender;
-        $user->student_id = $request->student_id;
+        $user->phone = $request->phone;
+        if ($request->roles == "STUDENT"){
+            $student = new Student();
+            $user->student_id = $request->student_id;
+            $student->batch = $request->batch;
+            $student->class = $request->class;
+            $student->id_student = $request->id_student;
+            $student->save();
+        }
 
         $user->save();
         return response()->json(['message' => 'User created success!']);
@@ -49,12 +59,16 @@ class UserController extends Controller
 
     // Get all Teacher only
     public function teacherOnly() {
-        return User::where('users.roles','=','TEACHER')->get();
+        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone']);
     }
 
-    // Show only one user 
-    public function show($id) {
-        return User::findOrFail($id);
+    // Show only one user (Teacher)
+    public function showOnTeacher($id) {
+        return User::where('users.student_id','=',null)->findOrFail($id);
+    }
+    // Show only one user (student)
+    public function showOnStudent($id) {
+        return response()->json(['userData' => User::where('users.student_id','=',$id)->get() ,'studentData' => Student::findOrFail($id)]);
     }
 
     // Update user
@@ -73,18 +87,27 @@ class UserController extends Controller
             'gender' => 'required|string',
         ],$customMessage);
 
+        
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
         $user->gender = $request->gender;
+        $user->phone = $request->phone;
+        if ($request->roles == 'STUDENT') {
+            $student = Student::findOrFail($id);
+            $student->id_student = $request->id_student;
+            $student->batch = $request->batch;
+            $student->save();
+        }
         $user->save();
         return response()->json(['message' => 'Updated Success!']);
     }
 
     // Delete User 
     public function destroy($id) {
-        User::destroy($id);
+        User::where('users.student_id','=',$id)->delete();
+        Student::destroy($id);
         return response()->json(['message' => 'Deleted Success!']);
     }
 
