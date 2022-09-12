@@ -19,15 +19,14 @@ class UserController extends Controller
         $customMessage = [
             'required' => 'You forgot put this feild!',
             'unique' => 'This email already exist!',
-            'min' => 'Password min 4',
         ];
 
         $this->validate($request, [
-            'first_name' => 'required|max:15',
-            'last_name' => 'required|max:15',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string|min:4|max:8',
-            'roles' => 'required|string',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'roles' => 'required',
         ],$customMessage);
 
         $user = new User();
@@ -37,7 +36,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->roles = $request->roles;
         $user->gender = $request->gender;
-        $user->profile = 'boy.png';
+        $user->student_id = $request->student_id;
 
         $user->save();
         return response()->json(['message' => 'User created success!']);
@@ -45,7 +44,7 @@ class UserController extends Controller
 
     // Get all Student only
     public function studentOnly() {
-        return User::where('users.roles','=','STUDENT')->get();
+        return User::join('students','users.student_id','=','students.id')->get(['users.*','students.*']);
     }
 
     // Get all Teacher only

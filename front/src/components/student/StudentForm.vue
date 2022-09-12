@@ -94,7 +94,7 @@
             class="shadow appearance-none border ml-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="studentIdInput"
             placeholder="Id ..."
-            v-model="studentId"
+            v-model="idStudent"
           />
         </div>
       </div>
@@ -120,6 +120,7 @@
 </div>
 </template>
 <script>
+import axiosHttp from '../../axios-http';
 export default{
   emits: ['create-student'],
   data() {
@@ -131,7 +132,9 @@ export default{
       classes: '',
       studentId: null,
       gender: 'Male',
-      phoneNumber: null
+      phoneNumber: null,
+      idStudent: null,
+
     }
   },
   methods: {
@@ -143,9 +146,10 @@ export default{
         password: this.generatePassword(),
         gender: this.gender,
         roles: 'STUDENT',
+        student_id: this.studentId,
       };
       let studentData = {
-        student_id: this.studentId,
+        id_student: this.idStudent,
         class: this.classes,
         batch: this.batch,
         phone: this.phoneNumber
@@ -163,6 +167,11 @@ export default{
       this.password = randomString;
       return this.password;
     },
+    getLastStudentId() {
+      axiosHttp.get('/students/getLastStudent').then(res => {
+        this.studentId = res.data.id;
+      })
+    }
   },
   watch: {
     lastName: function(newValue) {
@@ -173,6 +182,9 @@ export default{
       }
     }
   },
+  mounted() {
+    this.getLastStudentId();
+  }
 }
 
 </script>
