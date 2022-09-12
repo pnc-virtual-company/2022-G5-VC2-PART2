@@ -39,6 +39,11 @@ class UserController extends Controller
         $user->roles = $request->roles;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
+        $ProfileImage = 'student_female.png';
+        if ($request->gender == "Male") {
+            $ProfileImage = 'student_male.png';
+        }
+        $user->profile = $ProfileImage; 
         if ($request->roles == "STUDENT"){
             $student = new Student();
             $user->student_id = $request->student_id;
@@ -59,7 +64,7 @@ class UserController extends Controller
 
     // Get all Teacher only
     public function teacherOnly() {
-        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone']);
+        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
     }
 
     // Show only one user (Teacher)
@@ -148,7 +153,7 @@ class UserController extends Controller
 
     // Get Profile user
     public function getProfile($imageName) {
-        $path = public_path('images/' . $imageName);
+        $path = storage_path('images/' . $imageName);
 
         if (File::exists($path)) {
             $file = File::get($path);

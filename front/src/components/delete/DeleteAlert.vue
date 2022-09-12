@@ -11,8 +11,8 @@
                 <p class="text-lg">You want to delete this person</p>
             </div>
             <div class="flex justify-center mt-6">
-                <button class="p-2 px-4 bg-gray-300 rounded cursor-pointer mr-1 hover:bg-gray-400 " @click="$emit('cancelDelete')">Cancel</button>
-                <button class="p-2 px-6 text-white bg-red-500 rounded cursor-pointer ml-1 hover:bg-red-400" @click="deleteUser">OK</button>
+                <button class="p-2 px-4 text-green-500  font-bold rounded cursor-pointer mr-1 hover:bg-green-200 " @click="$emit('cancelDelete')">Cancel</button>
+                <button class="p-2 px-6 text-red-500 font-bold rounded cursor-pointer ml-1 hover:bg-red-200" @click="deleteUser">Delete</button>
             </div>
         </div>
     </div>
