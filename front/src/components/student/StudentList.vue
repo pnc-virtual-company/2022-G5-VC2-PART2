@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-    <student-form v-if="isShowForm" @closeForm="isShowForm=false" @create-student="createStudent" :userData="user" :studentData="user"/>
+    <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
 </template>
 
 <script>
@@ -40,9 +40,10 @@ export default {
   data() {
     return {
       isShowForm: false,
-      messageError: "",
+      errorMessage: "",
       listStudents:[],
-      keyword:''
+      keyword:'',
+      errorIdStudent: '',
     };
   },
   computed:{
@@ -73,8 +74,12 @@ export default {
         this.getStudentData()
         this.isShowForm = false;
       }).catch((error) =>{
-        if (error.response.status === 401){
-          this.messageError = error.response.data.message;
+        if (error.response.status === 422){
+          this.errorMessage = error.response.data.message;
+        }
+        if (error.response.status === 402) {
+          this.errorIdStudent = error.response.data.message;
+          console.log(this.errorIdStudent)
         }
       });
     },

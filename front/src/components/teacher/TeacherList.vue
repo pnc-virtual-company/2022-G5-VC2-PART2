@@ -40,7 +40,7 @@
         </div>
     </div>
   </div>
-    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
+    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
 
 </template>
 
@@ -61,7 +61,8 @@ export default {
     return {
       isShowForm:false,
       listTeachers: [],
-      keyword:''
+      keyword:'',
+      messageError: '',
     }
   },
   computed:{
@@ -92,6 +93,10 @@ export default {
           console.log(res.data);
           this.getTeacherData()
           this.isShowForm = false;
+        }).catch((error) =>{
+          if (error.response.status === 422) {
+            this.messageError = error.response.data.message;
+          }
         });
       },
       newKeyword(keyword){
