@@ -147,14 +147,12 @@ export default{
         gender: this.gender,
         roles: 'STUDENT',
         student_id: this.studentId,
-      };
-      let studentData = {
         id_student: this.idStudent,
         class: this.classes,
         batch: this.batch,
         phone: this.phoneNumber
       };
-      this.$emit('create-student',userData,studentData);
+      this.$emit('create-student',userData);
     },
     generatePassword() {
       let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -169,13 +167,11 @@ export default{
     },
     getLastStudentId() {
       axiosHttp.get('/students/getLastStudent').then(res => {
-        console.log(res.data);
-        if (res.data != null) {
-          this.studentId = res.data.id + 1;
+        if (res.data == []) {
+          this.studentId = 1
         }else{
-          this.studentId = 1;
+          this.studentId = res.data.id + 1;
         }
-        console.log(this.studentId)
       })
     }
   },
