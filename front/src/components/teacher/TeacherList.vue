@@ -28,7 +28,7 @@
     <div class="rounded shadow p-4 relative mt-2">
       <searchbar-form @newKeyword="newKeyword"/>
       <div class="flex justify-center mt-4">
-        <people-list :peopleList="filterTeacher" @showDetail="showDetail"/>
+        <people-list :peopleList="filterTeacher"/>
       </div>
         <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-blue-500 absolute bg-white text-sm" >
@@ -39,8 +39,8 @@
             </button>   
         </div>
     </div>
-  </div>
     <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
+  </div>
 
 </template>
 
@@ -81,6 +81,7 @@ export default {
         })
       },
       showTeacherForm(){
+        console.log("Click");
         this.isShowForm = true;
       },
       createTeacher(userData) {

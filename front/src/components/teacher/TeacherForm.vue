@@ -1,6 +1,7 @@
 <template>
   <div
-    class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
+    cla
+    ss="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
   >
     <div class="w-[40%]">
       <div
