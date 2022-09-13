@@ -24,7 +24,7 @@ Route::prefix('/students')->group(function() {
 // Route User(teacher and student)
 Route::prefix('/users')->group(function() {
     Route::post('/',[UserController::class,'registerUser']);
-    Route::post('/{id}',[UserController::class,'update']);
+    Route::put('/{id}',[UserController::class,'update']);
     Route::get('/students',[UserController::class,'studentOnly']);
     Route::get('/teachers',[UserController::class,'teacherOnly']);
     Route::get('/student/{id}',[UserController::class,'showOneStudent']);

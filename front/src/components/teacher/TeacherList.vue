@@ -70,7 +70,6 @@ export default {
       messageError: '',
       isDeleteAlert:false,
       userId:null,
-      keyword:'',
       dataToShow: 3,
       showShortList: true,
     }

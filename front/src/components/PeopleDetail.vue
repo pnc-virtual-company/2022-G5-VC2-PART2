@@ -2,49 +2,44 @@
 <div class="flex items-center justify-center w-full">
     <div class="w-[80%]">
         <div class="mt-32">
-            <p class="text-3xl text-center capitalize">student informaion detail</p>
+            <p v-if="userDataDetail.roles == 'TEACHER'" class="text-3xl text-center capitalize">teacher informaion detail</p>
+            <p v-if="userDataDetail.roles == 'STUDENT'" class="text-3xl text-center capitalize">student informaion detail</p>
             <div class="shadow bg-white flex items-center mt-5 p-8 relative rounded">
                 <div class="relative" >
-                    <img class="w-40 h-40 rounded-full" src="../assets/ducati.jpeg" alt="">
-                    <label v-if="dataDetail.roles == 'STUDENT'" for="image">
-                        <svg fill="none" class="w-10 rounded-full shadow p-2 h-10 bg-white absolute right-0 top-28 cursor-pointer text-black" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </label>
-                    <input type="file" id="image" hidden>
+                    <img class="w-40 h-40 rounded-full" :src="getProfile(userDataDetail.profile)" alt="">
                 </div>
                 <div class="ml-5 leading-9 text-xl">
-                    <p class="capitalize">{{dataDetail.first_name}} {{dataDetail.last_name}}</p>
-                    <p>{{dataDetail.email}}</p>
-                    <p>{{dataDetail.phone}}</p>
+                    <p class="capitalize">{{userDataDetail.first_name}} {{userDataDetail.last_name}}</p>
+                    <p>{{userDataDetail.email}}</p>
+                    <p>{{userDataDetail.phone}}</p>
                 </div>
             </div>
         </div>
         <div class="">  
             <div class="shadow rounded flex items-center mt-5 p-8 relative bg-white">
-                <svg v-if="dataDetail.roles == 'STUDENT'" @click="onUpdate" class="w-12 h-12 absolute right-6 top-6 cursor-pointer shadow hover:bg-blue-500 hover:text-white rounded-full p-2 duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                <svg v-if="userDataDetail.roles == 'STUDENT'" @click="onUpdate" class="w-12 h-12 absolute right-6 top-6 cursor-pointer shadow hover:bg-blue-500 hover:text-white rounded-full p-2 duration-300 ease-in-out" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                 <div class="ml-5 leading-9 text-xl font-bold">
                     <p>Gender</p>
-                    <p>Batch</p>
-                    <p>Class</p>
-                    <p>Personal ID</p>
+                    <p v-if="role == 'STUDENT'">Batch</p>
+                    <p v-if="role == 'STUDENT'">Class</p>
+                    <p v-if="role == 'STUDENT'">Personal ID</p>
                 </div> 
                 <div class=" leading-9 text-xl ml-20">
-                    <p>{{dataDetail.gender}}</p>
-                    <p>{{dataDetail.batch}}</p>
-                    <p class="capitalize">{{dataDetail.class}}</p>
-                    <p>{{dataDetail.id_student}}</p>
+                    <p>{{userDataDetail.gender}}</p>
+                    <p>{{studentDataDetail.batch}}</p>
+                    <p class="capitalize">{{studentDataDetail.class}}</p>
+                    <p>{{studentDataDetail.id_student}}</p>
                 </div> 
             </div>
         </div>
     </div>
 </div>
-<form-edit v-if="isEditStudent" @closeForm="isEditStudent=false"/>
+<form-edit :userDataDetail="userDataDetail" :studentDataDetail="studentDataDetail" v-if="isEditStudent" @closeForm="isEditStudent=false" @save-edit="saveEdit"/>
 </template>
 
 <script>
 import formEdit from "./student/FormEditStudent.vue";
-import axios from "../axios-http"
+import axios from "../axios-http";
 export default {
     components:{
         'form-edit':formEdit
@@ -53,7 +48,9 @@ export default {
         return{
             isEditStudent:false,
             id: null,
-            dataDetail:{}
+            userDataDetail: [],
+            studentDataDetail: [],
+            role: null,
         }
     },
 
@@ -61,22 +58,33 @@ export default {
         onUpdate(){
             this.isEditStudent = true;
         },
+        saveEdit(){
+            this.isEditStudent = false;
+            this.getPeopleDetail();
+        },
         getPeopleDetail(){
-            let role = this.$route.params.role;
-            console.log(role);
-            console.log(this.$route.params.id);
+            this.role = this.$route.params.role;
             let url = "/users/teacher/";
-            if (role == "STUDENT"){
-                url = "/users/student/"
+            if (this.role == "STUDENT"){
+                url = "/users/student/";
+                axios.get(url+this.$route.params.id).then((res)=>{
+                    this.userDataDetail = res.data.userData[0];
+                    this.studentDataDetail = res.data.studentData;
+                })
             }
-            axios.get(url+this.$route.params.id).then((res)=>{
-                console.log(res.data);
-                this.dataDetail = res.data;
-            })
+            else{
+                axios.get(url+this.$route.params.id).then((res)=>{
+                    this.userDataDetail = res.data.userData;
+                })
+            }
+            
+        },
+        getProfile(image){
+            return axios.defaults.baseURL + "storage/image/" + image ;
         }
     },
     mounted(){
-        this.getPeopleDetail()
+        this.getPeopleDetail();
     }
 }
 </script>
