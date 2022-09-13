@@ -20,7 +20,7 @@
       <div class="flex justify-center mt-4 w-full">
         <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
       </div>
-        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 5" >
+        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 2" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                 <p v-if="showShortList">View All</p>
                 <p v-else>Hide</p>
@@ -48,19 +48,17 @@ export default {
     "delete-alert": deleteAlert,
     "searchbar-form": searchBar
   },
-  emits:['show-detail'],
   data() {
-    return {
-      isShowForm: false,
-      errorMessage: "",
-      listStudents:[],
-      isDeleteAlert:false,
-      userId:null,
-      dataToShow: 6,
-      showShortList: true,
-      keyword:'',
-      errorIdStudent: '',
-    }
+      return {
+        isShowForm: false,
+        messageError: "",
+        listStudents:[],
+        isDeleteAlert:false,
+        userId:null,
+        dataToShow: 3,
+        showShortList: true,
+        keyword:''
+      }
   },
   methods: {
     getStudentData(){
@@ -74,9 +72,11 @@ export default {
     showDetail(){
       this.$emit('show-detail');
     },  
-    createStudent(userData) {
+    createStudent(userData,errorMessageBack) {
       axiosHttp.post('/users',userData).then((res) => {
         console.log(res.data);
+        this.errorMessage = errorMessageBack;
+        this.errorIdStudent = errorMessageBack;
         this.getStudentData()
         this.isShowForm = false;
       }).catch((error) =>{
@@ -84,6 +84,7 @@ export default {
           this.errorMessage = error.response.data.message;
         }
         if (error.response.status === 402) {
+          this.errorMessage = '';
           this.errorIdStudent = error.response.data.message;
         }
       });

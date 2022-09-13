@@ -31,7 +31,7 @@
         <div class="flex justify-center mt-4">
           <people-list :peopleList="filterTeacher" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 5"> 
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 2"> 
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                   <p v-if="showShortList">View All</p>
                   <p v-else>Hide</p>
@@ -62,7 +62,6 @@ export default {
       "delete-alert": deleteAlert,
       "searchbar-form": searchBar
   },
-  emits:['show-detail'],
   data(){
     return {
       isShowForm:false,
@@ -71,7 +70,7 @@ export default {
       messageError: '',
       isDeleteAlert:false,
       userId:null,
-      dataToShow: 6,
+      dataToShow: 3,
       showShortList: true,
     }
   },
@@ -95,9 +94,10 @@ export default {
       this.isDeleteAlert = true;
       this.userId = id;
     },
-    createTeacher(userData) {
+    createTeacher(userData,messageBack) {
       axiosHttp.post("/users", userData).then(() => {
         this.getTeacherData();
+        this.messageError = messageBack;
         this.isShowForm = false;
       }).catch((error) =>{
         if (error.response.status === 422) {

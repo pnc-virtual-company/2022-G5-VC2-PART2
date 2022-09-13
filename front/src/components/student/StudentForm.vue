@@ -72,30 +72,23 @@
         <div>
           <b><label for="batchInput">Batch</label></b>
           <br />
-          <input
-            type="number"
-            name="batchInput"
-            class="shadow appearance-none border mr-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-            id="batchInput"
-            placeholder="Batch ..."
-            v-model="batch"
-            :class="{'border-red-600' :forgotBatch}"
-          />
-          <p>{{forgotBatch}}</p>
+          <select class="form-select w-[12.2vw] shadow appearance-none border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="batch">
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
         </div>
         <div>
           <b><label for="classInput">Class</label></b>
           <br />
-          <input
-            type="text"
-            name="classInput"
-            class="shadow appearance-none ml-1 border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-            id="classInput"
-            placeholder="Class ..."
-            v-model="classes"
-            :class="{'border-red-600' :forgotClass}"
-          />
-          <p>{{forgotClass}}</p>
+          <select class="form-select w-[12.2vw] shadow appearance-none ml-1 border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="classes">
+            <option value="WEB A">WEB A</option>
+            <option value="WEB B">WEB B</option>
+            <option value="WEB C">WEB C</option>
+            <option value="SNA">SNA</option>
+          </select>
         </div>
         <div>
           <b><label for="studentIdInput">Student ID</label></b>
@@ -103,15 +96,27 @@
           <input
             type="text"
             name="studentIdInput"
-            class="shadow appearance-none border ml-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            class="shadow appearance-none border ml-1 mr-6 rounded w-[12.2vw] px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="studentIdInput"
-            placeholder="Id ..."
+            placeholder="PNC_2022_000....."
             v-model="idStudent"
             :class="{'border-red-600' :forgotIdStudent + errorIdStudent}"
           />
           <p>{{forgotIdStudent}}</p>
           <p>{{errorIdStudent}}</p>
         </div>
+      </div>
+      <div class="{}">
+        <b><label for="classInput">Date of Birth</label></b>
+        <input
+            type="text"
+            name="studentDateBirth"
+            class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            v-model="dateOfBirth"
+            placeholder="Set date of birth"
+            :class="{'border-red-600' :forgotDateBirth}"
+          />
+          <p>{{forgotDateBirth}}</p>
       </div>
       <div class="gender mr-2 mb-2">
         <b>Gender</b>
@@ -144,23 +149,24 @@ export default{
       firstName: '',
       lastName: '',
       email: '',
-      batch: '',
-      classes: '',
+      batch: '2022',
+      classes: 'WEB A',
       studentId: null,
       gender: 'Male',
       phoneNumber: null,
       idStudent: null,
+      dateOfBirth: '',
       forgotFirstName: '',
       forgotLastName: '',
       forgotEmail: '',
-      forgotBatch: '',
-      forgotClass: '',
       forgotIdStudent: '',
+      forgotDateBirth: '',
     }
   },
   methods: {
     createNewStudent() {
       if (this.firstName === '') {
+        this.forgotLastName = '';
         this.forgotFirstName = 'Please put first name!*';
       }else if(this.lastName === '') {
         this.forgotFirstName = '';
@@ -169,19 +175,19 @@ export default{
         this.forgotFirstName = '';
         this.forgotLastName = '';
         this.forgotEmail = 'Please put email!*';
-      }else if(this.batch === '') {
+      }else if(this.idStudent === null){
         this.forgotFirstName = '';
         this.forgotLastName = '';
-        this.forgotEmail = '';
-        this.forgotBatch = 'Please put batch!*';
-      }else if(this.classes === '') {
-        this.forgotBatch = '';
-        this.forgotClass = 'Please put class!*';
-      }else if(this.idStudent === null){
-        this.forgotClass = '';
         this.forgotIdStudent = 'Please put Id student!*';
       }
+      else if(this.dateOfBirth === '') {
+        this.forgotIdStudent = '';
+        this.forgotDateBirth = 'Please put date of birth!*';
+      }
       else{
+        this.forgotIdStudent = '';
+        this.forgotDateBirth = '';
+        let errorMessageBack = '';
         let userData = {
           first_name: this.firstName,
           last_name: this.lastName,
@@ -193,9 +199,10 @@ export default{
           id_student: this.idStudent,
           class: this.classes,
           batch: this.batch,
-          phone: this.phoneNumber
+          phone: this.phoneNumber,
+          date_birth: this.dateOfBirth,
         };
-        this.$emit('create-student',userData);
+        this.$emit('create-student',userData,errorMessageBack);
       }
       
     },
@@ -227,6 +234,9 @@ export default{
       }else{
         this.email = '';
       }
+    },
+    firstName: function(newValue) {
+      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@student.passerellesnumeriques.org';
     }
   },
   mounted() {
