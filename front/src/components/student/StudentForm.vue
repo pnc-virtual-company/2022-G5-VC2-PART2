@@ -21,7 +21,9 @@
             id="firstNameInput"
             placeholder="First name ..."
             v-model="firstName"
+            :class="{'border-red-600' :forgotFirstName}"
           />
+          <p>{{forgotFirstName}}</p>
         </div>
         <div class="w-full">
           <b><label for="lastNameInput">Last name</label></b>
@@ -33,7 +35,9 @@
             id="lastNameInput"
             placeholder="Last name ..."
             v-model="lastName"
+            :class="{'border-red-600' :forgotLastName}"
           />
+          <p>{{forgotLastName}}</p>
         </div>
       </div>
       <div class="email mb-2">
@@ -45,8 +49,11 @@
           class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           id="emailInput"
           placeholder="Email ..."
-          :value= email
+          v-model="email"
+          :class="{'border-red-600' :messageError + forgotEmail}"
         />
+        <p>{{messageError}}</p>
+        <p>{{forgotEmail}}</p>
       </div>
       <div class="phone mb-2">
         <b><label for="phoneInput">Phone</label></b>
@@ -59,31 +66,29 @@
           placeholder="Phone ..."
           v-model="phoneNumber"
         />
+        <span>Optional*</span>
       </div>
       <div class="flex mb-2 box-border relative">
         <div>
           <b><label for="batchInput">Batch</label></b>
           <br />
-          <input
-            type="number"
-            name="batchInput"
-            class="shadow appearance-none border mr-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-            id="batchInput"
-            placeholder="Batch ..."
-            v-model="batch"
-          />
+          <select class="form-select w-[12.2vw] shadow appearance-none border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="batch">
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
         </div>
         <div>
           <b><label for="classInput">Class</label></b>
           <br />
-          <input
-            type="text"
-            name="classInput"
-            class="shadow appearance-none ml-1 border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-            id="classInput"
-            placeholder="Class ..."
-            v-model="classes"
-          />
+          <select class="form-select w-[12.2vw] shadow appearance-none ml-1 border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="classes">
+            <option value="WEB A">WEB A</option>
+            <option value="WEB B">WEB B</option>
+            <option value="WEB C">WEB C</option>
+            <option value="SNA">SNA</option>
+          </select>
         </div>
         <div>
           <b><label for="studentIdInput">Student ID</label></b>
@@ -91,12 +96,27 @@
           <input
             type="text"
             name="studentIdInput"
-            class="shadow appearance-none border ml-1 rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            class="shadow appearance-none border ml-1 mr-6 rounded w-[12.2vw] px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="studentIdInput"
-            placeholder="Id ..."
+            placeholder="PNC_2022_000....."
             v-model="idStudent"
+            :class="{'border-red-600' :forgotIdStudent + errorIdStudent}"
           />
+          <p>{{forgotIdStudent}}</p>
+          <p>{{errorIdStudent}}</p>
         </div>
+      </div>
+      <div class="{}">
+        <b><label for="classInput">Date of Birth</label></b>
+        <input
+            type="text"
+            name="studentDateBirth"
+            class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            v-model="dateOfBirth"
+            placeholder="Set date of birth"
+            :class="{'border-red-600' :forgotDateBirth}"
+          />
+          <p>{{forgotDateBirth}}</p>
       </div>
       <div class="gender mr-2 mb-2">
         <b>Gender</b>
@@ -123,36 +143,68 @@
 import axiosHttp from '../../axios-http';
 export default{
   emits: ['create-student'],
+  props:['messageError','errorIdStudent'],
   data() {
     return {
       firstName: '',
       lastName: '',
       email: '',
-      batch: '',
-      classes: '',
+      batch: '2022',
+      classes: 'WEB A',
       studentId: null,
       gender: 'Male',
       phoneNumber: null,
       idStudent: null,
-
+      dateOfBirth: '',
+      forgotFirstName: '',
+      forgotLastName: '',
+      forgotEmail: '',
+      forgotIdStudent: '',
+      forgotDateBirth: '',
     }
   },
   methods: {
     createNewStudent() {
-      let userData = {
-        first_name: this.firstName,
-        last_name: this.lastName,
-        email: this.email,
-        password: this.generatePassword(),
-        gender: this.gender,
-        roles: 'STUDENT',
-        student_id: this.studentId,
-        id_student: this.idStudent,
-        class: this.classes,
-        batch: this.batch,
-        phone: this.phoneNumber
-      };
-      this.$emit('create-student',userData);
+      if (this.firstName === '') {
+        this.forgotLastName = '';
+        this.forgotFirstName = 'Please put first name!*';
+      }else if(this.lastName === '') {
+        this.forgotFirstName = '';
+        this.forgotLastName = 'Please put last name!*';
+      }else if(this.email === '') {
+        this.forgotFirstName = '';
+        this.forgotLastName = '';
+        this.forgotEmail = 'Please put email!*';
+      }else if(this.idStudent === null){
+        this.forgotFirstName = '';
+        this.forgotLastName = '';
+        this.forgotIdStudent = 'Please put Id student!*';
+      }
+      else if(this.dateOfBirth === '') {
+        this.forgotIdStudent = '';
+        this.forgotDateBirth = 'Please put date of birth!*';
+      }
+      else{
+        this.forgotIdStudent = '';
+        this.forgotDateBirth = '';
+        let errorMessageBack = '';
+        let userData = {
+          first_name: this.firstName,
+          last_name: this.lastName,
+          email: this.email,
+          password: this.generatePassword(),
+          gender: this.gender,
+          roles: 'STUDENT',
+          student_id: this.studentId,
+          id_student: this.idStudent,
+          class: this.classes,
+          batch: this.batch,
+          phone: this.phoneNumber,
+          date_birth: this.dateOfBirth,
+        };
+        this.$emit('create-student',userData,errorMessageBack);
+      }
+      
     },
     generatePassword() {
       let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -178,10 +230,13 @@ export default{
   watch: {
     lastName: function(newValue) {
       if (newValue != '') {
-        this.email = this.firstName + '.' + newValue + '@student.passerellesnumeriques.org';
+        this.email = this.firstName.toLowerCase().trim() + '.' + newValue.toLowerCase().trim() + '@student.passerellesnumeriques.org';
       }else{
         this.email = '';
       }
+    },
+    firstName: function(newValue) {
+      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@student.passerellesnumeriques.org';
     }
   },
   mounted() {
@@ -190,4 +245,15 @@ export default{
 }
 
 </script>
-
+<style scoped>
+p{
+  color: red;
+  font-size: 15px;
+}
+span{
+  color: rgb(61, 61, 254);
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+}
+</style>

@@ -20,7 +20,7 @@ class UserController extends Controller
         // Validation sign Up user
         $customMessage = [
             'required' => 'You forgot put this feild!',
-            'unique' => 'This email already exist!',
+            'unique' => 'This email already exist!*',
         ];
 
         $this->validate($request, [
@@ -49,10 +49,19 @@ class UserController extends Controller
             $user->student_id = $request->student_id;
             $student->batch = $request->batch;
             $student->class = $request->class;
+            $idStudents = Student::where('students.batch','=',$request->batch)->get(['students.id_student']);
+            // return $idStudents;
+            foreach($idStudents as $idStudent) {
+    
+                if ($idStudent['id_student'] === $request->id_student){
+
+                    // return abort(422,['message' => 'Id already exist!*']);
+                    return response()->json(['message' => 'Id already exist!*'],402);
+                }
+            }
             $student->id_student = $request->id_student;
             $student->save();
         }
-
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
@@ -68,12 +77,15 @@ class UserController extends Controller
     }
 
     // Show only one user (Teacher)
-    public function showOnTeacher($id) {
-        return User::where('users.student_id','=',null)->findOrFail($id);
+    public function showOneTeacher($id) {
+        $userData = User::where('users.student_id','=',null)->findOrFail($id);
+        return response()->json(['userData' => $userData]);
     }
     // Show only one user (student)
-    public function showOnStudent($id) {
-        return response()->json(['userData' => User::where('users.student_id','=',$id)->get() ,'studentData' => Student::findOrFail($id)]);
+    public function showOneStudent($id) {
+        $userData = User::where('users.student_id','=',$id)->get();
+        $studentData = Student::findOrFail($id);
+        return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 
     // Update user

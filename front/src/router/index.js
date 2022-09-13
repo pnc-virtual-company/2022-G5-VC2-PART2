@@ -5,6 +5,7 @@ import FollowUpView from '../views/Admin/followUp/FollowUpView.vue'
 import PeopleView from '../views/Admin/people/PeopleView.vue'
 import LoginView from '../views/Admin/login&signout/LoginView.vue'
 import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue'
+import PeopleDetailView from '../views/Admin/people/PeopleDetailView'
 const routes = [
   {
     path: '/dashboard',
@@ -36,7 +37,12 @@ const routes = [
     component: ProfileView,
 
   },
-
+  {
+    path: '/peopleDetail/:role/:id',
+    name: 'peopleDetail',
+    component: PeopleDetailView,
+    props: true,
+  },
 ]
 
 const router = createRouter({

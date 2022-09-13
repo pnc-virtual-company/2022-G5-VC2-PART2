@@ -20,7 +20,7 @@
             />
           </svg>
           <div
-            class="add-button absolute -top-12 z-50 text-center opacity-0 -right-10 text-sm w-32 bg-gray-900 rounded-full text-white p-1.5"
+            class="add-button absolute -top-12 z-50 text-center opacity-0 -right-10 text-sm w-32 bg-[#1a1a1a] rounded-full text-white p-1.5"
           >
             Add new teacher
           </div>
@@ -31,7 +31,7 @@
         <div class="flex justify-center mt-4">
           <people-list :peopleList="filterTeacher" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 5"> 
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 2"> 
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                   <p v-if="showShortList">View All</p>
                   <p v-else>Hide</p>
@@ -45,7 +45,7 @@
       <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
-  
+    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
 </template>
 
 <script>
@@ -62,15 +62,15 @@ export default {
       "delete-alert": deleteAlert,
       "searchbar-form": searchBar
   },
-  emits:['show-detail'],
   data(){
     return {
       isShowForm:false,
       listTeachers: [],
+      keyword:'',
+      messageError: '',
       isDeleteAlert:false,
       userId:null,
-      keyword:'',
-      dataToShow: 6,
+      dataToShow: 3,
       showShortList: true,
     }
   },
@@ -94,10 +94,15 @@ export default {
       this.isDeleteAlert = true;
       this.userId = id;
     },
-    createTeacher(userData) {
+    createTeacher(userData,messageBack) {
       axiosHttp.post("/users", userData).then(() => {
         this.getTeacherData();
+        this.messageError = messageBack;
         this.isShowForm = false;
+      }).catch((error) =>{
+        if (error.response.status === 422) {
+          this.messageError = error.response.data.message;
+        }
       });
     },
     newKeyword(keyword){
@@ -123,7 +128,6 @@ export default {
       return teacherToDisplay
     }
   },
-
 };
 </script>
 

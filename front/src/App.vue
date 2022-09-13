@@ -20,7 +20,6 @@ export default {
 }
 body{
   background: #eee;
-
 }
 .fade-enter-from,
 .fade-leave-to {
