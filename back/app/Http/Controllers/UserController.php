@@ -64,7 +64,7 @@ class UserController extends Controller
 
     // Get all Teacher only
     public function teacherOnly() {
-        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
+       return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
     }
 
     // Show only one user (Teacher)
@@ -111,8 +111,11 @@ class UserController extends Controller
 
     // Delete User 
     public function destroy($id) {
-        User::where('users.student_id','=',$id)->delete();
-        Student::destroy($id);
+        if (User::where('users.student_id','=',$id)->delete()){
+            Student::destroy($id);
+        }else{
+            User::destroy($id);
+        }
         return response()->json(['message' => 'Deleted Success!']);
     }
 

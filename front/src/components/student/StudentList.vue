@@ -61,18 +61,7 @@ export default {
         keyword:''
       }
   },
-  computed:{
-    filterStudent(){
-      let studentToDisplay = this.listStudents;
-      if(this.keyword){
-        studentToDisplay = this.listStudents.filter((person) => (person.first_name+" "+person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
-      }
-      if (this.showShortList){
-        studentToDisplay = studentToDisplay.slice(0,this.dataToShow);
-      }
-      return studentToDisplay
-    }
-  },
+
   methods: {
       getStudentData(){
         axiosHttp.get("/users/students").then((res)=>{
@@ -113,6 +102,18 @@ export default {
   },
   mounted(){
     this.getStudentData();
+  },
+  computed:{
+    filterStudent(){
+      let studentToDisplay = this.listStudents;
+      if(this.keyword){
+        studentToDisplay = this.listStudents.filter((person) => (person.first_name+" "+person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
+      }
+      if (this.showShortList){
+        studentToDisplay = studentToDisplay.slice(0,this.dataToShow);
+      }
+      return studentToDisplay
+    }
   },
 }
 

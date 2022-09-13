@@ -23,14 +23,12 @@ import axiosHttp from "../../axios-http";
 
 export default({
     props:{
-      userId: Number  
+        userId: Number  
     },
     emits: ['delete-user'],
     methods:{
         deleteUser(){
-            axiosHttp.delete('/users/delete/'+ this.userId);
-            console.log('ok');
-            this.$emit('delete-user');
+            axiosHttp.delete('/users/delete/'+ this.userId).then(this.$emit('delete-user'));
         }
     }
 })

@@ -74,23 +74,9 @@ export default {
       showShortList: true,
     }
   },
-  computed:{
-    filterTeacher(){
-      let teacherToDisplay = this.listTeachers
-      if(this.keyword){
-        teacherToDisplay = this.listTeachers.filter((person) => (person.first_name +" "+ person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
-      }
-      if (this.showShortList){
-        teacherToDisplay = teacherToDisplay.slice(0,this.dataToShow);
-      }
-      return teacherToDisplay
-    }
-
-  },
   methods: {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
-        console.log(res.data);
         this.listTeachers = res.data;
       })
     },
@@ -107,7 +93,6 @@ export default {
     alertDelete(id){
       this.isDeleteAlert = true;
       this.userId = id;
-      console.log(id);
     },
     createTeacher(userData) {
       axiosHttp.post("/users", userData).then(() => {
@@ -124,7 +109,21 @@ export default {
   },
   mounted(){
     this.getTeacherData();
-  }
+  },
+  computed:{
+    filterTeacher(){
+      let teacherToDisplay = this.listTeachers
+      if(this.keyword){
+        teacherToDisplay = this.listTeachers.filter((person) => (person.first_name +" "+ person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
+      }
+      if (this.showShortList){
+        teacherToDisplay = teacherToDisplay.slice(0,this.dataToShow);
+      }
+      console.log(teacherToDisplay);
+      return teacherToDisplay
+    }
+  },
+
 };
 </script>
 
