@@ -1,7 +1,6 @@
 <template>
   <div
-    cla
-    ss="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
+    class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
   >
     <div class="w-[40%]">
       <div
@@ -138,7 +137,7 @@
             type="submit"
             class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline"
           >
-            Add Student
+            Add Teacher
           </button>
         </div>
       </form>

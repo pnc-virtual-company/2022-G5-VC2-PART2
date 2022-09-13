@@ -68,11 +68,11 @@ class UserController extends Controller
     }
 
     // Show only one user (Teacher)
-    public function showOnTeacher($id) {
+    public function showOneTeacher($id) {
         return User::where('users.student_id','=',null)->findOrFail($id);
     }
     // Show only one user (student)
-    public function showOnStudent($id) {
+    public function showOneStudent($id) {
         return response()->json(['userData' => User::where('users.student_id','=',$id)->get() ,'studentData' => Student::findOrFail($id)]);
     }
 

@@ -62,7 +62,14 @@ export default {
             this.isEditStudent = true;
         },
         getPeopleDetail(){
-            axios.get('/users/'+this.$route.params.id).then((res)=>{
+            let role = this.$route.params.role;
+            console.log(role);
+            console.log(this.$route.params.id);
+            let url = "/users/teacher/";
+            if (role == "STUDENT"){
+                url = "/users/student/"
+            }
+            axios.get(url+this.$route.params.id).then((res)=>{
                 console.log(res.data);
                 this.dataDetail = res.data;
             })

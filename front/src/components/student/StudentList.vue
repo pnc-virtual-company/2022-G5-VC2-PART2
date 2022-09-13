@@ -20,7 +20,7 @@
       <div class="flex justify-center mt-4 w-full">
         <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
       </div>
-        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 5" >
+        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 2" >
             <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                 <p v-if="showShortList">View All</p>
                 <p v-else>Hide</p>
@@ -55,7 +55,7 @@ export default {
         listStudents:[],
         isDeleteAlert:false,
         userId:null,
-        dataToShow: 6,
+        dataToShow: 3,
         showShortList: true,
         keyword:''
       }

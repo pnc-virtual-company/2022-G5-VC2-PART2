@@ -38,7 +38,7 @@ const routes = [
 
   },
   {
-    path: '/peopleDetail/:id',
+    path: '/peopleDetail/:role/:id',
     name: 'peopleDetail',
     component: PeopleDetailView,
     props: true,
