@@ -113,7 +113,7 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         if ($request->roles == 'STUDENT') {
-            $student = Student::findOrFail($id);
+            $student = Student::findOrFail($user->student_id);
             $student->id_student = $request->id_student;
             $student->batch = $request->batch;
             $student->date_birth = $request->date_birth;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-[90%] m-auto mt-28  p-4 rounded">
+    <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
       <div class="flex justify-between">
         <h2 class="text-2xl">Teachers</h2>
         <div class="relative">
