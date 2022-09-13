@@ -21,6 +21,7 @@
                 <div class="ml-5 leading-9 text-xl font-bold">
                     <p>Gender</p>
                     <div v-if="role == 'STUDENT'">
+                        <p>Date of birth</p>
                         <p>Batch</p>
                         <p>Class</p>
                         <p>Personal ID</p>
@@ -28,6 +29,7 @@
                 </div> 
                 <div class=" leading-9 text-xl ml-20">
                     <p>{{userDataDetail.gender}}</p>
+                    <p>{{studentDataDetail.date_birth}}</p>
                     <p>{{studentDataDetail.batch}}</p>
                     <p class="capitalize">{{studentDataDetail.class}}</p>
                     <p>{{studentDataDetail.id_student}}</p>
