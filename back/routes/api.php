@@ -32,3 +32,7 @@ Route::prefix('/users')->group(function() {
     Route::delete('/delete/{id}',[UserController::class,'destroy']);
 });
 
+
+// Public route to get image
+Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
+

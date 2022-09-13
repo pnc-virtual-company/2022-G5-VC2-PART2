@@ -1,6 +1,5 @@
 <template>
         <div class="flex justify-end items-center relative">
-        <label for="">Search</label>
         <input v-model="keyword" @input="$emit('newKeyword',keyword)"
           type="text"
           class="shadow appearance-none w-36 focus:w-64 duration-200 ease-in-out border ml-2 rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"

@@ -69,7 +69,7 @@
             />
           </div>
           <div class="w-full">
-            <b><label for="phoneInput">Phone number ...</label></b>
+            <b><label for="phoneInput">Phone number</label></b>
             <br />
             <input
               type="text"
