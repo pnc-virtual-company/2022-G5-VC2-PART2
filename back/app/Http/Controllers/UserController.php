@@ -77,12 +77,15 @@ class UserController extends Controller
     }
 
     // Show only one user (Teacher)
-    public function showOnTeacher($id) {
-        return User::where('users.student_id','=',null)->findOrFail($id);
+    public function showOneTeacher($id) {
+        $userData = User::where('users.student_id','=',null)->findOrFail($id);
+        return response()->json(['userData' => $userData]);
     }
     // Show only one user (student)
-    public function showOnStudent($id) {
-        return response()->json(['userData' => User::where('users.student_id','=',$id)->get() ,'studentData' => Student::findOrFail($id)]);
+    public function showOneStudent($id) {
+        $userData = User::where('users.student_id','=',$id)->get();
+        $studentData = Student::findOrFail($id);
+        return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 
     // Update user

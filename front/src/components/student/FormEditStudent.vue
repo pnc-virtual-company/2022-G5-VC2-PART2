@@ -1,5 +1,4 @@
 <template>
-
 <!-- popup to update student -->
     <div class="fixed flex w-full z-50 h-full inset-0 items-center justify-center bg-gray-700 bg-opacity-50"> 
         <div>
@@ -10,12 +9,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </div>
-            <form class="shadow p-4 bg-white">
+            <form @submit.prevent="onUpdate" class="shadow p-4 bg-white">
                 <div class="flex w-full justify-between  mr-2 mb-2">
                     <div class="w-full mr-2 mb-2">
                     <b><label for="firstNameInput">First name</label></b>
                     <br />
                     <input
+                        v-model="first_name"
                         type="text"
                         class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
                         name="firstNameInput"
@@ -27,6 +27,7 @@
                     <b><label for="lastNameInput">Last name</label></b>
                     <br />
                     <input
+                        v-model="last_name"
                         type="text"
                         name="lastNameInput"
                         class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
@@ -39,22 +40,24 @@
                     <b><label for="emailInput">Email</label></b>
                     <br />
                     <input
-                    type="email"
-                    name="emailInput"
-                    class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                    id="emailInput"
-                    placeholder="Email ..."
+                        v-model="email"
+                        type="email"
+                        name="emailInput"
+                        class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                        id="emailInput"
+                        placeholder="Email ..."
                     />
                 </div>
                 <div class="phone mr-2 mb-2">
                     <b><label for="phoneInput">Phone</label></b>
                     <br />
                     <input
-                    type="phone"
-                    name="phoneInput"
-                    class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                    id="phoneInput"
-                    placeholder="Phone ..."
+                        v-model="phone"
+                        type="phone"
+                        name="phoneInput"
+                        class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                        id="phoneInput"
+                        placeholder="Phone ..."
                     />
                 </div>
                 <div class="flex justify-between mr-2 mb-2">
@@ -62,6 +65,7 @@
                     <b><label for="batchInput">Batch</label></b>
                     <br />
                     <input
+                        v-model="batch"
                         type="text"
                         name="batchInput"
                         class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
@@ -73,6 +77,7 @@
                     <b><label for="classInput">Class</label></b>
                     <br />
                     <input
+                        v-model="student_class"
                         type="text"
                         name="classInput"
                         class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
@@ -84,6 +89,7 @@
                     <b><label for="studentIdInput">Student ID</label></b>
                     <br />
                     <input
+                        v-model="id_student"
                         type="text"
                         name="studentIdInput"
                         class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
@@ -95,19 +101,19 @@
                 <div class="gender mr-2 mb-2">
                     <b>Gender</b>
                     <div class="formGender flex">
-                    <div class="male">
-                        <input type="radio" name="gender" id="maleClick" />
-                        <label for="maleClick">Male</label>
-                    </div>
-                    <div class="female ml-8">
-                        <input type="radio" name="gender" id="femaleClick" />
-                        <label for="femaleClick">Female </label>
-                    </div>
+                        <div class="male">
+                            <input v-model="gender" value="Male" type="radio" name="gender" id="maleClick" />
+                            <label for="maleClick">Male</label>
+                        </div>
+                        <div class="female ml-8">
+                            <input v-model="gender" value="Female" type="radio" name="gender" id="femaleClick" />
+                            <label for="femaleClick">Female </label>
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-end">
                     <button @click="$emit('closeForm')" type="button" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Add Student</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Update</button>
                 </div>
             </form>
         </div>
@@ -116,16 +122,51 @@
 </template>
 
 <script>
+import axios from '../../axios-http';
 export default {
+    props:{
+        userDataDetail: Object,
+        studentDataDetail: Object,
+    }, 
+    emits: ['save-edit'],
     data(){
         return{
             isOpen: false,
+            id:this.userDataDetail.id,
+            roles: this.userDataDetail.roles,
+            first_name: this.userDataDetail.first_name,
+            last_name: this.userDataDetail.last_name,
+            email: this.userDataDetail.email,
+            phone: this.userDataDetail.phone,
+            batch: this.studentDataDetail.batch,
+            student_class: this.studentDataDetail.class,
+            id_student: this.studentDataDetail.id_student,
+            gender: this.userDataDetail.gender,
         }
     },
 
     methods:{
         onUpdate(){
             this.isOpen = true;
+            if(this.gender != null){
+                let newDataUser = {
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    email: this.email,
+                    phone: this.phone,
+                    batch: this.batch,
+                    class: this.student_class,
+                    id_student: this.id_student,
+                    roles: this.roles,
+                    gender: this.gender,
+                };
+                axios.put('/users/' + this.id, newDataUser).then((res => {
+                    console.log(res.data);
+                    // this.isOpen = false;
+                    this.$emit('save-edit');
+
+                }))
+            }
         }
     }
 }

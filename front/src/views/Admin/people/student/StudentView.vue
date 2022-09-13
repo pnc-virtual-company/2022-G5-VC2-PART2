@@ -18,8 +18,8 @@ export default {
     };
   },
   methods:{
-    showDetail(){
-      this.$emit('show-detail');
+    showDetail(id){
+      this.$emit('show-detail',id);
     }
   }
 };
