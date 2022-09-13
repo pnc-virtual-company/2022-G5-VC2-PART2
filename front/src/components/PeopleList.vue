@@ -21,7 +21,7 @@
           <td class="text-center">{{ person.last_name }}</td>
           <td class="text-left flex justify-between mt-5">
             {{ person.email }}
-            <div class="flex absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex ">
+            <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex ">
               <router-link :to="{name:'peopleDetail', params:{id:person.id,role:person.roles}}">
                 <svg xmlns="http://www.w3.org/2000/svg"
                   fill="none"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-[90%] m-auto mt-6  p-4 rounded">
+    <div class="w-[90%] m-auto mt-28  p-4 rounded">
       <div class="flex justify-between">
         <h2 class="text-2xl">Teachers</h2>
         <div class="relative">
@@ -49,10 +49,9 @@
           </div>
       </div>
     </div>
-      <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
+      <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
-    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
 </template>
 
 <script>

@@ -1,45 +1,47 @@
 <template>
-  <div class="w-[90%] m-auto mt-6  p-4 rounded">
-    <div class="flex justify-between">
-      <h2 class="text-2xl">Students</h2>
-      <div class="relative">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="add-people w-14 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
-          @click="showStudentForm">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-        </svg>
-        <div
-          class="add-button absolute z-50 -top-12 opacity-0 -right-10 text-sm w-32 bg-[#1a1a1a] rounded-full text-white p-1.5 text-center">
-          Add new student
+  <div>
+    <div class="w-[90%] m-auto mt-28  p-4 rounded">
+      <div class="flex justify-between">
+        <h2 class="text-2xl">Students</h2>
+        <div class="relative">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="add-people w-14 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
+            @click="showStudentForm">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+          </svg>
+          <div
+            class="add-button absolute z-50 -top-12 opacity-0 -right-10 text-sm w-32 bg-[#1a1a1a] rounded-full text-white p-1.5 text-center">
+            Add new student
+          </div>
         </div>
       </div>
-    </div>
-    <div class="rounded shadow p-4 mt-2 bg-white">
-      <searchbar-form @newKeyword="updateKeyword"/>
-      <div class="flex justify-center mt-4 w-full">
-        <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
-      </div>
-        <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 2" >
-            <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
-                <div v-if="showShortList" class="flex">
-                  <p class="text-sm">View All</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </div>
-                <div v-else class="flex">
-                  <p class="text-sm">Hide</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                  </svg>
-                </div>
-            </button>   
+      <div class="rounded shadow p-4 mt-2 bg-white">
+        <searchbar-form @newKeyword="updateKeyword"/>
+        <div class="flex justify-center mt-4 w-full">
+          <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 2" >
+              <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
+                  <div v-if="showShortList" class="flex">
+                    <p class="text-sm">View All</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </div>
+                  <div v-else class="flex">
+                    <p class="text-sm">Hide</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                    </svg>
+                  </div>
+              </button>   
+          </div>
+      </div>
     </div>
+      <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
+      <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
-    <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
-    <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
 </template>
 
 <script>
