@@ -74,9 +74,11 @@ export default {
     showDetail(){
       this.$emit('show-detail');
     },  
-    createStudent(userData) {
+    createStudent(userData,errorMessageBack) {
       axiosHttp.post('/users',userData).then((res) => {
         console.log(res.data);
+        this.errorMessage = errorMessageBack;
+        this.errorIdStudent = errorMessageBack;
         this.getStudentData()
         this.isShowForm = false;
       }).catch((error) =>{
@@ -84,6 +86,7 @@ export default {
           this.errorMessage = error.response.data.message;
         }
         if (error.response.status === 402) {
+          this.errorMessage = '';
           this.errorIdStudent = error.response.data.message;
         }
       });

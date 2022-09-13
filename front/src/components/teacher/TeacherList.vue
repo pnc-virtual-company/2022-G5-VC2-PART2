@@ -95,9 +95,10 @@ export default {
       this.isDeleteAlert = true;
       this.userId = id;
     },
-    createTeacher(userData) {
+    createTeacher(userData,messageBack) {
       axiosHttp.post("/users", userData).then(() => {
         this.getTeacherData();
+        this.messageError = messageBack;
         this.isShowForm = false;
       }).catch((error) =>{
         if (error.response.status === 422) {

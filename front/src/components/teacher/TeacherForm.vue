@@ -57,7 +57,7 @@
         </div>
         <div class="flex w-full justify-between mr-2 mb-2">
           <div class="w-full mr-2 mb-2">
-            <b><label for="roleInput">Role</label></b>
+            <b><label for="roleInput">Position</label></b>
             <br />
             <input
               type="text"
@@ -90,7 +90,7 @@
           <input
             type="email"
             name="emailInput"
-            :class="{'border-red-500':message}"
+            :class="{'border-red-500':message + messageForgotEmail}"
             class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="emailInput"
             placeholder="Email ..."
@@ -170,6 +170,9 @@ export default {
       this.email =
       this.firstName.toLowerCase().trim() + "." + newValue.toLowerCase().trim() + "@passerellesnumeriques.org";
     },
+    firstName: function(newValue) {
+      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@student.passerellesnumeriques.org';
+    }
   },
   methods: {
     createTeacher() {
@@ -187,6 +190,7 @@ export default {
         this.messageForgotfirstName = '';
         this.messageForgotlastName = '';
         this.messageForgotEmail = '';
+        let messageBack = '';
         let userData = {
           first_name: this.firstName,
           last_name: this.lastName,
@@ -196,7 +200,7 @@ export default {
           phone: this.phone,
           roles:this.roles
         };
-        this.$emit("create-teacher", userData);
+        this.$emit("create-teacher", userData,messageBack);
       }
     },
     generatePassword() {
