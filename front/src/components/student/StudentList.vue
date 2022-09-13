@@ -31,7 +31,7 @@
         </div>
     </div>
   </div>
-    <student-form v-if="isShowForm" @closeForm="isShowForm=false" @create-student="createStudent" :userData="user" :studentData="user"/>
+    <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
     <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
 </template>
 
@@ -60,44 +60,45 @@ export default {
         keyword:''
       }
   },
-
   methods: {
-      getStudentData(){
-        axiosHttp.get("/users/students").then((res)=>{
-          console.log(res.data);
-          this.listStudents = res.data;
-        })
-      },
-      showStudentForm(){
-        this.isShowForm = true;
-      },
-      showDetail(){
-        this.$emit('show-detail');
-      },  
-      deletedPerson(){
+    getStudentData(){
+      axiosHttp.get("/users/students").then((res)=>{
+        this.listStudents = res.data;
+      })
+    },
+    showStudentForm(){
+      this.isShowForm = true;
+    },
+    showDetail(){
+      this.$emit('show-detail');
+    },  
+    createStudent(userData) {
+      axiosHttp.post('/users',userData).then((res) => {
+        console.log(res.data);
+        this.getStudentData()
+        this.isShowForm = false;
+      }).catch((error) =>{
+        if (error.response.status === 422) {
+          this.errorMessage = error.response.data.message;
+        }
+        if (error.response.status === 402) {
+          this.errorIdStudent = error.response.data.message;
+        }
+      });
+    },
+    updateKeyword(keyword){
+      this.keyword = keyword
+    },
+    deletedPerson(){
       this.isDeleteAlert = false;
-      },
-      alertDelete(id){
-        this.isDeleteAlert = true;
-        this.userId = id;
-        console.log(id);
-      },
-      updateKeyword(keyword){
-        this.keyword = keyword
-      },
-      showAll(){
+    },
+    alertDelete(id){
+      this.isDeleteAlert = true;
+      this.userId = id;
+    },
+    showAll(){
       this.showShortList = !this.showShortList;
-      },
-      createStudent(userData) {
-        axiosHttp.post('/users',userData).then(() => {
-          this.getStudentData()
-          this.isShowForm = false;
-        }).catch((error) =>{
-          if (error.response.status === 401){
-            this.messageError = error.response.data.message;
-          }
-        });
-      },
+    },
   },
   mounted(){
     this.getStudentData();

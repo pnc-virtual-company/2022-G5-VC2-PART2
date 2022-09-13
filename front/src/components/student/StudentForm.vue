@@ -21,7 +21,9 @@
             id="firstNameInput"
             placeholder="First name ..."
             v-model="firstName"
+            :class="{'border-red-600' :forgotFirstName}"
           />
+          <p>{{forgotFirstName}}</p>
         </div>
         <div class="w-full">
           <b><label for="lastNameInput">Last name</label></b>
@@ -33,7 +35,9 @@
             id="lastNameInput"
             placeholder="Last name ..."
             v-model="lastName"
+            :class="{'border-red-600' :forgotLastName}"
           />
+          <p>{{forgotLastName}}</p>
         </div>
       </div>
       <div class="email mb-2">
@@ -45,8 +49,11 @@
           class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           id="emailInput"
           placeholder="Email ..."
-          :value= email
+          v-model="email"
+          :class="{'border-red-600' :messageError + forgotEmail}"
         />
+        <p>{{messageError}}</p>
+        <p>{{forgotEmail}}</p>
       </div>
       <div class="phone mb-2">
         <b><label for="phoneInput">Phone</label></b>
@@ -59,6 +66,7 @@
           placeholder="Phone ..."
           v-model="phoneNumber"
         />
+        <span>Optional*</span>
       </div>
       <div class="flex mb-2 box-border relative">
         <div>
@@ -71,7 +79,9 @@
             id="batchInput"
             placeholder="Batch ..."
             v-model="batch"
+            :class="{'border-red-600' :forgotBatch}"
           />
+          <p>{{forgotBatch}}</p>
         </div>
         <div>
           <b><label for="classInput">Class</label></b>
@@ -83,7 +93,9 @@
             id="classInput"
             placeholder="Class ..."
             v-model="classes"
+            :class="{'border-red-600' :forgotClass}"
           />
+          <p>{{forgotClass}}</p>
         </div>
         <div>
           <b><label for="studentIdInput">Student ID</label></b>
@@ -95,7 +107,10 @@
             id="studentIdInput"
             placeholder="Id ..."
             v-model="idStudent"
+            :class="{'border-red-600' :forgotIdStudent + errorIdStudent}"
           />
+          <p>{{forgotIdStudent}}</p>
+          <p>{{errorIdStudent}}</p>
         </div>
       </div>
       <div class="gender mr-2 mb-2">
@@ -123,6 +138,7 @@
 import axiosHttp from '../../axios-http';
 export default{
   emits: ['create-student'],
+  props:['messageError','errorIdStudent'],
   data() {
     return {
       firstName: '',
@@ -134,25 +150,54 @@ export default{
       gender: 'Male',
       phoneNumber: null,
       idStudent: null,
-
+      forgotFirstName: '',
+      forgotLastName: '',
+      forgotEmail: '',
+      forgotBatch: '',
+      forgotClass: '',
+      forgotIdStudent: '',
     }
   },
   methods: {
     createNewStudent() {
-      let userData = {
-        first_name: this.firstName,
-        last_name: this.lastName,
-        email: this.email,
-        password: this.generatePassword(),
-        gender: this.gender,
-        roles: 'STUDENT',
-        student_id: this.studentId,
-        id_student: this.idStudent,
-        class: this.classes,
-        batch: this.batch,
-        phone: this.phoneNumber
-      };
-      this.$emit('create-student',userData);
+      if (this.firstName === '') {
+        this.forgotFirstName = 'Please put first name!*';
+      }else if(this.lastName === '') {
+        this.forgotFirstName = '';
+        this.forgotLastName = 'Please put last name!*';
+      }else if(this.email === '') {
+        this.forgotFirstName = '';
+        this.forgotLastName = '';
+        this.forgotEmail = 'Please put email!*';
+      }else if(this.batch === '') {
+        this.forgotFirstName = '';
+        this.forgotLastName = '';
+        this.forgotEmail = '';
+        this.forgotBatch = 'Please put batch!*';
+      }else if(this.classes === '') {
+        this.forgotBatch = '';
+        this.forgotClass = 'Please put class!*';
+      }else if(this.idStudent === null){
+        this.forgotClass = '';
+        this.forgotIdStudent = 'Please put Id student!*';
+      }
+      else{
+        let userData = {
+          first_name: this.firstName,
+          last_name: this.lastName,
+          email: this.email,
+          password: this.generatePassword(),
+          gender: this.gender,
+          roles: 'STUDENT',
+          student_id: this.studentId,
+          id_student: this.idStudent,
+          class: this.classes,
+          batch: this.batch,
+          phone: this.phoneNumber
+        };
+        this.$emit('create-student',userData);
+      }
+      
     },
     generatePassword() {
       let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -178,7 +223,7 @@ export default{
   watch: {
     lastName: function(newValue) {
       if (newValue != '') {
-        this.email = this.firstName + '.' + newValue + '@student.passerellesnumeriques.org';
+        this.email = this.firstName.toLowerCase().trim() + '.' + newValue.toLowerCase().trim() + '@student.passerellesnumeriques.org';
       }else{
         this.email = '';
       }
@@ -190,4 +235,15 @@ export default{
 }
 
 </script>
-
+<style scoped>
+p{
+  color: red;
+  font-size: 15px;
+}
+span{
+  color: rgb(61, 61, 254);
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+}
+</style>

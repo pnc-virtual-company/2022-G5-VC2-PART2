@@ -36,7 +36,9 @@
               id="firstNameInput"
               placeholder="First name ..."
               v-model="firstName"
+              :class="{'border-red-600':messageForgotfirstName}"
             />
+            <p>{{messageForgotfirstName}}</p>
           </div>
           <div class="w-full">
             <b><label for="lastNameInput">Last name</label></b>
@@ -48,7 +50,9 @@
               id="lastNameInput"
               placeholder="Last name ..."
               v-model="lastName"
+              :class="{'border-red-600' :messageForgotlastName}"
             />
+            <p>{{messageForgotlastName}}</p>
           </div>
         </div>
         <div class="flex w-full justify-between mr-2 mb-2">
@@ -62,7 +66,6 @@
               id="roleInput"
               placeholder="Role..."
               v-model="roles"
-              disabled
             />
           </div>
           <div class="w-full">
@@ -76,9 +79,9 @@
               placeholder="Phone number ..."
               v-model="phone"
             />
+            <span>Optional*</span>
           </div>
           <div class="text-red-500 text-sm mb-2">
-            {{ sms_error_phone_number }}
           </div>
         </div>
         <div class="email mb-2">
@@ -87,14 +90,14 @@
           <input
             type="email"
             name="emailInput"
+            :class="{'border-red-500':message}"
             class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="emailInput"
             placeholder="Email ..."
             v-model="email"
           />
-        </div>
-        <div class="text-red-500 text-sm mb-2">
-          {{ sms_error_email }}
+          <p>{{message}}</p>
+          <p>{{messageForgotEmail}}</p>
         </div>
         <div class="gender mr-2 mb-2">
           <b>Gender</b>
@@ -148,6 +151,7 @@
 <script>
 export default {
   emits: ["create-teacher"],
+  props: ['message'],
   data() {
     return {
       firstName: "",
@@ -156,26 +160,44 @@ export default {
       phone: "",
       email: "",
       gender: "Male",
+      messageForgotfirstName: '',
+      messageForgotlastName: '',
+      messageForgotEmail: '',
     };
   },
   watch: {
     lastName: function (newValue) {
       this.email =
-        this.firstName + "." + newValue + "@passerellesnumeriques.org";
+      this.firstName.toLowerCase().trim() + "." + newValue.toLowerCase().trim() + "@passerellesnumeriques.org";
     },
   },
   methods: {
     createTeacher() {
-      let userData = {
-        first_name: this.firstName,
-        last_name: this.lastName,
-        email: this.email,
-        password: this.generatePassword(),
-        gender: this.gender,
-        phone: this.phone,
-        roles:this.roles
-      };
-      this.$emit("create-teacher", userData);
+      if (this.firstName === ''){
+        this.messageForgotlastName = '';
+        this.messageForgotfirstName = 'Please put first name!*';
+      }else if(this.lastName === ''){
+        this.messageForgotfirstName = '';
+        this.messageForgotlastName = 'Please put last name!*';
+      }else if(this.email === '') {
+        this.messageForgotlastName = '';
+        this.messageForgotEmail = 'Please put email!*';
+      }
+      else{
+        this.messageForgotfirstName = '';
+        this.messageForgotlastName = '';
+        this.messageForgotEmail = '';
+        let userData = {
+          first_name: this.firstName,
+          last_name: this.lastName,
+          email: this.email,
+          password: this.generatePassword(),
+          gender: this.gender,
+          phone: this.phone,
+          roles:this.roles
+        };
+        this.$emit("create-teacher", userData);
+      }
     },
     generatePassword() {
       let chars =
@@ -192,3 +214,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+p{
+  color: red;
+  font-size: 14px;
+}
+span{
+  color: rgb(61, 61, 254);
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+}
+</style>

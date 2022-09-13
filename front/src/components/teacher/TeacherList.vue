@@ -45,7 +45,7 @@
       <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
-  
+    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
 </template>
 
 <script>
@@ -66,6 +66,8 @@ export default {
     return {
       isShowForm:false,
       listTeachers: [],
+      keyword:'',
+      messageError: '',
       isDeleteAlert:false,
       userId:null,
       keyword:'',
@@ -97,6 +99,10 @@ export default {
       axiosHttp.post("/users", userData).then(() => {
         this.getTeacherData();
         this.isShowForm = false;
+      }).catch((error) =>{
+        if (error.response.status === 422) {
+          this.messageError = error.response.data.message;
+        }
       });
     },
     newKeyword(keyword){
