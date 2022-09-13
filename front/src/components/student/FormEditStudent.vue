@@ -168,6 +168,14 @@ export default {
                 }))
             }
         }
+    },
+    watch: {
+        first_name: function (newValue) {
+            this.email = newValue.toLowerCase().trim() + '.' + this.last_name.toLowerCase().trim() + '@student.passerellesnumeriques.org';
+        },
+        last_name: function (newValue) {
+            this.email = this.first_name.toLowerCase().trim() + '.' + newValue.toLowerCase().trim() + '@student.passerellesnumeriques.org';
+        }
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
-<div class="flex items-center justify-center w-full">
+<div class="flex items-center justify-center w-full mb-4">
     <div class="w-[80%]">
-        <div class="mt-32">
+        <div class="mt-20">
             <p v-if="userDataDetail.roles == 'TEACHER'" class="text-3xl text-center capitalize">teacher informaion detail</p>
             <p v-if="userDataDetail.roles == 'STUDENT'" class="text-3xl text-center capitalize">student informaion detail</p>
             <div class="shadow bg-white flex items-center mt-5 p-8 relative rounded">
@@ -9,7 +9,7 @@
                     <img class="w-40 h-40 rounded-full" :src="getProfile(userDataDetail.profile)" alt="">
                 </div>
                 <div class="ml-5 leading-9 text-xl">
-                    <p class="capitalize">{{userDataDetail.first_name}} {{userDataDetail.last_name}}</p>
+                    <b><p class="capitalize">{{userDataDetail.first_name}} {{userDataDetail.last_name}}</p></b>
                     <p>{{userDataDetail.email}}</p>
                     <p>{{userDataDetail.phone}}</p>
                 </div>

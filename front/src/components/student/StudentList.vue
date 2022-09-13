@@ -51,13 +51,14 @@ export default {
   data() {
       return {
         isShowForm: false,
-        messageError: "",
+        errorMessage: "",
         listStudents:[],
         isDeleteAlert:false,
         userId:null,
         dataToShow: 3,
         showShortList: true,
-        keyword:''
+        keyword:'',
+        errorIdStudent: ''
       }
   },
   methods: {
