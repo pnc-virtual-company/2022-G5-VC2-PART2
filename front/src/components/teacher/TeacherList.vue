@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-[90%] m-auto mt-6  p-4 rounded">
+    <div class="w-[90%] m-auto mt-28  p-4 rounded">
       <div class="flex justify-between">
         <h2 class="text-2xl">Teachers</h2>
         <div class="relative">
@@ -20,7 +20,7 @@
             />
           </svg>
           <div
-            class="add-button absolute -top-12 z-50 text-center opacity-0 -right-10 text-sm w-32 bg-gray-900 rounded-full text-white p-1.5"
+            class="add-button absolute -top-12 z-50 text-center opacity-0 -right-10 text-sm w-32 bg-[#1a1a1a] rounded-full text-white p-1.5"
           >
             Add new teacher
           </div>
@@ -33,19 +33,25 @@
         </div>
           <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 2"> 
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
-                  <p v-if="showShortList">View All</p>
-                  <p v-else>Hide</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <div v-if="showShortList" class="flex">
+                  <p class="text-sm">View All</p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                   </svg>
+                </div>
+                <div v-else class="flex">
+                  <p class="text-sm">Hide</p>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                  </svg>
+                </div>
               </button>   
           </div>
       </div>
     </div>
-      <teacher-form v-if="isShowForm" @closeForm="isShowForm=false" @create-teacher="createTeacher"/>
+      <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
-    <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
 </template>
 
 <script>
