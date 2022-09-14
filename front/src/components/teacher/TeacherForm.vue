@@ -38,7 +38,6 @@
               v-model="firstName"
               :class="{'border-red-600':messageForgotfirstName}"
             />
-            <p>{{messageForgotfirstName}}</p>
           </div>
           <div class="w-full">
             <b><label for="lastNameInput">Last name</label></b>
@@ -52,7 +51,7 @@
               v-model="lastName"
               :class="{'border-red-600' :messageForgotlastName}"
             />
-            <p>{{messageForgotlastName}}</p>
+
           </div>
         </div>
         <div class="flex w-full justify-between mr-2 mb-2">
@@ -97,7 +96,6 @@
             v-model="email"
           />
           <p>{{message}}</p>
-          <p>{{messageForgotEmail}}</p>
         </div>
         <div class="gender mr-2 mb-2">
           <b>Gender</b>
@@ -171,7 +169,7 @@ export default {
       this.firstName.toLowerCase().trim() + "." + newValue.toLowerCase().trim() + "@passerellesnumeriques.org";
     },
     firstName: function(newValue) {
-      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@student.passerellesnumeriques.org';
+      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@passerellesnumeriques.org';
     }
   },
   methods: {
