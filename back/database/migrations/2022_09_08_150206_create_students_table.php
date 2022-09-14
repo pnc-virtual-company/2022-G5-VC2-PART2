@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("class");
             $table->string("batch");
             $table->string('date_birth');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
