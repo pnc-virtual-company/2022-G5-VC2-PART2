@@ -78,7 +78,7 @@
               placeholder="Phone number ..."
               v-model="phone"
             />
-            <span>Optional*</span>
+            <span class="text-primary text-sm">Optional*</span>
           </div>
           <div class="text-red-500 text-sm mb-2">
           </div>
@@ -220,11 +220,5 @@ export default {
 p{
   color: red;
   font-size: 14px;
-}
-span{
-  color: rgb(61, 61, 254);
-  font-size: 13px;
-  margin: 0;
-  padding: 0;
 }
 </style>
