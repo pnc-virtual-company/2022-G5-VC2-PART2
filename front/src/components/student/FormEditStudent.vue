@@ -98,6 +98,16 @@
                     />
                     </div>
                 </div>
+                <div class="{}">
+                    <b><label for="classInput">Date of Birth</label></b>
+                    <input
+                        type="text"
+                        name="studentDateBirth"
+                        class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+                        v-model="date_birth"
+                        placeholder="Set date of birth"
+                    />
+                </div>
                 <div class="gender mr-2 mb-2">
                     <b>Gender</b>
                     <div class="formGender flex">
@@ -142,6 +152,7 @@ export default {
             student_class: this.studentDataDetail.class,
             id_student: this.studentDataDetail.id_student,
             gender: this.userDataDetail.gender,
+            date_birth: this.studentDataDetail.date_birth,
         }
     },
 
@@ -159,6 +170,7 @@ export default {
                     id_student: this.id_student,
                     roles: this.roles,
                     gender: this.gender,
+                    date_birth: this.date_birth
                 };
                 axios.put('/users/' + this.id, newDataUser).then((res => {
                     console.log(res.data);
@@ -167,6 +179,14 @@ export default {
 
                 }))
             }
+        }
+    },
+    watch: {
+        first_name: function (newValue) {
+            this.email = newValue.toLowerCase().trim() + '.' + this.last_name.toLowerCase().trim() + '@student.passerellesnumeriques.org';
+        },
+        last_name: function (newValue) {
+            this.email = this.first_name.toLowerCase().trim() + '.' + newValue.toLowerCase().trim() + '@student.passerellesnumeriques.org';
         }
     }
 }

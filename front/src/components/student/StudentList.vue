@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-[90%] m-auto mt-28  p-4 rounded">
+    <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
         <div class="relative">
@@ -18,11 +18,47 @@
         </div>
       </div>
       <div class="rounded shadow p-4 mt-2 bg-white">
-        <searchbar-form @newKeyword="updateKeyword"/>
+        <div class="flex justify-between">
+          <div class="flex">
+              <div class="flex justify-between">
+                <label for="filter-status" class="mx-3 font-medium"><span class="text-red-600">*</span>Filter By
+                  Batch:</label>
+                <select v-model="filterByBatch" id="filter-status"
+                  class="shadow appearance-none w-44 rounded border border-gray-250 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
+                  <option value="All">All</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                </select>
+              </div>
+            <div class="flex justify-between">
+              <label for="filter-status" class="mx-3 font-medium"><span class="text-red-600">*</span>Filter By
+                Class:</label>
+              <select v-model="filterByClass" id="filter-status"
+                class="shadow appearance-none w-44 rounded border border-gray-250 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
+                <option value="All">All</option>
+                <option value="WEB A">WEB A</option>
+                <option value="WEB B">WEB B</option>
+                <option value="WEB C">WEB C</option>
+                <option value="SNA">SNA</option>
+              </select>
+            </div>
+  
+          </div>
+          <searchbar-form @newKeyword="updateKeyword" placeholder="Search Name, ID"/>
+        </div>
         <div class="flex justify-center mt-4 w-full">
           <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 2" >
+        <div v-if="listStudents.length <= 0" class="flex flex-col items-center mt-8 mb-3">
+          <img class="w-60" src="./../../assets/noRequestFound.png" alt="Image not found">
+          <h1 class="text-stone-500">No any requests for now!</h1>
+        </div>
+        <div v-else-if="filterStudent.length <= 0" class="flex flex-col items-center mt-8 mb-3">
+          <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
+          <h1 class="text-stone-500 mt-5 ">No requests found!</h1>
+        </div>
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 3" >
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                   <div v-if="showShortList" class="flex">
                     <p class="text-sm">View All</p>
@@ -63,13 +99,16 @@ export default {
   data() {
       return {
         isShowForm: false,
-        messageError: "",
+        errorMessage: "",
         listStudents:[],
         isDeleteAlert:false,
         userId:null,
         dataToShow: 3,
         showShortList: true,
-        keyword:''
+        keyword:'',
+        errorIdStudent: '',
+        filterByBatch: "All",
+      filterByClass: "All",
       }
   },
   methods: {
@@ -122,10 +161,17 @@ export default {
     filterStudent(){
       let studentToDisplay = this.listStudents;
       if(this.keyword){
-        studentToDisplay = this.listStudents.filter((person) => (person.first_name+" "+person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
+        studentToDisplay = this.listStudents.filter((person) => (person.first_name+" "+person.last_name+" "+person.id_student).toLowerCase().includes(this.keyword.toLowerCase()));
       }
       if (this.showShortList){
         studentToDisplay = studentToDisplay.slice(0,this.dataToShow);
+      }
+      if (this.filterByBatch != "All" && this.filterByClass != "All") {
+        studentToDisplay = studentToDisplay.filter((person) => person.batch == this.filterByBatch && person.class == this.filterByClass);
+      } else if (this.filterByBatch != "All") {
+        studentToDisplay = studentToDisplay.filter((person) => person.batch == this.filterByBatch);
+      } else if (this.filterByClass != "All") {
+        studentToDisplay = studentToDisplay.filter((person) => person.class == this.filterByClass);
       }
       return studentToDisplay
     }

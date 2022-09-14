@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('id_student');
             $table->string("class");
-            $table->integer("batch");
+            $table->string("batch");
+            $table->string('date_birth');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
