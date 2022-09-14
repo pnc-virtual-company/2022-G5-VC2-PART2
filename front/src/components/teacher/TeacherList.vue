@@ -31,7 +31,7 @@
         <div class="flex justify-center mt-4">
           <people-list :peopleList="filterTeacher" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 2"> 
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 3"> 
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                 <div v-if="showShortList" class="flex">
                   <p class="text-sm">View All</p>
