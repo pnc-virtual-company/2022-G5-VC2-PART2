@@ -49,6 +49,7 @@ class UserController extends Controller
             $user->student_id = $request->student_id;
             $student->batch = $request->batch;
             $student->class = $request->class;
+            $student->date_birth = $request->date_birth;
             $idStudents = Student::where('students.batch','=',$request->batch)->get(['students.id_student']);
             // return $idStudents;
             foreach($idStudents as $idStudent) {
@@ -112,9 +113,10 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         if ($request->roles == 'STUDENT') {
-            $student = Student::findOrFail($id);
+            $student = Student::findOrFail($user->student_id);
             $student->id_student = $request->id_student;
             $student->batch = $request->batch;
+            $student->date_birth = $request->date_birth;
             $student->save();
         }
         $user->save();
