@@ -7,12 +7,32 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
 
 class UserController extends Controller
 {
-    // Sign In user
+    // Log In user
+    public function login(Request $request) {
+        // Check email and password
+        $user = User::where('email', $request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'fail'], 401);
+        }
+        // Create token
+        $token = $user->createToken('mytoken')->plainTextToken;
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
+    }
+
+    // Log out user
+    public function logout() {
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'User logout']);
+    }
 
 
     // Create New User 
@@ -35,7 +55,6 @@ class UserController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
         $user->roles = $request->roles;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
