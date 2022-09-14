@@ -21,22 +21,24 @@
         <div class="flex justify-between">
           <div class="flex">
               <div class="flex justify-between">
-                <label for="filter-status" class="mx-3 font-medium"><span class="text-red-600">*</span>Filter By
-                  Batch:</label>
+                <label for="filter-status" class="mx-3 font-medium mt-2"><span class="text-red-600">*</span>Filter By
+                  Batch:
+                </label>
                 <select v-model="filterByBatch" id="filter-status"
                   class="shadow appearance-none w-44 rounded border border-gray-250 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
-                  <option value="All">All</option>
+                  <option value="All">All batch</option>
                   <option value="2022">2022</option>
                   <option value="2023">2023</option>
                   <option value="2024">2024</option>
                 </select>
               </div>
             <div class="flex justify-between">
-              <label for="filter-status" class="mx-3 font-medium"><span class="text-red-600">*</span>Filter By
-                Class:</label>
+              <label for="filter-status" class="mx-3 font-medium mt-2"><span class="text-red-600">*</span>Filter By
+                Class:
+              </label>
               <select v-model="filterByClass" id="filter-status"
                 class="shadow appearance-none w-44 rounded border border-gray-250 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
-                <option value="All">All</option>
+                <option value="All">All class</option>
                 <option value="WEB A">WEB A</option>
                 <option value="WEB B">WEB B</option>
                 <option value="WEB C">WEB C</option>
@@ -58,7 +60,7 @@
           <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
           <h1 class="text-stone-500 mt-5 ">No requests found!</h1>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 3" >
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listStudents.length > 3" >
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                   <div v-if="showShortList" class="flex">
                     <p class="text-sm">View All</p>
@@ -108,7 +110,7 @@ export default {
         keyword:'',
         errorIdStudent: '',
         filterByBatch: "All",
-      filterByClass: "All",
+        filterByClass: "All",
       }
   },
   methods: {

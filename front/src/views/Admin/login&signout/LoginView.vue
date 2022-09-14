@@ -24,7 +24,7 @@
           />
         </div>
         <div class="flex items-center justify-end">
-          <button
+          <!-- <button
             class="flex bg-blue-500 ground  hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline uppercase"
             type="submit"
           >
@@ -43,7 +43,26 @@
                 d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
               />
             </svg>
-          </button>
+          </button> -->
+          <button-create class="flex">
+            <template v-slot:button_create>Sign in</template>  
+            <template v-slot:button_body>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 ml-2 duration-200 ease-out"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                />
+              </svg>
+            </template>   
+          </button-create>
         </div>
       </form>
     </div>

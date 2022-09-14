@@ -18,7 +18,9 @@
                         id="lastNameInput"
                         placeholder= "please text ..."
                     />
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-4 rounded focus:outline-none focus:shadow-outline h-10">Add</button>
+                    <button-create>
+                        <template v-slot:button_create>Add</template>      
+                    </button-create>
                 </div>
             </form>
         </div>
