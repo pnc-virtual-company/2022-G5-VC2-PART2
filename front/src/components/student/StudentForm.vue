@@ -23,7 +23,6 @@
             v-model="firstName"
             :class="{'border-red-600' :forgotFirstName}"
           />
-          <p>{{forgotFirstName}}</p>
         </div>
         <div class="w-full">
           <b><label for="lastNameInput">Last name</label></b>
@@ -37,7 +36,6 @@
             v-model="lastName"
             :class="{'border-red-600' :forgotLastName}"
           />
-          <p>{{forgotLastName}}</p>
         </div>
       </div>
       <div class="email mb-2">
@@ -102,21 +100,18 @@
             v-model="idStudent"
             :class="{'border-red-600' :forgotIdStudent + errorIdStudent}"
           />
-          <p>{{forgotIdStudent}}</p>
           <p>{{errorIdStudent}}</p>
         </div>
       </div>
       <div class="{}">
         <b><label for="classInput">Date of Birth</label></b>
         <input
-            type="text"
+            type="date"
             name="studentDateBirth"
-            class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            class="shadow appearance-none border ml-1 mr-6 rounded w-[98%] px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             v-model="dateOfBirth"
-            placeholder="Set date of birth"
             :class="{'border-red-600' :forgotDateBirth}"
           />
-          <p>{{forgotDateBirth}}</p>
       </div>
       <div class="gender mr-2 mb-2">
         <b>Gender</b>

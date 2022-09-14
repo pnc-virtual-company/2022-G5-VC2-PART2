@@ -1,16 +1,19 @@
 <template>
-  <navbar-view />
+  <!-- <navbar-view/> -->
   <router-view v-slot="{ Component }">
     <transition name="fade">
       <component :is="Component" />
     </transition>
   </router-view>
+  <form-login/>
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
+import FormLogin from './views/Admin/login&signout/LoginView.vue'
 export default {
   components: {
     "navbar-view": NavBar,
+    "form-login" : FormLogin,
   },
 };
 </script>
