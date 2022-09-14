@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import axiosHttp from "../../axios-http";
-
+import axiosHttp from "../../../axios-http"
 export default({
     props:{
         userId: Number  

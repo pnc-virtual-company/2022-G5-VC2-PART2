@@ -57,16 +57,16 @@
 <script>
 import axiosHttp from "../../axios-http";
 import peopleList from "../PeopleList.vue";
-import teacherForm from "./TeacherForm.vue";
-import deleteAlert from "../delete/DeleteAlert.vue";
-import searchBar from '../search/SearchBar.vue'
+import teacherForm from "../teacher/TeacherForm.vue";
+import deleteAlert from "../widgets/delete/DeleteAlert.vue";
+import searchBar from '../widgets/search/SearchBar.vue';
 
 export default {
   components:{
       "people-list": peopleList,
       "teacher-form":teacherForm,
       "delete-alert": deleteAlert,
-      "searchbar-form": searchBar
+      "searchbar-form": searchBar,
   },
   data(){
     return {
@@ -83,7 +83,7 @@ export default {
   methods: {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
-        this.listTeachers = res.data;
+        this.listTeachers = res.data.reverse();
       })
     },
     showTeacherForm(){
