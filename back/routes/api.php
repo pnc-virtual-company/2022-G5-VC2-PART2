@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\StudentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+// route students //
+Route::prefix('/students')->group(function() {
+    Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
 });
+
+
+// Route User(teacher and student)
+Route::prefix('/users')->group(function() {
+    Route::post('/',[UserController::class,'registerUser']);
+    Route::put('/{id}',[UserController::class,'update']);
+    Route::get('/students',[UserController::class,'studentOnly']);
+    Route::get('/teachers',[UserController::class,'teacherOnly']);
+    Route::get('/student/{id}',[UserController::class,'showOneStudent']);
+    Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
+    Route::delete('/delete/{id}',[UserController::class,'destroy']);
+});
+
+
+// Public route to get image
+Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
+
