@@ -17,18 +17,17 @@ class UserController extends Controller
     public function login(Request $request) {
         // Check email and password
         $user = User::where('email', $request->email)->first();
-        if (!$user) {
-            return response()->json(['email_status' => false, 'email_sms'=> "This email doesn't exist!"], 401);
-        } 
-        if ($user->password == 'Null') {
-            return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
+        if ($user) {
+            $token = $user->createToken('mytoken')->plainTextToken;
+            $response = ['email'=> $request->email, 'password'=>  $user->password,'token' => $token];
+            if ($user->password == 'null') {
+                $response = ['email'=> $request->email, 'password'=> null,'token' => $token];
+            }
+        } else{
+            $response = ['email'=> null, 'password'=> $request->password];
         }
-        // Create token
-        $token = $user->createToken('mytoken')->plainTextToken;
-        return response()->json([
-            'user' => $user,
-            'token' => $token
-        ]);
+
+        return response()->json($response);
     }
 
     // Log out user
@@ -59,6 +58,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
+        $user->password= "null";
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';

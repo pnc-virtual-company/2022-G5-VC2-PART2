@@ -1,9 +1,9 @@
 import { createStore } from 'vuex'
-
+// import getCookie from "./cookie"
 export const store = new createStore({
   state: {
     // role: decryptData(getCookie('role'), 'my_role'),
-    // token: decryptData(getCookie('token'), 'my_token'),
+    // token: getCookie('token'), 'my_token',
     userId: null,
     userEmail: null,
   },

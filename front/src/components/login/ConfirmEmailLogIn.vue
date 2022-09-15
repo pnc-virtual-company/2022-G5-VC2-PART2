@@ -54,7 +54,6 @@
   </div>
 </template>
 <script>
-import { store } from "../../store/store"
 import axios from '../../axios-http'
 export default ({
     data(){
@@ -73,7 +72,8 @@ export default ({
                     this.email_error = ""
                     console.log(reponse);
                     if (reponse.email !=null){
-                      store.state.userEmail = reponse.email;
+                      this.$store.state.userEmail =  reponse.email;
+                      this.$cookie.set('token',reponse.token);
                       if (reponse.password == null){
                           this.$router.push('/createPassword');
                       } else {
