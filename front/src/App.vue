@@ -5,15 +5,18 @@
       <component :is="Component" />
     </transition>
   </router-view>
-  <form-login/>
+  <!-- <form-login/> -->
+  <password-view/>
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
-import FormLogin from './views/Admin/login&signout/LoginView.vue'
+// import FormLogin from './views/Admin/login&signout/LoginView.vue';
+import PasswordView from './views/Admin/login&signout/PasswordView.vue'
 export default {
   components: {
     "navbar-view": NavBar,
-    "form-login" : FormLogin,
+    // "form-login" : FormLogin
+    'password-view' : PasswordView
   },
 };
 </script>

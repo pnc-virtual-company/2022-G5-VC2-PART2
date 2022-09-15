@@ -3,21 +3,20 @@
     <div class="flex items-center justify-center w-[60%]">
       <div class="p-5 uppercase w-[50%]">
         <div>
-          <h1 class="text-2xl font-semibold">Student follow up</h1>
-          <span class="text-lg font-semibold"> Management System </span>
+          <h1 class="text-2xl font-semibold text-primary">Student follow up</h1>
+          <span class="text-lg font-semibold text-primary"> Management System </span>
         </div>
-        <img src="../../../assets/pic.png" alt="logo" class="w-[100%] m-auto" />
+        <img src="../../../assets/pic-login.png" alt="" class="w-[100%] m-auto" />
       </div>
       <form class="w-[50%]">
-        <h1 class="text-2xl font-semibold text-center p-1 uppercase mt-4">
+        <img src="../../../assets/people.png" alt="" class="m-auto">
+        <h1 class="text-lg font-semibold text-center p-1 uppercase mt-6 text-primary">
           Sign in now
         </h1>
-        <div class="mb-5 relative">
-          <label class="block text-gray-700 text-md" for="email">
-            Email *
-          </label>
+        <div class="mb-5 relative mt-5">
+          <label class="block text-gray-700 text-md" for="email"></label>
           <input
-            class="appearance border w-full py-2 px-3 text-gray-700 mb-1 focus:outline-none"
+            class="appearance border w-full py-2 px-4 text-gray-700 mb-1 focus:outline-none rounded shadow"
             type="email"
             id="email"
             placeholder="Email ..."
@@ -25,7 +24,7 @@
         </div>
         <div class="flex items-center justify-end">
           <button
-            class="flex bg-blue-500 ground  hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline uppercase"
+            class="flex bg-blue-500 ground  hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline uppercase shadow"
             type="submit"
           >
             sign in
