@@ -45,10 +45,10 @@ Route::post('/login', [UserController::class, 'login']);
     Route::delete('delete/batch/{id}',[BatchController::class,'destroy']);
 
     // Route Class
-    // Route::post('/classes',[ClassBatchController::class,'store']);
-    // Route::post('/class/{id}',[ClassBatchController::class,'update']);
-    // Route::get('/class/{id}',[ClassBatchController::class,'show']);
-    // Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
+    Route::post('/classes',[ClassBatchController::class,'store']);
+    Route::post('/class/{id}',[ClassBatchController::class,'update']);
+    Route::get('/class/{id}',[ClassBatchController::class,'show']);
+    Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
 
     // Public route to get image
     Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
