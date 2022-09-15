@@ -44,11 +44,7 @@ class UserController extends Controller
         ];
 
         $this->validate($request, [
-            'first_name' => 'required',
-            'last_name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required',
-            'roles' => 'required',
         ],$customMessage);
 
         $user = new User();
@@ -66,11 +62,10 @@ class UserController extends Controller
         if ($request->roles == "STUDENT"){
             $student = new Student();
             $user->student_id = $request->student_id;
-            $student->batch = $request->batch;
-            $student->class = $request->class;
+            $student->batch_id = $request->batch_id;
+            $student->class_id = $request->class_id;
             $student->date_birth = $request->date_birth;
-            $student->status = false;
-            $idStudents = Student::where('students.batch','=',$request->batch)->get(['students.id_student']);
+            $idStudents = Student::where('students.batch_id','=',$request->batch_id)->get(['students.id_student']);
             // return $idStudents;
             foreach($idStudents as $idStudent) {
     
@@ -89,7 +84,7 @@ class UserController extends Controller
 
     // Get all Student only
     public function studentOnly() {
-        return User::join('students','users.student_id','=','students.id')->get(['users.*','students.*']);
+        return User::join('students','users.student_id','=','students.id')->join('class_batches','students.class_id','=','class_batches.id')->join('batches','students.batch_id','=','batches.id')->get(['users.*','students.*','class_batches.*','batches.*']);
     }
 
     // Get all Teacher only
@@ -135,7 +130,8 @@ class UserController extends Controller
         if ($request->roles == 'STUDENT') {
             $student = Student::findOrFail($user->student_id);
             $student->id_student = $request->id_student;
-            $student->batch = $request->batch;
+            $student->batch_id = $request->batch_id;
+            $student->class_id = $request->class_id;
             $student->date_birth = $request->date_birth;
             $student->save();
         }
