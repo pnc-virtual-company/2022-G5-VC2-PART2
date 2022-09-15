@@ -1,25 +1,75 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
+import DashboardView from '../views/Admin/dashboard/DashboardView.vue'
+import FollowUpView from '../views/Admin/followUp/FollowUpView.vue'
+import LoginView from '../views/Admin/login&signout/LoginView.vue'
+import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue'
+import PeopleDetailView from '../views/Admin/people/PeopleDetailView'  
+import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
+import StudentView from "../views/Admin/people/student/StudentView.vue";
+// import {storeToken} from '../storetoken/storeToken';
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView,
+    meta: {
+      needLogin: true
+    }
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/followUp',
+    name: 'foolowUp',
+    component: FollowUpView,
+    meta: {
+      needLogin: true
+    }
+
+  },
+  {
+    path: '/teacher',
+    name: 'teacher',
+    component: TeacherView,
+    meta: {
+      needLogin: true
+    }
+  },
+  {
+    path: '/student',
+    name: 'student',
+    component: StudentView,
+    meta: {
+      needLogin: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
+    meta: {
+      needLogin: true
+    }
+
+  },
+  {
+    path: '/peopleDetail/:role/:id',
+    name: 'peopleDetail',
+    component: PeopleDetailView,
+    props: true,
+    meta: {
+      needLogin: true
+    }
+  },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+    history: createWebHistory(),
+    routes
 })
-
 export default router
