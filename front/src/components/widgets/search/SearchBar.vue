@@ -13,14 +13,14 @@
 
 <script>
 export default {
-props:{
-placeholder:String,
-},
-data(){
-return{
-  keyword:''
-}
-}
+  props:{
+    placeholder:String
+  },
+  data(){
+      return {
+          keyword:''
+      }
+  }
 }
 </script>
 
