@@ -17,8 +17,11 @@ class UserController extends Controller
     public function login(Request $request) {
         // Check email and password
         $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'fail'], 401);
+        if (!$user) {
+            return response()->json(['email_status' => false, 'email_sms'=> "This email doesn't exist!"], 401);
+        } 
+        if ($user->password == 'Null') {
+            return response()->json(['sms'=>'invalid', 'email'=> $request->email, 'password'=> $request->password], 404);
         }
         // Create token
         $token = $user->createToken('mytoken')->plainTextToken;
