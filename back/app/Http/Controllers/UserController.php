@@ -204,4 +204,16 @@ class UserController extends Controller
         return $response;
     }
 
+    // Create New Password
+    public function createNewPassword(Request $request,$id) {
+        $user = User::findOrFail($id);
+        if($request->newPassword === $request->confirmPassword) {
+            $user->password = bcrypt($request->confirmPassword);
+            $user->save();
+            return response()->json(['message' => 'Password created!']);
+        }else {
+            return response()->json(['message' => 'Password not match!']);
+        }
+    }
+
 }
