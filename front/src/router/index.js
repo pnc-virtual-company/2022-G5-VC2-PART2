@@ -1,12 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import LoginView from "../views/Admin/login&signout/ConfirmEmailLoginView"
+import CreatePasswordView from "../views/Admin/login&signout/CreatePasswordView";
+import SetPasswordView from "../views/Admin/login&signout/SetPasswordView";
 import DashboardView from '../views/Admin/dashboard/DashboardView.vue';
 import FollowUpView from '../views/Admin/followUp/FollowUpView.vue';
-import LoginView from "../views/Admin/login&signout/LoginView.vue";
 import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue';
 import PeopleDetailView from '../views/Admin/people/PeopleDetailView';  
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
+import { store } from '../store/store'
 const routes = [
   {
     path: '/dashboard',
@@ -50,6 +53,22 @@ const routes = [
     // }
   },
   {
+    path: '/createPassword',
+    name: 'createPassword',
+    component: CreatePasswordView,
+    // meta: {
+    //   auth: false
+    // }
+  },
+  {
+    path: '/setPassword',
+    name: 'setPassword',
+    component: SetPasswordView,
+    // meta: {
+    //   auth: false
+    // }
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: ProfileView,
@@ -74,9 +93,12 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach((to)=>{
-//   console.log(to);
-//   return "/login"
-// })
-
+router.beforeEach(async (to) => {
+  const publicPages = ['/login'];
+  console.log(store.state.userEmail);
+  const authRequired = !publicPages.includes(to.path);
+  if (authRequired && !store.state.userEmail) {
+    return '/login';
+  }
+});
 export default router

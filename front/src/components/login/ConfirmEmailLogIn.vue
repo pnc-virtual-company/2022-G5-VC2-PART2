@@ -12,12 +12,12 @@
         <h1 class="text-2xl font-semibold text-center p-1 uppercase mt-4">
           Sign in now
         </h1>
-        <div class="mb-5 relative">
+        <div class="mb-2 relative">
           <label class="block text-gray-700 text-md" for="email">
             Email *
           </label>
           <input
-            class="appearance border w-full py-2 px-3 text-gray-700 mb-1 focus:outline-none rounded"
+            class="shadow appearance-none border  rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             :class="{'border-red-500': is_empty}"
             type="email"
             id="email"
@@ -26,7 +26,8 @@
             @input="is_empty=false"
           />
         </div>
-        <div class="flex items-center justify-end">
+        <div class="text-red-500 text-sm">{{email_error}}</div>
+        <div class="flex items-center justify-end mt-12">
           <button
             class="flex bg-blue-500 ground  hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline uppercase"
             type="submit"
@@ -53,29 +54,39 @@
   </div>
 </template>
 <script>
+import { store } from "../../store/store"
 import axios from '../../axios-http'
 export default ({
     data(){
         return {
             email: "",
             is_empty: false,
-            email_error: ''
+            email_error: '',
         }
     },
     methods: {
         async handleLogin(){
-            try{
-                if (this.email.trim() != ""){
-                    await axios.post('/login',{email: this.email}).then((res)=>{
-                        console.log(res.data);
-                    })
-                }else{
-                    this.is_empty = true
-                }
-            }catch(err){
-                    console.log(err.response.data);
-
-                }
+            if (this.email.trim() != ""){
+                await axios.post('/login',{email: this.email}).then((res)=>{
+                    const reponse = res.data;
+                    this.is_empty = false;
+                    this.email_error = ""
+                    console.log(reponse);
+                    if (reponse.email !=null){
+                      store.state.userEmail = reponse.email;
+                      if (reponse.password == null){
+                          this.$router.push('/createPassword');
+                      } else {
+                          this.$router.push('/setPassword')
+                      }
+                    }else{
+                      this.is_empty = true;
+                      this.email_error = "This email doesn't exist!"
+                    }
+                })
+            }else{
+                this.is_empty = true
+            }
         }
     }
 })
