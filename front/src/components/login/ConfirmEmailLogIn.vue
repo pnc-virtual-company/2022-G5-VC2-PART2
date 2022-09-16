@@ -4,13 +4,17 @@
       <div class="p-5 uppercase w-[50%]">
         <div>
           <h1 class="text-2xl font-semibold text-primary">Student follow up</h1>
-          <span class="text-lg font-semibold text-primary"> Management System </span>
+          <span class="text-lg font-semibold text-primary">
+            Management System
+          </span>
         </div>
         <img src="../../assets/pic-login.png" alt="" class="w-[100%] m-auto" />
       </div>
       <form class="w-[50%]" @submit.prevent="handleLogin">
-        <img src="../../assets/people.png" alt="" class="m-auto">
-        <h1 class="text-lg font-semibold text-center p-1 uppercase mt-6 text-primary">
+        <img src="../../assets/people.png" alt="" class="m-auto" />
+        <h1
+          class="text-lg font-semibold text-center p-1 uppercase mt-6 text-primary"
+        >
           Sign in now
         </h1>
         <div class="mb-1 relative mt-5">
@@ -23,10 +27,10 @@
             v-model="email"
           />
         </div>
-        <div class="text-red-500 text-sm">{{email_error}}</div>
+        <div class="text-red-500 text-sm">{{ email_error }}</div>
         <div class="flex items-center justify-end mt-12">
           <button
-            class="flex bg-blue-500 ground  hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline uppercase shadow"
+            class="flex bg-blue-500 ground hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-primary focus:shadow-outline uppercase shadow"
             type="submit"
           >
             sign in
@@ -52,40 +56,40 @@
 </template>
 
 <script>
-import axios from '../../axios-http'
-export default ({
-    data(){
-        return {
-            email: "",
-            is_empty: false,
-            email_error: '',
-        }
-    },
-    methods: {
-        async handleLogin(){
-            if (this.email.trim() != ""){
-                await axios.post('/login',{email: this.email}).then((res)=>{
-                    const reponse = res.data;
-                    this.is_empty = false;
-                    this.email_error = ""
-                    console.log(reponse);
-                    if (reponse.email !=null){
-                      this.$store.state.userEmail =  reponse.email;
-                      // this.$cookie.set('token',reponse.token);
-                      if (reponse.password == null){
-                          this.$router.push('/createPassword');
-                      } else {
-                          this.$router.push('/setPassword')
-                      }
-                    }else{
-                      this.is_empty = true;
-                      this.email_error = "This email doesn't exist!"
-                    }
-                })
-            }else{
-                this.is_empty = true
+import axios from "../../axios-http";
+export default {
+  data() {
+    return {
+      email: "",
+      is_empty: false,
+      email_error: "",
+    };
+  },
+  methods: {
+    async handleLogin() {
+      if (this.email.trim() != "") {
+        await axios.post("/login", { email: this.email }).then((res) => {
+          const reponse = res.data;
+          this.is_empty = false;
+          this.email_error = "";
+          console.log(reponse);
+          if (reponse.email != null) {
+            this.$store.state.userEmail = reponse.email;
+            // this.$cookie.set('token',reponse.token);
+            if (reponse.password == null) {
+              this.$router.push("/createPassword");
+            } else {
+              this.$router.push("/setPassword");
             }
-        }
-    }
-})
+          } else {
+            this.is_empty = true;
+            this.email_error = "This email doesn't exist!";
+          }
+        });
+      } else {
+        this.is_empty = true;
+      }
+    },
+  },
+};
 </script>
