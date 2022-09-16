@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewUserMail;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
@@ -81,6 +83,9 @@ class UserController extends Controller
             $student->id_student = $request->id_student;
             $student->save();
         }
+
+        // Sending email to user
+        Mail::to('lmsophea757@gmail.com')->send(new NewUserMail($user));
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
