@@ -115,6 +115,7 @@ export default {
     getStudentData(){
       axiosHttp.get("/users/students").then((res)=>{
         this.listStudents = res.data.reverse();
+        console.log(this.listStudents);
       })
     },
     showStudentForm(){

@@ -1,17 +1,24 @@
 import { createStore } from 'vuex'
-// import getCookie from "./cookie"
+import getDataCookie from "@/secret/getDataCookie"
+import aesDecrypt from '@/secret/aesdecrypt'
+import axios from '../axios-http'
 export const store = new createStore({
   state: {
-    // role: decryptData(getCookie('role'), 'my_role'),
-    // token: getCookie('token'), 'my_token',
-    userId: null,
+    authenticated: aesDecrypt(getDataCookie('token'), 'my_token'),
     userEmail: null,
+    userId: null
   },
   getters: {
   },
   mutations: {
   },
   actions: {
+    logout(){
+      document.cookie = `${'token'}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${'id'}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${'email'}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      axios.get('logout')
+    }
   },
   modules: {
   }

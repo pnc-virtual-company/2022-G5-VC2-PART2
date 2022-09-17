@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import LoginView from "../views/Admin/login&signout/ConfirmEmailLoginView"
 import CreatePasswordView from "../views/Admin/login&signout/CreatePasswordView";
 import SetPasswordView from "../views/Admin/login&signout/SetPasswordView";
@@ -10,39 +9,42 @@ import PeopleDetailView from '../views/Admin/people/PeopleDetailView';
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
 // import { store } from '../store/store'
+import { store } from '@/store/store';
+// import { useCookies } from "vue3-cookies";
+// const { cookies } = useCookies();
 const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
-    // meta: {
-    //   auth: true
-    // }
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/followUp',
     name: 'foolowUp',
     component: FollowUpView,
-    // meta: {
-    //   auth: true
-    // }
+    meta: {
+      auth: true
+    }
 
   },
   {
     path: '/teacher',
     name: 'teacher',
     component: TeacherView,
-    // meta: {
-    //   auth: true
-    // }
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/student',
     name: 'student',
     component: StudentView,
-    // meta: {
-    //   auth: true
-    // }
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/login',
@@ -57,7 +59,7 @@ const routes = [
     name: 'createPassword',
     component: CreatePasswordView,
     // meta: {
-    //   auth: false
+    //   auth: true
     // }
   },
   {
@@ -72,9 +74,9 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
-    // meta: {
-    //   auth: true
-    // }
+    meta: {
+      auth: true
+    }
 
   },
   {
@@ -82,23 +84,34 @@ const routes = [
     name: 'peopleDetail',
     component: PeopleDetailView,
     props: true,
-    // meta: {
-    //   auth: true
-    // }
+    meta: {
+      auth: true
+    }
   },
+
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+  history: createWebHistory(),
+  routes,
+  base: process.env.BASE_URL,
+  linkExactActiveClass: 'active'
+});
 
-// router.beforeEach(async (to) => {
-//   const publicPages = ['/login'];
-//   console.log(store.state.userEmail);
-//   const authRequired = !publicPages.includes(to.path);
-//   if (authRequired && !store.state.userEmail) {
-//     return '/login';
-//   }
-// });
+
+router.beforeEach((to, from, next) => {
+    let publicPage = to.meta.auth;
+    if (publicPage) {
+        if (!store.state.userEmail) {
+            next("/login");
+        } else if (!store.state.authenticated) {
+            next('/setPassword');
+        }else {
+          next()
+        }
+    } else {
+        next();
+    }
+});
+
 export default router

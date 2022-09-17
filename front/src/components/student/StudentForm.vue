@@ -192,8 +192,8 @@ export default{
           roles: 'STUDENT',
           student_id: this.studentId,
           id_student: this.idStudent,
-          class: this.classes,
-          batch: this.batch,
+          class_id: 1,
+          batch_id: 1,
           phone: this.phoneNumber,
           date_birth: this.dateOfBirth,
         };

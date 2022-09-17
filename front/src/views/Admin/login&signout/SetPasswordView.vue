@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import setPassword from "../../../components/login/SetPassword.vue"
+    import setPassword from "../../../components/login/SetPasswordLogin.vue"
     export default {
         components: {
             'set-password': setPassword

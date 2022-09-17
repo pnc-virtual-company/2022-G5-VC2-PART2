@@ -16,17 +16,26 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller
 {
     // Log In user
-    public function login(Request $request) {
+    public function confirmEmail(Request $request,$email) {
         // Check email and password
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $email)->first();
         if ($user) {
-            $token = $user->createToken('mytoken')->plainTextToken;
-            $response = ['email'=> $request->email, 'password'=>  $user->password,'token' => $token];
+            $password_status = true;
             if ($user->password == 'null') {
-                $response = ['email'=> $request->email, 'password'=> null,'token' => $token];
+                $password_status = false;
             }
+            $response = ['email'=>$user->email,'id'=> $user->id, "email_status"=>true,'password_status'=>$password_status];
         } else{
-            $response = ['email'=> null, 'password'=> $request->password];
+            $response = ['email_status'=> false, 'password_status'=> false];
+        }
+        return response()->json($response );
+    }
+    public function setPasswordLogin(Request $request){
+        $user = User::where('email',$request->email)->first();
+        $response = ['password_status'=>false];
+        if (Hash::check($request->password,$user->password)){
+            $token = $user->createToken('mytoken')->plainTextToken;
+            $response = ['user'=>$user,'password_status'=>true,'token'=>$token];
         }
 
         return response()->json($response);
@@ -38,7 +47,34 @@ class UserController extends Controller
         return response()->json(['message' => 'User logout']);
     }
 
-
+    // Create New Password
+    public function createNewPassword(Request $request,$id) {
+        $user = User::findOrFail($id);
+        if($request->newPassword === $request->confirmPassword) {
+            $user->password = bcrypt($request->confirmPassword);
+            $user->save();
+            return response()->json(['message' => 'Password created!']);
+        }else {
+            return response()->json(['message' => 'Password not match!']);
+        }
+    }
+    // Reset password
+    // public function resetPassword(Request $request, $id) {
+    //     $user = User::findOrFail($id);
+    //     if (Hash::check($request->currentPassword,$user->password)) {
+    //         if ($request->newPassword == $request->confirmPassword) {
+    //             $user->password = Hash::make($request->newPassword);
+    //             $user->save();
+    //             return response()->json(['message' => 'Password Updated!']);
+    //         }
+    //         else{
+    //             return response()->json(['message' => 'Confirm password does not match!']);
+    //         }
+    //     }
+    //     else {
+    //         return response()->json(['message' => 'Current password incorrect!']);
+    //     }
+    // }
     // Create New User 
     public function registerUser(Request $request) {
         // Validation sign Up user
@@ -97,7 +133,7 @@ class UserController extends Controller
 
     // Get all Teacher only
     public function teacherOnly() {
-       return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
+        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
     }
 
     // Show only one user (Teacher)
@@ -209,16 +245,5 @@ class UserController extends Controller
         return $response;
     }
 
-    // Create New Password
-    public function createNewPassword(Request $request,$id) {
-        $user = User::findOrFail($id);
-        if($request->newPassword === $request->confirmPassword) {
-            $user->password = bcrypt($request->confirmPassword);
-            $user->save();
-            return response()->json(['message' => 'Password created!']);
-        }else {
-            return response()->json(['message' => 'Password not match!']);
-        }
-    }
 
 }

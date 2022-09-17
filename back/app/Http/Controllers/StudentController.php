@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     public function getLastStudent() {
-        return Student::lastest()->first();
+        return Student::latest()->first();
     }
 }

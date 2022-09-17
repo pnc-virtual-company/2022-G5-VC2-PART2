@@ -18,8 +18,11 @@ use App\Http\Controllers\StudentController;
 
 // Public route---------======
 // Login Route
-Route::post('/login', [UserController::class, 'login']);
-Route::post('/login/set-password/{id}',[UserController::class,'createNewPassword']);
+Route::prefix('/login')->group(function() {
+    Route::get('/confirmEmail/{email}', [UserController::class, 'confirmEmail']);
+    Route::post('/createPassword/{id}',[UserController::class,'createNewPassword']);
+    Route::post('/', [UserController::class, 'setPasswordLogin']);
+});
 // Private Route ------------=========
 // Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //

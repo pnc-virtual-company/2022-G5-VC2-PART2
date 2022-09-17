@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar-view />
+    <navbar-view v-if="isLogin" />
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <component :is="Component" />
@@ -16,9 +16,20 @@ export default {
   },
   data(){
     return {
-
+      isLogin: false
     }
   },
+  methods: {
+    findUserInfo(){
+      console.log(this.$store.state.authenticated);
+      if (this.$store.state.authenticated){
+        this.isLogin = true;
+      }
+    }
+  },
+  created(){
+    this.findUserInfo()
+  }
 };
 </script>
 <style>
