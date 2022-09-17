@@ -14,7 +14,7 @@ class Batch extends Model
         'updated_at',
     ];
     
-    public function classbatchs() {
+    public function classbatches() {
         return $this->hasMany(ClassBatch::class);
     }
 

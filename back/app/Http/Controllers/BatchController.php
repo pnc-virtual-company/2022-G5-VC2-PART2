@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 class BatchController extends Controller
 {
+    public function index(){
+        return Batch::with('classbatches', 'students')->get();
+    }
     // Create New batch
     public function store(Request $request) {
         $batch = new Batch();

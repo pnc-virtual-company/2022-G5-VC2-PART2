@@ -7,7 +7,7 @@ import PeopleDetailView from '../views/Admin/people/PeopleDetailView';
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
 import { store } from '@/store/store';
-
+import BatchView from "../views/Admin/people/student/BatchView"
 const routes = [
   {
     path: '/dashboard',
@@ -57,7 +57,14 @@ const routes = [
     meta: {
       auth: true
     }
-
+  },
+  {
+    path: '/batch',
+    name: 'batch',
+    component: BatchView,
+    meta: {
+      auth: true
+    }
   },
   {
     path: '/peopleDetail/:role/:id',

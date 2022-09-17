@@ -127,6 +127,7 @@ class UserController extends Controller
 
     // Get all Student only
     public function studentOnly() {
+        
         return User::join('students','users.student_id','=','students.id')->join('class_batches','students.class_id','=','class_batches.id')->join('batches','students.batch_id','=','batches.id')->get(['users.*','students.*','class_batches.*','batches.*']);
     }
 

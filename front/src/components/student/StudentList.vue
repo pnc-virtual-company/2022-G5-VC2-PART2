@@ -3,18 +3,30 @@
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
-        <div class="relative">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="add-people w-14 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
-            @click="showStudentForm"
-            >
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-          </svg>
-          <div
-            class="add-button absolute z-50 -top-12 opacity-0 -right-10 text-sm w-32 bg-[#1a1a1a] rounded-full text-white p-1.5 text-center">
-            Add new student
-          </div>
+        <div class="flex">
+            <div class="relative mr-2">
+            <router-link to="/batch">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="add-people w-10 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2 ml-auto " @click="showForm">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </router-link>
+            <div id="cardBatch" class="add-button absolute -top-10 z-50 text-center opacity-0 -right-11 text-sm w-32 bg-[#1596e0] rounded-full text-white p-1.5">
+                 Add new batch
+            </div>
+            </div>
+            <div class="relative">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="add-people w-14 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
+                @click="showStudentForm"
+                >
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+              </svg>
+              <div
+                class="add-button absolute z-50 -top-12 opacity-0 -right-10 text-sm w-32 bg-[#1a1a1a] rounded-full text-white p-1.5 text-center">
+                Add new student
+              </div>
+            </div>
         </div>
       </div>
       <div class="rounded shadow p-4 mt-2 bg-white">
@@ -81,14 +93,16 @@
       <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
+  <card-batch />
 </template>
 
 <script>
 import axiosHttp from '../../axios-http';
 import peopleList from "../PeopleList.vue"
 import studentForm from './StudentForm.vue';
-import deleteAlert from "../widgets/delete/DeleteAlert.vue";
-import searchBar from '../widgets/search/SearchBar.vue';
+import deleteAlert from "../widgets/action/DeleteAlert.vue";
+import searchBar from '../search/SearchBar.vue';
+import cardBatch from '../../components/widgets/Card/CardBatch.vue'
 
 export default {
   components: {
@@ -96,6 +110,7 @@ export default {
     "student-form": studentForm,
     "delete-alert": deleteAlert,
     "searchbar-form": searchBar,
+    'card-batch': cardBatch,
     
   },
   data() {
