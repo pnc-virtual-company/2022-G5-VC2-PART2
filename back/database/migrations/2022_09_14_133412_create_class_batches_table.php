@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('class_batches', function (Blueprint $table) {
             $table->id();
             $table->string('class_name');
-            $table->foreignId('batch_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('batch_id')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
