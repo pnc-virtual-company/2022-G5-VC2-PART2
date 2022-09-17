@@ -1,14 +1,6 @@
 <template>
-  <div class="w-full m-auto h-[100vh] flex items-center justify-center">
-    <div class="flex items-center justify-center w-[60%]">
-      <div class="p-5 uppercase w-[50%]">
-        <div>
-          <h1 class="text-2xl font-semibold text-primary">Student follow up</h1>
-          <span class="text-lg font-semibold text-primary"> Management System </span>
-        </div>
-        <img src="../../assets/pic-login.png" alt="" class="w-[100%] m-auto" />
-      </div>
-          <form class="w-[50%]" @submit.prevent="handleLogin">
+    <div class="flex items-center justify-center w-[30%] duration-400 ease-in-out">
+          <form class="w-full" @submit.prevent="handleLogin">
             <div class="mb-1   relative">
               <div class="flex items-center relative">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9   p-2 h-9   absolute text-primary border-r-2 top-0.5">
@@ -57,7 +49,6 @@
               </div>
           </form>
     </div>
-  </div>
 </template>
 <script>
 import axios from "../../axios-http"
@@ -85,15 +76,17 @@ export default({
         this.isEmptyPassword = false;
         this.isIncorrect = false;
         this.isProcessing = false;
+        console.log('ass');
         axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then((res)=>{
           this.isProcessing = true;
+          console.log(res.data);
           if (res.data.password_status){
             console.log(res.data);
-              // const secret_role = aesEncrypt(response.user.role, 'my_role');
-              // this.$cookies.set('role',secret_role);
+              const secret_role = aesEncrypt(res.data.role, 'my_role');
+              this.$cookies.set('role',secret_role);
               const secret_token = aesEncrypt(res.data.token, 'my_token');
               this.$cookies.set('token',secret_token);
-            this.$router.push("/teacher");
+              window.location.reload();
           }else{
             this.isEmptyPassword = true;
             this.isIncorrect = true;
@@ -102,5 +95,16 @@ export default({
       }
     },
   },
+  created(){
+    if (this.$cookies.token){
+      if (this.$cookies.role=="TEACHER"){
+        console.log("teacher");
+      } else if (this.$cookies.role == "STUDENT"){
+        console.log();
+      } else{
+        this.$router.push('/dashboard');
+      }
+    }
+  }
 })
 </script>

@@ -38,13 +38,8 @@ class UserController extends Controller
             $response = ['user'=>$user,'password_status'=>true,'token'=>$token];
         }
 
+        // Create token for login
         return response()->json($response);
-    }
-
-    // Log out user
-    public function logout() {
-        auth()->user()->tokens()->delete();
-        return response()->json(['message' => 'User logout']);
     }
 
     // Create New Password
@@ -58,6 +53,12 @@ class UserController extends Controller
             return response()->json(['message' => 'Password not match!']);
         }
     }
+    // Log out user
+    public function logout() {
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'User logout']);
+    }
+
     // Reset password
     // public function resetPassword(Request $request, $id) {
     //     $user = User::findOrFail($id);
@@ -92,7 +93,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
-        $user->password= "null";
+        $user->password= null;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';

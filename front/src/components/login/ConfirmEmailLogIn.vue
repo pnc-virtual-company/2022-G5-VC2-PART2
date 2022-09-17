@@ -1,16 +1,7 @@
 <template>
-  <div class="w-full m-auto h-[100vh] flex items-center justify-center">
-    <div class="flex items-center justify-center w-[60%]">
-      <div class="p-5 uppercase w-[50%]">
-        <div>
-          <h1 class="text-2xl font-semibold text-primary">Student follow up</h1>
-          <span class="text-lg font-semibold text-primary">
-            Management System
-          </span>
-        </div>
-        <img src="../../assets/pic-login.png" alt="" class="w-[100%] m-auto" />
-      </div>
-      <form class="w-[50%]" @submit.prevent="handleLogin">
+    <div class="flex items-center justify-center w-[30%]">
+
+      <form class="w-full" @submit.prevent="handleLogin">
         <img src="../../assets/people.png" alt="" class="m-auto">
 
         <h1 class="text-xl font-semibold text-center p-1 uppercase mt-6 text-primary">
@@ -55,7 +46,7 @@
         </div>
       </form>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -69,6 +60,7 @@ export default ({
             isProcessing: true,
         }
     },
+    emits: ['confirm-email'],
     methods: {
         async handleLogin(){
           if (this.email.trim() != ""){
@@ -79,14 +71,9 @@ export default ({
                     this.isProcessing = true;
                       console.log(response);
                     if (response.email_status){
-                      // window.location.reload();
                       this.$store.state.userEmail = response.email
                       this.$store.state.userId = response.id
-                      if (!response.password_status){
-                        this.$router.push('/createPassword');
-                      } else {
-                        this.$router.push('/setPassword');
-                      }
+                      this.$emit('confirm-email', response)
                     }else{
                       this.is_empty = true;
                     }
