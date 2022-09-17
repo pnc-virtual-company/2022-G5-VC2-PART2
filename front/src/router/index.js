@@ -9,7 +9,7 @@ import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue';
 import PeopleDetailView from '../views/Admin/people/PeopleDetailView';  
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
-import { store } from '../store/store'
+// import { store } from '../store/store'
 const routes = [
   {
     path: '/dashboard',
@@ -93,12 +93,12 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach(async (to) => {
-  const publicPages = ['/login'];
-  console.log(store.state.userEmail);
-  const authRequired = !publicPages.includes(to.path);
-  if (authRequired && !store.state.userEmail) {
-    return '/login';
-  }
-});
+// router.beforeEach(async (to) => {
+//   const publicPages = ['/login'];
+//   console.log(store.state.userEmail);
+//   const authRequired = !publicPages.includes(to.path);
+//   if (authRequired && !store.state.userEmail) {
+//     return '/login';
+//   }
+// });
 export default router
