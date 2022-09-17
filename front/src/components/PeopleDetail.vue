@@ -46,7 +46,7 @@ import formEdit from "./student/FormEditStudent.vue";
 import axios from "../axios-http";
 export default {
     components:{
-        'form-edit':formEdit
+        'form-edit':formEdit,
     },
     data(){
         return{

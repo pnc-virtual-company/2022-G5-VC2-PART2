@@ -1,11 +1,7 @@
 <template>
-  <div
-    class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
-  >
+  <div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
     <div class="w-[40%]">
-      <div
-        class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t"
-      >
+      <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
         <p></p>
         <h2>Create Teacher</h2>
         <svg
@@ -97,51 +93,40 @@
             v-model="email"
           />
           <p>{{message}}</p>
-          <p>{{messageForgotEmail}}</p>
         </div>
-        <div class="gender mr-2 mb-2">
-          <b>Gender</b>
-          <div class="mt-2 flex">
-            <div class="male">
-              <input
-                type="radio"
-                class="ml-2 cursor-pointer"
-                name="gender"
-                id="maleClick"
-                value="Male"
-                v-model="gender"
-              />
-              <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
-            </div>
-            <div class="female ml-8">
-              <input
-                type="radio"
-                class="ml-2 cursor-pointer"
-                name="gender"
-                value="Female"
-                id="femaleClick"
-                v-model="gender"
-              />
-              <label for="femaleClick" class="ml-2 cursor-pointer"
-                >Female
-              </label>
-            </div>
+        <div class="mt-2 flex">
+          <div class="male">
+            <input
+              type="radio"
+              class="ml-2 cursor-pointer"
+              name="gender"
+              id="maleClick"
+              value="Male"
+              v-model="gender"
+            />
+            <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
+          </div>
+          <div class="female ml-8">
+            <input
+              type="radio"
+              class="ml-2 cursor-pointer"
+              name="gender"
+              value="Female"
+              id="femaleClick"
+              v-model="gender"
+            />
+            <label for="femaleClick" class="ml-2 cursor-pointer"
+              >Female
+            </label>
           </div>
         </div>
         <div class="flex justify-end">
-          <button
-            type="button"
-            @click="$emit('closeForm')"
-            class="bg-red-500 hover:bg-red-600 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline"
-          >
-            Add Teacher
-          </button>
+          <button-cancel @click="$emit('closeForm')">
+            <template v-slot:button_cancel>Cancel</template>     
+          </button-cancel>
+          <button-create>
+            <template v-slot:button_create>Add Teacher</template>      
+          </button-create>
         </div>
       </form>
     </div>
@@ -171,7 +156,7 @@ export default {
       this.firstName.toLowerCase().trim() + "." + newValue.toLowerCase().trim() + "@passerellesnumeriques.org";
     },
     firstName: function(newValue) {
-      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@student.passerellesnumeriques.org';
+      this.email = newValue.toLowerCase().trim() + '.' + this.lastName.toLowerCase().trim() + '@passerellesnumeriques.org';
     }
   },
   methods: {

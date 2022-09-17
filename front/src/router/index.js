@@ -7,28 +7,40 @@ import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue'
 import PeopleDetailView from '../views/Admin/people/PeopleDetailView'  
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
+// import {storeToken} from '../storetoken/storeToken';
 const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
-
+    meta: {
+      needLogin: true
+    }
   },
   {
     path: '/followUp',
     name: 'foolowUp',
     component: FollowUpView,
+    meta: {
+      needLogin: true
+    }
 
   },
   {
     path: '/teacher',
     name: 'teacher',
     component: TeacherView,
+    meta: {
+      needLogin: true
+    }
   },
   {
     path: '/student',
     name: 'student',
     component: StudentView,
+    meta: {
+      needLogin: true
+    }
   },
   {
     path: '/login',
@@ -40,6 +52,9 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+    meta: {
+      needLogin: true
+    }
 
   },
   {
@@ -47,6 +62,9 @@ const routes = [
     name: 'peopleDetail',
     component: PeopleDetailView,
     props: true,
+    meta: {
+      needLogin: true
+    }
   },
 ]
 

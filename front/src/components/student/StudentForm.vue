@@ -109,14 +109,13 @@
       <div class="{}">
         <b><label for="classInput">Date of Birth</label></b>
         <input
-            type="text"
+            type="date"
             name="studentDateBirth"
-            class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            class="shadow appearance-none border ml-1 mr-6 rounded w-[98%] px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
             v-model="dateOfBirth"
-            placeholder="Set date of birth"
             :class="{'border-red-600' :forgotDateBirth}"
           />
-          <p>{{forgotDateBirth}}</p>
+           <p>{{forgotDateBirth}}</p>
       </div>
       <div class="gender mr-2 mb-2">
         <b>Gender</b>
@@ -132,8 +131,12 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <button type="button" @click="$emit('closeForm')" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Add Student</button>
+        <button-cancel @click="$emit('closeForm')">
+            <template v-slot:button_cancel>Cancel</template>     
+        </button-cancel>
+        <button-create>
+          <template v-slot:button_create>Add Student</template>      
+        </button-create>
       </div>
     </form>
   </div>

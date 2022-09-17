@@ -122,8 +122,12 @@
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <button @click="$emit('closeForm')" type="button" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Update</button>
+                    <button-cancel @click="$emit('closeForm')">
+                        <template v-slot:button_cancel>Cancel</template>     
+                    </button-cancel>
+                    <button-create>
+                        <template v-slot:button_create>Save Change</template>      
+                    </button-create>
                 </div>
             </form>
         </div>
