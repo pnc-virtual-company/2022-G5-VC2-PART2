@@ -19,17 +19,29 @@ class UserController extends Controller
     public function login(Request $request) {
         // Check email and password
         $user = User::where('email', $request->email)->first();
-        if ($user) {
-            $token = $user->createToken('mytoken')->plainTextToken;
-            $response = ['email'=> $request->email, 'password'=>  $user->password,'token' => $token];
-            if ($user->password == 'null') {
-                $response = ['email'=> $request->email, 'password'=> null,'token' => $token];
-            }
-        } else{
-            $response = ['email'=> null, 'password'=> $request->password];
+
+        // Check password
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'fail'], 401);
         }
 
-        return response()->json($response);
+        // Create token for login
+        $token = $user->createToken('mytoken')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
+
+    public function confirmEmail(Request $request, $id) {
+        $user = User::findOrFail($id);
+        // Check email first create
+        if ($user->email === $request->email) {
+            return response()->json(['status' => true ],200);
+        }else {
+            return response()->json(['message' => 'Email not true'],402);
+        }
     }
 
     // Log out user
@@ -56,7 +68,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
-        $user->password= "null";
+        $user->password= null;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';
@@ -217,7 +229,7 @@ class UserController extends Controller
             $user->save();
             return response()->json(['message' => 'Password created!']);
         }else {
-            return response()->json(['message' => 'Password not match!']);
+            return response()->json(['message' => 'Password not match!'],402);
         }
     }
 
