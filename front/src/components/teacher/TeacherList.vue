@@ -66,7 +66,7 @@
 import axiosHttp from "../../axios-http";
 import peopleList from "../PeopleList.vue";
 import teacherForm from "../teacher/TeacherForm.vue";
-import deleteAlert from "../widgets/delete/DeleteAlert.vue";
+import deleteAlert from "../widgets/action/DeleteAlert.vue";
 import searchBar from '../search/SearchBar.vue';
 
 export default {

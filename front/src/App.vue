@@ -5,7 +5,7 @@
       <component :is="Component" />
     </transition>
   </router-view>
-  <form-login/>
+  <!-- <form-login/> -->
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";

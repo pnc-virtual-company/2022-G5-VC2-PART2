@@ -7,6 +7,7 @@ import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue'
 import PeopleDetailView from '../views/Admin/people/PeopleDetailView'  
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
+import BatchView from "../views/Admin/people/student/BatchView"
 // import {storeToken} from '../storetoken/storeToken';
 const routes = [
   {
@@ -55,7 +56,14 @@ const routes = [
     meta: {
       needLogin: true
     }
-
+  },
+  {
+    path: '/batch',
+    name: 'batch',
+    component: BatchView,
+    meta: {
+      needLogin: true
+    }
   },
   {
     path: '/peopleDetail/:role/:id',
