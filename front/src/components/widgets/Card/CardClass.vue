@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex mt-10">
     <div
-      class="w-4/12 m-3 mt-10 items-center justify-center shadow rounded bg-gray-300"
+      class="w-4/12 m-3 mt-10 items-center justify-center shadow rounded bg-white"
       v-for="card of classes"
       :key="card"
     >
@@ -16,7 +16,7 @@
             stroke-width="1.5"
             stroke="currentColor"
             class="w-6 h-6"
-            @click="isActive = !isActive"
+            @click="greet(card)"
           >
             <path
               stroke-linecap="round"
@@ -24,6 +24,27 @@
               d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
             />
           </svg>
+          <!--  -->
+          <div v-if="dropDown && card === displayIndex" class="makeitFlaot floatRight floatLeft">
+            <!-- Dropdown menu -->
+            <div class="w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 backgroundBlure">
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
+                    <li>
+                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+          <!--  -->
         </div>
         <h1 class="text-white">{{ card.name }}</h1>
       </div>
@@ -54,18 +75,33 @@
 export default {
   data() {
     return {
+      dropDown: false,
+      displayIndex: null,
       classes: [
         { name: " web a", students: { number: 12 } },
         { name: "web b", students: { number: 22 } },
         { name: "web c", students: { number: 32 } },
       ],
-      isActive: false,
     };
   },
-//   computed: {
-//     showDelete() {
-//         return this.isActive ? "is-delete" : "is-edit";
-//     }
-//   }
+  methods: {
+    greet(card) {
+      this.dropDown = !this.dropDown;
+      this.displayIndex = card;
+    },
+  },
 };
 </script>
+<style scoped>
+ .makeitFlaot{
+    margin-top: 20px;
+    position: absolute;
+    z-index: 99;
+ }
+ .floatRight{
+    margin-right: -160px;
+ }
+ .backgroundBlure{
+    background: rgba(0,0,0,0.3);
+ }
+</style>
