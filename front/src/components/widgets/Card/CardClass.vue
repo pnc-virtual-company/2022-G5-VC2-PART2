@@ -16,6 +16,7 @@
             stroke-width="1.5"
             stroke="currentColor"
             class="w-6 h-6"
+            @click="isActive = !isActive"
           >
             <path
               stroke-linecap="round"
@@ -58,7 +59,13 @@ export default {
         { name: "web b", students: { number: 22 } },
         { name: "web c", students: { number: 32 } },
       ],
+      isActive: false,
     };
   },
+//   computed: {
+//     showDelete() {
+//         return this.isActive ? "is-delete" : "is-edit";
+//     }
+//   }
 };
 </script>
