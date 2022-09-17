@@ -24,27 +24,6 @@
               d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
             />
           </svg>
-          <!--  -->
-          <div v-if="dropDown && card === displayIndex" class="makeitFlaot floatRight floatLeft">
-            <!-- Dropdown menu -->
-            <div class="w-44 bg-white rounded divide-gray-100 shadow dark:bg-gray-700 backgroundBlure">
-                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                    <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-                    </li>
-                </ul>
-            </div>
-          </div>
-          <!--  -->
         </div>
         <h1 class="text-white">{{ card.name }}</h1>
       </div>
@@ -84,24 +63,5 @@ export default {
       ],
     };
   },
-  methods: {
-    greet(card) {
-      this.dropDown = !this.dropDown;
-      this.displayIndex = card;
-    },
-  },
 };
 </script>
-<style scoped>
- .makeitFlaot{
-    margin-top: 20px;
-    position: absolute;
-    z-index: 99;
- }
- .floatRight{
-    margin-right: -160px;
- }
- .backgroundBlure{
-    background: rgba(0,0,0,0.3);
- }
-</style>
