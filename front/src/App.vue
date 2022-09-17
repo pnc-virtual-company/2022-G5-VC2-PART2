@@ -1,11 +1,13 @@
 <template>
+<div>
   <navbar-view/>
   <router-view v-slot="{ Component }">
     <transition name="fade">
       <component :is="Component" />
     </transition>
   </router-view>
-  <form-login/>
+</div>
+  <!-- <form-login/> -->
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";

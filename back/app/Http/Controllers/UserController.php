@@ -74,7 +74,6 @@ class UserController extends Controller
             foreach($idStudents as $idStudent) {
     
                 if ($idStudent['id_student'] === $request->id_student){
-
                     // return abort(422,['message' => 'Id already exist!*']);
                     return response()->json(['message' => 'Id already exist!*'],402);
                 }
