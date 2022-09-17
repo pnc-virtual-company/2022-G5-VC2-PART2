@@ -81,6 +81,7 @@
       <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
+  <card-batch />
 </template>
 
 <script>
@@ -89,6 +90,7 @@ import peopleList from "../PeopleList.vue"
 import studentForm from './StudentForm.vue';
 import deleteAlert from "../widgets/delete/DeleteAlert.vue";
 import searchBar from '../search/SearchBar.vue';
+import cardBatch from '../../components/widgets/Card/CardBatch.vue'
 
 export default {
   components: {
@@ -96,6 +98,7 @@ export default {
     "student-form": studentForm,
     "delete-alert": deleteAlert,
     "searchbar-form": searchBar,
+    'card-batch': cardBatch,
     
   },
   data() {
