@@ -10,9 +10,11 @@
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
+import FormLogin from './views/Admin/login&signout/LoginView.vue'
 export default {
   components: {
     "navbar-view": NavBar,
+    "form-login" : FormLogin,
   },
   data(){
     return {

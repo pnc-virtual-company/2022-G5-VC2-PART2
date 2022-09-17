@@ -1,5 +1,5 @@
 <template>
-<div class="flex items-center justify-center w-full mb-4">
+    <div class="flex items-center justify-center w-full mb-4">
     <div class="w-[80%]">
         <div class="mt-20">
             <p v-if="userDataDetail.roles == 'TEACHER'" class="text-3xl text-center capitalize">teacher informaion detail</p>
@@ -38,6 +38,7 @@
         </div>
     </div>
 </div>
+
 <form-edit :userDataDetail="userDataDetail" :studentDataDetail="studentDataDetail" v-if="isEditStudent" @closeForm="isEditStudent=false" @save-edit="saveEdit"/>
 </template>
 
@@ -46,7 +47,7 @@ import formEdit from "./student/FormEditStudent.vue";
 import axios from "../axios-http";
 export default {
     components:{
-        'form-edit':formEdit
+        'form-edit':formEdit,
     },
     data(){
         return{

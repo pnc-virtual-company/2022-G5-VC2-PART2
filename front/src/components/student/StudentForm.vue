@@ -112,6 +112,7 @@
             v-model="dateOfBirth"
             :class="{'border-red-600' :forgotDateBirth}"
           />
+           <p>{{forgotDateBirth}}</p>
       </div>
       <div class="gender mr-2 mb-2">
         <b>Gender</b>
@@ -127,8 +128,12 @@
         </div>
       </div>
       <div class="flex justify-end">
-        <button type="button" @click="$emit('closeForm')" class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">Cancel</button>
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 mx-2 text-white p-1.5 px-3 rounded focus:outline-none focus:shadow-outline">Add Student</button>
+        <button-cancel @click="$emit('closeForm')">
+            <template v-slot:button_cancel>Cancel</template>     
+        </button-cancel>
+        <button-create>
+          <template v-slot:button_create>Add Student</template>      
+        </button-create>
       </div>
     </form>
   </div>

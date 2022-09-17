@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
@@ -112,7 +111,6 @@ class UserController extends Controller
             foreach($idStudents as $idStudent) {
     
                 if ($idStudent['id_student'] === $request->id_student){
-
                     // return abort(422,['message' => 'Id already exist!*']);
                     return response()->json(['message' => 'Id already exist!*'],402);
                 }
