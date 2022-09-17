@@ -40,6 +40,7 @@ Route::post('/login/set-password/{id}',[UserController::class,'createNewPassword
     });
 
     // Route Batchs
+    Route::get('/batches',[BatchController::class,'index']);
     Route::post('/batches',[BatchController::class,'store']);
     Route::post('/batch/{id}',[BatchController::class,'update']);
     Route::get('/batch/{id}',[BatchController::class,'show']);
