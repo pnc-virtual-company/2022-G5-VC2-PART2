@@ -24,6 +24,7 @@ export default {
       console.log(this.$store.state.authenticated);
       if (this.$store.state.authenticated){
         this.isLogin = true;
+        this.$router.push('/dashboard')
       }
     }
   },

@@ -1,14 +1,20 @@
 <template>
-    <div class="flex items-center justify-center w-[30%] duration-400 ease-in-out">
-                <form class="w-full m-auto" @submit.prevent="createPassword">
+    <div class="flex items-center justify-center w-[40%] duration-400 ease-in-out">
+                <form class="w-full m-auto p-4 rounded bg-gray-100 px-12" @submit.prevent="createPassword">
+                    <div class="text-center text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-28 p-4 border-4 border-primary h-28 bg-gray-100  shadow rounded-full m-auto">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+                        <h1 class=" text-xl mt-2 font-bold">Create New Password</h1>
+                    </div>
                     <div class="mb-3 relative mt-5">
                         <div class="flex items-center relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9   p-2 h-9   absolute text-primary border-r-2 top-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9   p-2 h-9   absolute text-primary border-r-2 top-0.5 font-bold">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                             </svg>
                             <input
                                 type="password"
-                                class="appearance-none rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
+                                class="appearance-none rounded w-full bg-gray-100 px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
                                 :class="{'border border-red-500 bg-red-100': isFilledNew}"
                                 placeholder="Enter new password ..."
                                 v-model="newPassword"
@@ -18,11 +24,11 @@
                     </div>
                     <div class="mb-1   relative">
                         <div class="flex items-center relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9   p-2 h-9   absolute text-primary border-r-2 top-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9   p-2 h-9   absolute text-primary border-r-2 top-0.5 font-bold">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                             </svg>
                             <input
-                                class=" appearance-none  rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
+                                class=" appearance-none bg-gray-100  rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
                                 :class="{' border-red-500 bg-red-100':isFilledConfirm}"
                                 :type="type"
                                 id="password"
@@ -41,7 +47,12 @@
                         <label for="show" class="ml-2 cursor-pointer text-sm">Show password</label>
                     </div>
                     <div class="flex items-center justify-end">
-                        <button type="submit" class="bg-primary p-2 rounded w-24 text-white  hover:bg-blue-400">Next</button>
+                        <button             
+                            :disabled="checkValidation"
+                            class=" bg-blue-500 ground  hover:bg-blue-600 text-white py-1.5 px-4 rounded focus:outline-primary focus:shadow-outline  shadow"
+                            :class="{'bg-gray-300 hover:bg-gray-300 hover:cursor-not-allowed': checkValidation}"
+                            type="submit">Next
+                        </button>
                     </div>
                 </form>
     </div>
@@ -51,6 +62,7 @@
 <script>
 import axios from "../../axios-http"
 export default({
+    emits: ['create-password'],
     data(){
         return {
             newPassword: "",
@@ -63,35 +75,17 @@ export default({
     },
     methods: {
         async createPassword(){
-            if (this.checkValidation()){
-                this.isValid = false
-                if (this.newPassword == this.confirmPassword){
-                    this.isValid = false;
-                    console.log(this.$store.state.userId);
-                    const newPassword = {newPassword: this.newPassword, confirmPassword: this.confirmPassword}
-                    axios.post("/login/createPassword/" +  this.$store.state.userId,newPassword);
-                    this.$router.push('/login');
-                }else{
-                    this.isValid = true
-                    this.isFilledConfirm = true
-                }
+            this.isValid = false
+            if (this.newPassword == this.confirmPassword){
+                this.isValid = false;
+                // console.log(this.$store.state.userId);
+                const newPassword = {newPassword: this.newPassword, confirmPassword: this.confirmPassword}
+                axios.post("/login/createPassword/" +  this.$store.state.userId,newPassword);
+                this.$emit('create-password');
+            }else{
+                this.isValid = true
+                this.isFilledConfirm = true
             }
-        },
-        // to check validation of both password
-        checkValidation(){
-            this.isFilledNew = false;
-            if (this.newPassword.trim() == ""){
-                this.isFilledNew = true;
-            }
-            this.isFilledConfirm = false;
-            if (this.confirmPassword.trim() == ""){
-                this.isFilledConfirm = true;
-            }
-            let sms = true;
-            if  (this.isFilledNew || this.isFilledConfirm){
-                sms = false;
-            }
-            return sms;
         },
         checkVisibility(){
             if (this.type == "password"){
@@ -101,6 +95,17 @@ export default({
 
             }
         }
+    },
+    computed: {
+        // to check validation of both password
+        checkValidation(){
+            // this.isFilledNew = false;
+            let sms = false;
+            if (this.newPassword.trim() == "" || this.confirmPassword.trim()== ''){
+                sms = true;
+            }
+            return sms;
+        },
     }
 })
 </script>

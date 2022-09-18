@@ -1,13 +1,19 @@
 <template>
-    <div class="flex items-center justify-center w-[30%] duration-400 ease-in-out">
-          <form class="w-full" @submit.prevent="handleLogin">
-            <div class="mb-1   relative">
+    <div class="flex items-center justify-center w-[40%] duration-400 ease-in-out">
+          <form class="w-full m-auto p-4 rounded bg-gray-100 px-12" @submit.prevent="handleLogin">
+            <div class="text-center text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-28 p-4 border-4 border-primary h-28 bg-gray-100  shadow rounded-full m-auto">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+                <h1 class=" text-xl mt-2 font-bold">Enter Password</h1>
+            </div>
+            <div class="mb-1   relative mt-6">
               <div class="flex items-center relative">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9   p-2 h-9   absolute text-primary border-r-2 top-0.5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>
                 <input
-                  class=" appearance-none  rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
+                  class=" appearance-none bg-gray-100  rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
                   :class="{' border-red-500 bg-red-100':isEmptyPassword}"
                   :type="type"
                   id="password"
@@ -17,7 +23,7 @@
                 />
               </div>
             </div>
-            <div v-if="isIncorrect" class="text-red-400 text-sm">Incorrect password</div>  
+            <div v-if="isIncorrect" class="text-red-400 text-sm mb-2">Incorrect password</div>  
             <div class="mb-6 relative text-sm">
               <input type="checkbox" id="show" @click="check">
               <label for="show"> Show password </label>
