@@ -72,7 +72,7 @@
           <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
           <h1 class="text-stone-500 mt-5 ">No requests found!</h1>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listStudents.length > 3" >
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listStudents.length > 2" >
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                   <div v-if="showShortList" class="flex">
                     <p class="text-sm">View All</p>
@@ -125,13 +125,14 @@ export default {
         keyword:'',
         errorIdStudent: '',
         filterByBatch: "All",
-        filterByClass: "All",
+      filterByClass: "All",
       }
   },
   methods: {
     getStudentData(){
       axiosHttp.get("/users/students").then((res)=>{
         this.listStudents = res.data.reverse();
+        console.log(this.listStudents);
       })
     },
     showStudentForm(){

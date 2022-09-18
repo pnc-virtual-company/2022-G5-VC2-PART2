@@ -1,11 +1,7 @@
 <template>
-  <div
-    class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0"
-  >
+  <div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
     <div class="w-[40%]">
-      <div
-        class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t"
-      >
+      <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
         <p></p>
         <h2>Create Teacher</h2>
         <svg
@@ -78,7 +74,7 @@
               placeholder="Phone number ..."
               v-model="phone"
             />
-            <span>Optional*</span>
+            <span class="text-primary text-sm">Optional*</span>
           </div>
           <div class="text-red-500 text-sm mb-2">
           </div>
@@ -97,33 +93,30 @@
           />
           <p>{{message}}</p>
         </div>
-        <div class="gender mr-2 mb-2">
-          <b>Gender</b>
-          <div class="mt-2 flex">
-            <div class="male">
-              <input
-                type="radio"
-                class="ml-2 cursor-pointer"
-                name="gender"
-                id="maleClick"
-                value="Male"
-                v-model="gender"
-              />
-              <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
-            </div>
-            <div class="female ml-8">
-              <input
-                type="radio"
-                class="ml-2 cursor-pointer"
-                name="gender"
-                value="Female"
-                id="femaleClick"
-                v-model="gender"
-              />
-              <label for="femaleClick" class="ml-2 cursor-pointer"
-                >Female
-              </label>
-            </div>
+        <div class="mt-2 flex">
+          <div class="male">
+            <input
+              type="radio"
+              class="ml-2 cursor-pointer"
+              name="gender"
+              id="maleClick"
+              value="Male"
+              v-model="gender"
+            />
+            <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
+          </div>
+          <div class="female ml-8">
+            <input
+              type="radio"
+              class="ml-2 cursor-pointer"
+              name="gender"
+              value="Female"
+              id="femaleClick"
+              v-model="gender"
+            />
+            <label for="femaleClick" class="ml-2 cursor-pointer"
+              >Female
+            </label>
           </div>
         </div>
         <div class="flex justify-end">
@@ -213,11 +206,5 @@ export default {
 p{
   color: red;
   font-size: 14px;
-}
-span{
-  color: rgb(61, 61, 254);
-  font-size: 13px;
-  margin: 0;
-  padding: 0;
 }
 </style>

@@ -1,20 +1,35 @@
 <template>
-  <navbar-view/>
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" />
-    </transition>
-  </router-view>
-  <!-- <form-login/> -->
+  <div>
+    <navbar-view v-if="isLogin" />
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
-import FormLogin from './views/Admin/login&signout/LoginView.vue'
 export default {
   components: {
     "navbar-view": NavBar,
-    "form-login" : FormLogin,
   },
+  data(){
+    return {
+      isLogin: false
+    }
+  },
+  methods: {
+    findUserInfo(){
+      console.log(this.$store.state.authenticated);
+      if (this.$store.state.authenticated){
+        this.isLogin = true;
+      }
+    }
+  },
+  created(){
+    this.findUserInfo()
+  }
 };
 </script>
 <style>
@@ -33,16 +48,4 @@ body{
 .fade-leave-active {
   transition: all 0.3s ease-out;
 }
-/*nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-} */
-
-/* nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>

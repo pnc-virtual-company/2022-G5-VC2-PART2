@@ -1,21 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-import DashboardView from '../views/Admin/dashboard/DashboardView.vue'
-import FollowUpView from '../views/Admin/followUp/FollowUpView.vue'
-import LoginView from '../views/Admin/login&signout/LoginView.vue'
-import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue'
-import PeopleDetailView from '../views/Admin/people/PeopleDetailView'  
+import LoginView from "../views/Admin/login&signout/LoginView"
+import DashboardView from '../views/Admin/dashboard/DashboardView.vue';
+import FollowUpView from '../views/Admin/followUp/FollowUpView.vue';
+import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue';
+import PeopleDetailView from '../views/Admin/people/PeopleDetailView';  
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
+import { store } from '@/store/store';
 import BatchView from "../views/Admin/people/student/BatchView"
-// import {storeToken} from '../storetoken/storeToken';
 const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
     meta: {
-      needLogin: true
+      auth: true
     }
   },
   {
@@ -23,7 +22,7 @@ const routes = [
     name: 'foolowUp',
     component: FollowUpView,
     meta: {
-      needLogin: true
+      auth: true
     }
 
   },
@@ -32,7 +31,7 @@ const routes = [
     name: 'teacher',
     component: TeacherView,
     meta: {
-      needLogin: true
+      auth: true
     }
   },
   {
@@ -40,21 +39,23 @@ const routes = [
     name: 'student',
     component: StudentView,
     meta: {
-      needLogin: true
+      auth: true
     }
   },
   {
     path: '/login',
     name: 'login',
     component: LoginView,
-
+    meta: {
+      auth: false
+    }
   },
   {
     path: '/profile',
     name: 'profile',
     component: ProfileView,
     meta: {
-      needLogin: true
+      auth: true
     }
   },
   {
@@ -62,7 +63,7 @@ const routes = [
     name: 'batch',
     component: BatchView,
     meta: {
-      needLogin: true
+      auth: true
     }
   },
   {
@@ -71,13 +72,27 @@ const routes = [
     component: PeopleDetailView,
     props: true,
     meta: {
-      needLogin: true
+      auth: true
     }
   },
+
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+  history: createWebHistory(),
+  routes,
+  base: process.env.BASE_URL,
+  linkExactActiveClass: 'active'
+});
+
+
+router.beforeEach(async (to) => {
+  // const publicPages = ['/login'];
+  const authRequired = to.meta.auth;
+  // const authRequired = !publicPages.includes(to.path);
+  if (authRequired && !store.state.authenticated) {
+    return '/login';
+  }
+});
+
 export default router

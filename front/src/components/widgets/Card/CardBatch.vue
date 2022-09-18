@@ -14,17 +14,15 @@
             </div>
     </div>
     </div>  
-    <batch-card v-if="isShowForm" @createNewBatch="createBatch,isShowForm=false" @closeForm="isShowForm=false"/>
+    <class-batch v-if="isShowForm" @createNewBatch="createBatch,isShowForm=false" @closeForm="isShowForm=false"/>
 </div>
 </template>
 
 <script>
 import axiosHttp from '../../../axios-http'
-import batchCard from '../form_create/CreateBatchClass.vue';
 import Edit_Remove from '../action/ActionCard.vue';
 export default {
     components:{
-        "batch-card": batchCard,
         "edit-remove": Edit_Remove,
     },
     data(){

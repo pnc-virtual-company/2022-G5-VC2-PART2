@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class ClassBatch extends Model
 {
     use HasFactory;
 
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
-
-    public function classbatch() {
-        return $this->belongsTo(ClassBatch::class);
-    }
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     public function batch() {
         return $this->belongsTo(Batch::class);
+    }
+
+    public function students() {
+        return $this->hasMany(Student::class);
     }
 }
