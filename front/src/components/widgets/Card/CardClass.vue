@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full flex mt-10">
+  <div class="w-full flex mt-1">
     <div
-      class="w-4/12 m-3 mt-10 items-center justify-center shadow rounded bg-gray-300"
+      class="w-4/12 mt-2 mr-2 items-center justify-between shadow rounded bg-gray-300"
       v-for="card of classes"
       :key="card"
     >
@@ -57,15 +57,11 @@ export default {
       classes: [
         { name: " web a", students: { number: 12 } },
         { name: "web b", students: { number: 22 } },
-        { name: "web c", students: { number: 32 } },
+        { name: "web b", students: { number: 22 } },
+        { name: "web b", students: { number: 22 } },
       ],
       isActive: false,
     };
   },
-//   computed: {
-//     showDelete() {
-//         return this.isActive ? "is-delete" : "is-edit";
-//     }
-//   }
 };
 </script>

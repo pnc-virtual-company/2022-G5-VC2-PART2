@@ -20,7 +20,7 @@
                         v-model="year"
                     />
                     <button-create>
-                        <template v-slot:button_create>Add</template>      
+                        <template v-slot:button_create >Add</template>      
                     </button-create>
                 </div>
                 <p v-if="isEmpty">Please put batch!*</p>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+
 export default {
     data(){
         return{
@@ -44,10 +45,10 @@ export default {
                     year: this.year
                 };
                 this.$emit('createNewBatch', newBatch);
+
             }else{
                 this.isEmpty = true;
             }
-
         }
     }
 }
