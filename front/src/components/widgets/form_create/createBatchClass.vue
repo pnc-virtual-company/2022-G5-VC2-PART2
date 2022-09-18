@@ -34,7 +34,7 @@ export default {
     data(){
         return{
             year: null,
-            isEmpty: false
+            isEmpty: false,
         }
     },
     methods:{
@@ -47,7 +47,6 @@ export default {
             }else{
                 this.isEmpty = true;
             }
-            
 
         }
     }
