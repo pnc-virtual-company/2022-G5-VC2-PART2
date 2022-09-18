@@ -25,12 +25,6 @@ export default {
     findUserInfo(){
       console.log(this.$store.state.authenticated);
       if (this.$store.state.authenticated){
-        let role = this.$cookies.get('role');
-        if (role =="TEACHER"){
-          this.$router.push('/teacher');
-        }else if (role == "STUDENT"){
-          this.$router.push('student');
-        }
         this.isLogin = true;
       }
     }

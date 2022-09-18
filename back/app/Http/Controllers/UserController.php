@@ -92,7 +92,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
-        $user->password= null;
+        $user->password = null;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';
@@ -120,13 +120,14 @@ class UserController extends Controller
         }
 
         // Sending email to user
-        // Mail::to($request->email)->send(new NewUserMail($user));
+        Mail::to($request->email)->send(new NewUserMail($user));
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
 
     // Get all Student only
     public function studentOnly() {
+        
         return User::join('students','users.student_id','=','students.id')->join('class_batches','students.class_id','=','class_batches.id')->join('batches','students.batch_id','=','batches.id')->get(['users.*','students.*','class_batches.*','batches.*']);
     }
 

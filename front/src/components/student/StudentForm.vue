@@ -218,7 +218,7 @@ export default{
         this.$emit('create-student',userData,errorMessageBack);
         setTimeout(() => {
           this.isCreate = false;
-        },50000);
+        },1000);
       }
       
     },
