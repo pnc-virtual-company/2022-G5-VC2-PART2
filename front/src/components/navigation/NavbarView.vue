@@ -49,6 +49,7 @@
             <img src="../../assets/avatar.png" alt="" class=" w-[50px] h-[50px] rounded-full">
           </div>
           <svg
+            @click="handleLogout"
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6 mr-1"
             fill="none"
@@ -70,11 +71,24 @@
 
 <script>
 export default {
+  props: {
+    user: Object
+  },
   data() {
     return {
       show: false,
     };
   },
+  methods: {
+    handleLogout(){
+      this.$store.dispatch('logout');
+      window.location.reload();
+      this.$router.push('/login');
+    }
+  },
+  created(){
+    console.log(this.user);
+  }
 };
 </script>
 
