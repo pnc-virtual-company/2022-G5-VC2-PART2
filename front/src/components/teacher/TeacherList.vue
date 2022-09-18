@@ -27,9 +27,17 @@
         </div>
       </div>
       <div class="rounded shadow p-4 relative mt-2 bg-white">
-        <searchbar-form @newKeyword="newKeyword"/>
+        <searchbar-form @newKeyword="newKeyword" placeholder="Search Name"/>
         <div class="flex justify-center mt-4">
           <people-list :peopleList="filterTeacher" @showDetail="showDetail" @alertDelete="alertDelete"/>
+        </div>
+        <div v-if="listTeachers.length <= 0" class="flex flex-col items-center mt-8 mb-3">
+          <img class="w-40" src="./../../assets/noRequestFound.png" alt="Image not found">
+          <h1 class="text-stone-500">No any requests for now!</h1>
+        </div>
+        <div v-else-if="filterTeacher.length === 0" class="flex flex-col items-center mt-8 mb-3">
+          <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
+          <h1 class="text-stone-500 mt-5">No requests found!</h1>
         </div>
           <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 3"> 
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
@@ -57,16 +65,16 @@
 <script>
 import axiosHttp from "../../axios-http";
 import peopleList from "../PeopleList.vue";
-import teacherForm from "./TeacherForm.vue";
-import deleteAlert from "../delete/DeleteAlert.vue";
-import searchBar from '../search/SearchBar.vue'
+import teacherForm from "../teacher/TeacherForm.vue";
+import deleteAlert from "../widgets/action/DeleteAlert.vue";
+import searchBar from '../search/SearchBar.vue';
 
 export default {
   components:{
       "people-list": peopleList,
       "teacher-form":teacherForm,
       "delete-alert": deleteAlert,
-      "searchbar-form": searchBar
+      "searchbar-form": searchBar,
   },
   data(){
     return {
@@ -83,7 +91,7 @@ export default {
   methods: {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
-        this.listTeachers = res.data;
+        this.listTeachers = res.data.reverse();
       })
     },
     showTeacherForm(){

@@ -8,27 +8,34 @@
             </div>
             <div class="text-center">
                 <h1 class="text-3xl mt-4 mb-2">Are you sure?</h1>
-                <p class="text-lg">You want to delete this person</p>
+                <p class="text-lg">You want to delete</p>
             </div>
             <div class="flex justify-center mt-6">
                 <button class="p-2 px-4 text-green-500  font-bold rounded cursor-pointer mr-1 hover:bg-green-200 " @click="$emit('cancelDelete')">Cancel</button>
-                <button class="p-2 px-6 text-red-500 font-bold rounded cursor-pointer ml-1 hover:bg-red-200" @click="deleteUser">Delete</button>
+                <button class="p-2 px-6 text-red-500 font-bold rounded cursor-pointer ml-1 hover:bg-red-200" @click="handleDelete">Delete</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axiosHttp from "../../axios-http";
-
+import axiosHttp from "../../../axios-http"
 export default({
     props:{
-        userId: Number  
+        id: Number,
     },
-    emits: ['delete-user'],
+    inject: ['content'],
+    emits: ['delete-user','delete-batch'],
     methods:{
-        deleteUser(){
-            axiosHttp.delete('/users/delete/'+ this.userId).then(this.$emit('delete-user'));
+        handleDelete(){
+            if (this.content == "batch"){
+                axiosHttp.delete('batch/delete/'+ this.id).then((res)=>{
+                    console.log(res.data);
+                    // this.$emit('delete-batch');
+                });
+            }else{
+                axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
+            }
         }
     }
 })

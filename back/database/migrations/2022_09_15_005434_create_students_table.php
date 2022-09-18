@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('id_student');
-            $table->string("class");
-            $table->string("batch");
+            $table->foreignId('class_id')->onDelete('CASCADE');
+            $table->foreignId('batch_id')->onDelete('CASCADE');
             $table->string('date_birth');
             $table->timestamps();
         });

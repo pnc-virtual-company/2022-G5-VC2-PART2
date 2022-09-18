@@ -44,37 +44,67 @@
         class="flex flex-col items-end min-w-[9rem] space-x-2 cursor-pointer"
       >
         <div class="flex justify-center items-center">
-          <router-link class="p-2" to="/profile">coordinator</router-link>
-          <div class="w-15 h-15 ml-1">
-            <img src="../../assets/avatar.png" alt="" class=" w-[50px] h-[50px] rounded-full">
+          <router-link class="p-2 flex items-center" to="/profile">coordinator
+              <img src="../../assets/avatar.png" alt="" class=" w-8 h-8 rounded-full">
+          </router-link>
+          <div class="group">
+            <svg
+              @click="handleLogout"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-10 w-10 mr-1 p-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              />
+            </svg>
+            <div
+              id="logout"
+              class="add-button absolute z-50 hidden group-hover:block right-2 top-14 text-md w-20 bg-[#19afd8] rounded-full text-white p-1.5 text-center">
+              Logout
+            </div>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 mr-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-          </svg>
         </div>
       </li>
     </nav>
+    <loading-logout v-if="isLogout"></loading-logout>
   </div>
 </template>
 
 <script>
+import loadingLogout from "../animations/LoadingAnimate.vue"
 export default {
+  components: {
+    'loading-logout': loadingLogout
+  },
+  props: {
+    user: Object
+  },
   data() {
     return {
       show: false,
+      isLogout: false
     };
   },
+  methods: {
+    handleLogout(){
+      this.isLogout = true;
+      setTimeout(() => {
+          this.isLogout = false;
+          window.location.reload();
+          this.$store.dispatch('logout');
+          this.$router.push('/login');
+      }, 1000);
+    }
+  },
+  created(){
+    console.log(this.user);
+  }
 };
 </script>
 
@@ -86,5 +116,10 @@ li a:hover {
   background: rgba(228, 228, 228, 0.74);
   transition: 2s;
   transform: ease-in-out;
+}
+#logout::before{
+  background: #19afd8;
+  left: 40px;
+  top: -4px;
 }
 </style>

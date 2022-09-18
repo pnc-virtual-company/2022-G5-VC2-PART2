@@ -2,19 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewUserMail;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
 
 class UserController extends Controller
 {
-    // Sign In user
+    // Log In user
+    public function confirmEmail(Request $request,$email) {
+        // Check email and password
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $password_status = true;
+            if ($user->password == 'null') {
+                $password_status = false;
+            }
+            $response = ['email'=>$user->email,'id'=> $user->id, "email_status"=>true,'password_status'=>$password_status];
+        } else{
+            $response = ['email_status'=> false, 'password_status'=> false];
+        }
+        return response()->json($response );
+    }
+    public function setPasswordLogin(Request $request){
+        $user = User::where('email',$request->email)->first();
+        $response = ['password_status'=>false];
+        if (Hash::check($request->password,$user->password)){
+            $token = $user->createToken('mytoken')->plainTextToken;
+            $response = ['user'=>$user,'password_status'=>true,'token'=>$token];
+        }
 
+        // Create token for login
+        return response()->json($response);
+    }
 
+    // Create New Password
+    public function createNewPassword(Request $request,$id) {
+        $user = User::findOrFail($id);
+        if($request->newPassword === $request->confirmPassword) {
+            $user->password = bcrypt($request->confirmPassword);
+            $user->save();
+            return response()->json(['message' => 'Password created!']);
+        }else {
+            return response()->json(['message' => 'Password not match!']);
+        }
+    }
+    // Log out user
+    public function logout() {
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'User logout']);
+    }
+
+    // Reset password
+    // public function resetPassword(Request $request, $id) {
+    //     $user = User::findOrFail($id);
+    //     if (Hash::check($request->currentPassword,$user->password)) {
+    //         if ($request->newPassword == $request->confirmPassword) {
+    //             $user->password = Hash::make($request->newPassword);
+    //             $user->save();
+    //             return response()->json(['message' => 'Password Updated!']);
+    //         }
+    //         else{
+    //             return response()->json(['message' => 'Confirm password does not match!']);
+    //         }
+    //     }
+    //     else {
+    //         return response()->json(['message' => 'Current password incorrect!']);
+    //     }
+    // }
     // Create New User 
     public function registerUser(Request $request) {
         // Validation sign Up user
@@ -24,19 +84,15 @@ class UserController extends Controller
         ];
 
         $this->validate($request, [
-            'first_name' => 'required',
-            'last_name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required',
-            'roles' => 'required',
         ],$customMessage);
 
         $user = new User();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
         $user->roles = $request->roles;
+        $user->password = null;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';
@@ -47,15 +103,14 @@ class UserController extends Controller
         if ($request->roles == "STUDENT"){
             $student = new Student();
             $user->student_id = $request->student_id;
-            $student->batch = $request->batch;
-            $student->class = $request->class;
+            $student->batch_id = $request->batch_id;
+            $student->class_id = $request->class_id;
             $student->date_birth = $request->date_birth;
-            $idStudents = Student::where('students.batch','=',$request->batch)->get(['students.id_student']);
+            $idStudents = Student::where('students.batch_id','=',$request->batch_id)->get(['students.id_student']);
             // return $idStudents;
             foreach($idStudents as $idStudent) {
     
                 if ($idStudent['id_student'] === $request->id_student){
-
                     // return abort(422,['message' => 'Id already exist!*']);
                     return response()->json(['message' => 'Id already exist!*'],402);
                 }
@@ -63,18 +118,22 @@ class UserController extends Controller
             $student->id_student = $request->id_student;
             $student->save();
         }
+
+        // Sending email to user
+        Mail::to($request->email)->send(new NewUserMail($user));
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
 
     // Get all Student only
     public function studentOnly() {
-        return User::join('students','users.student_id','=','students.id')->get(['users.*','students.*']);
+        
+        return User::join('students','users.student_id','=','students.id')->join('class_batches','students.class_id','=','class_batches.id')->join('batches','students.batch_id','=','batches.id')->get(['users.*','students.*','class_batches.*','batches.*']);
     }
 
     // Get all Teacher only
     public function teacherOnly() {
-       return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
+        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
     }
 
     // Show only one user (Teacher)
@@ -85,7 +144,7 @@ class UserController extends Controller
     // Show only one user (student)
     public function showOneStudent($id) {
         $userData = User::where('users.student_id','=',$id)->get();
-        $studentData = Student::findOrFail($id);
+        $studentData = Student::join('class_batches','students.class_id','=','class_batches.id')->join('batches','batches.id','=','students.batch_id')->findOrFail($id);
         return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 
@@ -115,7 +174,8 @@ class UserController extends Controller
         if ($request->roles == 'STUDENT') {
             $student = Student::findOrFail($user->student_id);
             $student->id_student = $request->id_student;
-            $student->batch = $request->batch;
+            $student->batch_id = $request->batch_id;
+            $student->class_id = $request->class_id;
             $student->date_birth = $request->date_birth;
             $student->save();
         }
@@ -184,5 +244,6 @@ class UserController extends Controller
 
         return $response;
     }
+
 
 }
