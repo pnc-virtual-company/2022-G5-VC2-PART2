@@ -12,7 +12,7 @@ class FollowupController extends Controller
      */
     public function index()
     {
-        return Followup::join('students','students.id','=','followups.student_id')->join('users','users.id', '=', 'followups.user_id')->get();
+        return Followup::all();
     }
 
     /**
@@ -40,9 +40,10 @@ class FollowupController extends Controller
      * @param  \App\Models\Followup  $followup
      * @return \Illuminate\Http\Response
      */
-    public function show(Followup $followup)
+    public function show($id)
     {
-        //
+        $followupInfo = Followup::where('followups.student_id','=',$id)->first();
+        return response()->json([$followupInfo]);
     }
 
     /**
@@ -66,5 +67,6 @@ class FollowupController extends Controller
     public function destroy($id)
     {
         Followup::destroy($id);
+        return response()->json(['message', 'Folow up had deleted']);
     }
 }

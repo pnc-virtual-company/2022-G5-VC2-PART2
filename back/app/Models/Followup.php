@@ -14,7 +14,7 @@ class Followup extends Model
     */
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class,'id');
     }
 
     /**
@@ -22,6 +22,6 @@ class Followup extends Model
     */
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(Student::class,'student_id');
     }
 }

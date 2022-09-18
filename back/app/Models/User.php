@@ -46,10 +46,10 @@ class User extends Authenticatable
     ];
 
     public function student() {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class,'student_id');
     }
 
     public function followups() {
-        return $this->hasMany(Followup::class);
+        return $this->hasMany(Followup::class,'followup_id');
     }
 }

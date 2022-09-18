@@ -33,8 +33,9 @@ Route::prefix('/users')->group(function() {
     Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
     Route::delete('/delete/{id}',[UserController::class,'destroy']);
     // route to add student into the follow up list 
-    Route::post('/follow_up',[FollowupController::class,'store']);
+    Route::post('/follow_ups',[FollowupController::class,'store']);
     Route::get('/follow_ups',[FollowupController::class,'index']);
+    Route::get('/follow_ups/{id}',[FollowupController::class, 'show']);
     Route::delete('/follow_ups/{id}',[FollowupController::class,'destroy']);
 });
 

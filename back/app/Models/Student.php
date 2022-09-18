@@ -19,7 +19,7 @@ class Student extends Model
     }
 
     public function followup() {
-        return $this->belongsTo(Followup::class); 
+        return $this->belongsTo(Followup::class,'id'); 
     }
 
     protected $casts = [
