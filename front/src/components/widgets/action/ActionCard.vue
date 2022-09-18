@@ -18,7 +18,6 @@
 </template>
 
 <script>
-
 import edit_batch from '../Edit/EditBatch.vue';
 export default {
     components:{

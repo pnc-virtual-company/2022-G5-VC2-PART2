@@ -10,7 +10,7 @@
     </div>
     <div  v-for="batch of batches" :key="batch.id">
         <div class="w-[88%] m-auto mt-2 mb-5  p-4 rounded bg-white ">
-            <div class="p-2 bg-gray-300 shadow flex justify-between items-center mt-2">
+            <div class="p-2 bg-gray-100 shadow flex justify-between items-center mt-2">
                 <p></p>
                 <h2 class="text-center text-2xl font-bold text-primary ">Student Batch {{batch.year}}</h2>
                 <div class="relative flex items-center">
@@ -22,7 +22,7 @@
                     </svg>
                 </div>
             </div>
-            <card-class></card-class>
+            <card-class />
         </div>
     </div>  
 </div>
