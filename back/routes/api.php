@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\FollowupController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +19,7 @@ use App\Http\Controllers\StudentController;
 // route students //
 Route::prefix('/students')->group(function() {
     Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
+    Route::put('/toFollowup/{id}',[StudentController::class, 'update']);
 });
 
 
@@ -30,6 +32,9 @@ Route::prefix('/users')->group(function() {
     Route::get('/student/{id}',[UserController::class,'showOneStudent']);
     Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
     Route::delete('/delete/{id}',[UserController::class,'destroy']);
+    // route to add student into the follow up list 
+    // Route::post('/follow_up/{id}',[FollowupController::class,'store']);
+    Route::get('/follow_ups',[FollowupController::class,'index']);
 });
 
 

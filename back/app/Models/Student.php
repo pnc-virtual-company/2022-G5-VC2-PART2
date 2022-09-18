@@ -17,4 +17,12 @@ class Student extends Model
     public function user() {
         return $this->belongsTo(User::class); 
     }
+
+    public function followup() {
+        return $this->belongsTo(Followup::class); 
+    }
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 }

@@ -48,6 +48,7 @@ class UserController extends Controller
             $student = new Student();
             $user->student_id = $request->student_id;
             $student->batch = $request->batch;
+            $student->status = false;
             $student->class = $request->class;
             $student->date_birth = $request->date_birth;
             $idStudents = Student::where('students.batch','=',$request->batch)->get(['students.id_student']);
