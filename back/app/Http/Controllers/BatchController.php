@@ -35,11 +35,12 @@ class BatchController extends Controller
     }
 
     public function destroy($id) {
-        $student = Student::where('students.batch_id','=',$id)->get(['students.id']);
-        User::where('users.student_id','=',$student[0]->id)->delete();
-        Student::where('students.batch_id','=',$student[0]->id)->delete();
-        ClassBatch::where('class_batches.batch_id','=',$id)->delete();
-        Batch::destroy($id);
-        return response()->json(['message' => 'Deleted']);
+        return $id;
+        // $student = Student::where('students.batch_id','=',$id)->get(['students.id']);
+        // User::where('users.student_id','=',$student[0]->id)->delete();
+        // Student::where('students.batch_id','=',$student[0]->id)->delete();
+        // ClassBatch::where('class_batches.batch_id','=',$id)->delete();
+        // Batch::destroy($id);
+        // return response()->json(['message' => 'Deleted']);
     }
 }

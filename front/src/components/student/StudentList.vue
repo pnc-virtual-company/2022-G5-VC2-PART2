@@ -66,11 +66,11 @@
         </div>
         <div v-if="listStudents.length <= 0" class="flex flex-col items-center mt-8 mb-3">
           <img class="w-60" src="./../../assets/noRequestFound.png" alt="Image not found">
-          <h1 class="text-stone-500">No any requests for now!</h1>
+          <h1 class="text-stone-500">No any student for now!</h1>
         </div>
         <div v-else-if="filterStudent.length <= 0" class="flex flex-col items-center mt-8 mb-3">
           <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
-          <h1 class="text-stone-500 mt-5 ">No requests found!</h1>
+          <h1 class="text-stone-500 mt-5 ">No student found!</h1>
         </div>
           <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listStudents.length > 2" >
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
@@ -91,9 +91,8 @@
       </div>
     </div>
       <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
-      <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
+      <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :id="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
-  <card-batch />
 </template>
 
 <script>
@@ -102,7 +101,6 @@ import peopleList from "../PeopleList.vue"
 import studentForm from './StudentForm.vue';
 import deleteAlert from "../widgets/action/DeleteAlert.vue";
 import searchBar from '../search/SearchBar.vue';
-import cardBatch from '../../components/widgets/Card/CardBatch.vue'
 
 export default {
   components: {
@@ -110,7 +108,6 @@ export default {
     "student-form": studentForm,
     "delete-alert": deleteAlert,
     "searchbar-form": searchBar,
-    'card-batch': cardBatch,
     
   },
   data() {
@@ -125,7 +122,7 @@ export default {
         keyword:'',
         errorIdStudent: '',
         filterByBatch: "All",
-      filterByClass: "All",
+        filterByClass: "All",
       }
   },
   methods: {
@@ -178,7 +175,7 @@ export default {
   computed:{
     filterStudent(){
       let studentToDisplay = this.listStudents;
-      if(this.keyword){
+      if(this.keyword.toLowerCase()){
         studentToDisplay = this.listStudents.filter((person) => (person.first_name+" "+person.last_name+" "+person.id_student).toLowerCase().includes(this.keyword.toLowerCase()));
       }
       if (this.showShortList){
