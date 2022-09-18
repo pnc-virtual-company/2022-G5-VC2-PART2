@@ -193,25 +193,12 @@ export default {
           first_name: this.firstName,
           last_name: this.lastName,
           email: this.email,
-          password: this.generatePassword(),
           gender: this.gender,
           phone: this.phone,
           roles:this.roles
         };
         this.$emit("create-teacher", userData,messageBack);
       }
-    },
-    generatePassword() {
-      let chars =
-        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      let stringLength = 8;
-      let randomString = "";
-      for (let i = 0; i < stringLength; i++) {
-        let rnum = Math.floor(Math.random() * chars.length);
-        randomString += chars.substring(rnum, rnum + 1);
-      }
-      this.password = randomString;
-      return this.password;
     },
   },
 };

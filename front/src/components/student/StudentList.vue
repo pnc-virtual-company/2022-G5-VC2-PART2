@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
+      <div class="mb-3 bg-green-500" v-if="isSuccess">
+        <p class="text-center text-white rounded">Created Successfully</p>
+      </div>
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
         <div class="relative">
@@ -51,11 +54,11 @@
           <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
         <div v-if="listStudents.length <= 0" class="flex flex-col items-center mt-8 mb-3">
-          <img class="w-60" src="./../../assets/noRequestFound.png" alt="Image not found">
+          <img class="w-40" src="./../../assets/noRequestFound.png" alt="Image not found">
           <h1 class="text-stone-500">No any requests for now!</h1>
         </div>
         <div v-else-if="filterStudent.length <= 0" class="flex flex-col items-center mt-8 mb-3">
-          <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
+          <img class="w-40" src="./../../assets/requestEmpty.png" alt="Image not found">
           <h1 class="text-stone-500 mt-5 ">No requests found!</h1>
         </div>
           <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterStudent.length > 3" >
@@ -108,7 +111,8 @@ export default {
         keyword:'',
         errorIdStudent: '',
         filterByBatch: "All",
-      filterByClass: "All",
+        filterByClass: "All",
+        isSuccess : false
       }
   },
   methods: {
@@ -130,6 +134,10 @@ export default {
         this.errorIdStudent = errorMessageBack;
         this.getStudentData()
         this.isShowForm = false;
+        this.isSuccess  = true
+        setTimeout(() => {
+          this.isSuccess = false;
+        },1000);
       }).catch((error) =>{
         if (error.response.status === 422) {
           this.errorMessage = error.response.data.message;

@@ -97,7 +97,7 @@ class UserController extends Controller
         }
 
         // Sending email to user
-        Mail::to($request->email)->send(new NewUserMail($user));
+        // Mail::to($request->email)->send(new NewUserMail($user));
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
@@ -120,7 +120,7 @@ class UserController extends Controller
     // Show only one user (student)
     public function showOneStudent($id) {
         $userData = User::where('users.student_id','=',$id)->get();
-        $studentData = Student::findOrFail($id);
+        $studentData = Student::join('class_batches','students.class_id','=','class_batches.id')->join('batches','batches.id','=','students.batch_id')->findOrFail($id);
         return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 

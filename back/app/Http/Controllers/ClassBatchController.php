@@ -10,6 +10,10 @@ use PhpParser\Builder\Class_;
 
 class ClassBatchController extends Controller
 {
+    // Get all class
+    public function index() {
+        return ClassBatch::get();
+    }
     // Create New Class
     public function store(Request $request) {
         $class = new ClassBatch();

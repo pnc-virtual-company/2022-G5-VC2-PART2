@@ -15,10 +15,6 @@ class Batch extends Model
     ];
     
     public function classbatchs() {
-        return $this->hasMany(ClassBatch::class);
-    }
-
-    public function students() {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(ClassBatch::class,'batch_id');
     }
 }

@@ -30,8 +30,8 @@
                 <div class=" leading-9 text-xl ml-20">
                     <p>{{userDataDetail.gender}}</p>
                     <p>{{studentDataDetail.date_birth}}</p>
-                    <p>{{studentDataDetail.batch}}</p>
-                    <p class="capitalize">{{studentDataDetail.class}}</p>
+                    <p>{{studentDataDetail.year}}</p>
+                    <p class="capitalize">{{studentDataDetail.class_name}}</p>
                     <p>{{studentDataDetail.id_student}}</p>
                 </div> 
             </div>

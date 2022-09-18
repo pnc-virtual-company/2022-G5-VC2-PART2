@@ -48,6 +48,7 @@ Route::post('/login/set-password/{id}',[UserController::class,'createNewPassword
     Route::delete('delete/batch/{id}',[BatchController::class,'destroy']);
 
     // Route Class
+    Route::get('/classes',[ClassBatchController::class,'index']);
     Route::post('/classes',[ClassBatchController::class,'store']);
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);
