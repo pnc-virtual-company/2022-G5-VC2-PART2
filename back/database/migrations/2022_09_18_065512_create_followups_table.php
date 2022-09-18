@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('followups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->onDelete('CASCADE');
+            $table->foreignId('user_id')->onDelete('CASCADE');
             $table->string('description');
             $table->string('type');
             $table->timestamps();

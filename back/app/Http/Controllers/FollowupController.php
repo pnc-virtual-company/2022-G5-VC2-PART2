@@ -12,7 +12,7 @@ class FollowupController extends Controller
      */
     public function index()
     {
-        return Followup::join('students','students.id','=','followups.student_id')->get();
+        return Followup::join('students','students.id','=','followups.student_id')->join('users','users.id', '=', 'followups.user_id')->get();
     }
 
     /**
@@ -25,6 +25,7 @@ class FollowupController extends Controller
     {
         $followup = new Followup();
         $followup->student_id = $request->student_id;
+        $followup->user_id = $request->user_id;
         $followup->type = $request->type;
         $followup->description = $request->description;
         $followup->save();
