@@ -11,6 +11,7 @@
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
 import FormLogin from './views/Admin/login&signout/LoginView.vue'
+import axios from "./axios-http"
 export default {
   components: {
     "navbar-view": NavBar,
@@ -23,10 +24,14 @@ export default {
   },
   methods: {
     findUserInfo(){
-      console.log(this.$store.state.authenticated);
+      axios.get('account/find').then((res)=>{
+        console.log(res.data);
+      })
       if (this.$store.state.authenticated){
         this.isLogin = true;
-        this.$router.push('/teacher');
+        this.$router.push('/');
+      }else{
+        this.$router.push('/login')
       }
     }
   },

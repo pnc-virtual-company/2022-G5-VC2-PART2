@@ -23,8 +23,9 @@ Route::prefix('/login')->group(function() {
     Route::post('/createPassword/{id}',[UserController::class,'createNewPassword']);
     Route::post('/', [UserController::class, 'setPasswordLogin']);
 });
+Route::get('account/find',[UserController::class,'getUserByToken']);
 // Private Route ------------=========
-// Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //
     Route::prefix('/students')->group(function() {
         Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
@@ -57,5 +58,5 @@ Route::prefix('/login')->group(function() {
     Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
 
     // Public route to get image
-    Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
-// });
+});
+Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */

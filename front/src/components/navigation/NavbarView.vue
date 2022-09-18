@@ -11,7 +11,7 @@
           <router-link
             class="p-3 px-6"
             exact-active-class="exact-active-link"
-            to="/dashboard"
+            to="/"
             >Dashboard</router-link
           >
         </li>
@@ -102,9 +102,6 @@ export default {
       }, 1000);
     }
   },
-  created(){
-    console.log(this.user);
-  }
 };
 </script>
 
