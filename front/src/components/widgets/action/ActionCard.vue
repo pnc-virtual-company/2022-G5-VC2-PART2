@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import deleteAlert from './DeleteAlert.vue'
+import deleteAlert from './DeleteAlert.vue';
 import edit_batch from '../Edit/EditBatch.vue';
 export default {
     components:{

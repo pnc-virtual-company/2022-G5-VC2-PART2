@@ -88,7 +88,7 @@
 import axiosHttp from '../../axios-http';
 import peopleList from "../PeopleList.vue"
 import studentForm from './StudentForm.vue';
-import deleteAlert from "../widgets/delete/DeleteAlert.vue";
+import deleteAlert from "../widgets/action/DeleteAlert.vue";
 import searchBar from '../search/SearchBar.vue';
 import cardBatch from '../../components/widgets/Card/CardBatch.vue'
 

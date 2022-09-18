@@ -21,6 +21,7 @@
                 </div>
             </div>
         </div>
+    <card-class />
     </div>
     <batch-card v-if="isShowForm" @createNewBatch="createBatch,isShowForm=false" @closeForm="isShowForm=false"/>
     <edit-remove v-if="isRemoveBatch"/>
@@ -31,10 +32,12 @@
 import axiosHttp from '../../../axios-http'
 import batchCard from '../form_create/CreateBatchClass.vue';
 import Edit_Remove from '../action/ActionCard.vue';
+import cardClass from '../Card/CardClass.vue';
 export default {
     components:{
         "batch-card": batchCard,
         "edit-remove": Edit_Remove,
+        "card-class": cardClass,
     },
     data(){
         return {
