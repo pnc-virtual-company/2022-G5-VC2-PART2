@@ -14,7 +14,15 @@ class Batch extends Model
         'updated_at',
     ];
     
-    public function classbatchs() {
+    public function classes() {
         return $this->hasMany(ClassBatch::class,'batch_id');
     }
+
+    public function students() {
+        return $this->hasMany(Student::class,'batch_id','student_id');
+    }
+
+    // public function user() {
+    //     return $this->hasMany(User::class);
+    // }
 }

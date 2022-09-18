@@ -57,3 +57,6 @@ Route::post('/login/set-password/{id}',[UserController::class,'createNewPassword
     // Public route to get image
     Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
 // });
+
+
+Route::get('/getStudent',[StudentController::class,'getStudent']);
