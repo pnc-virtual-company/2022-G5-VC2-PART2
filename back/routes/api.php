@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ClassBatchController;
+use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -60,5 +61,3 @@ Route::prefix('/login')->group(function() {
     Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
 // });
 
-
-Route::get('/getStudent',[StudentController::class,'getStudent']);
