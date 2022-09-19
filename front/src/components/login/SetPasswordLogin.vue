@@ -29,12 +29,12 @@
               <label for="show"> Show password </label>
             </div>
             <div class="flex items-center justify-between mt-8  ">
-              <router-link
+              <!-- <router-link
                 class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-600"
                 to="forgot"
               >
                 Forgot Password?
-              </router-link>
+              </router-link> -->
                 <button
                   :disabled="inputPassword==''"
                   class=" bg-blue-500 ground  hover:bg-blue-600 text-white py-1.5 px-4 rounded focus:outline-primary focus:shadow-outline  shadow"
@@ -60,13 +60,15 @@
 import axios from "../../axios-http"
 import aesEncrypt from "../../secret/aesEncrypt"
 export default({
+  
   data(){
     return {
       type: "password",
       inputPassword: "",
       isEmptyPassword: false,
       isProcessing: true,
-      isIncorrect: false
+      isIncorrect: false,
+      password_status: false
     }
   },
   methods: {
@@ -82,7 +84,7 @@ export default({
         this.isEmptyPassword = false;
         this.isIncorrect = false;
         this.isProcessing = false;
-        axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then((res)=>{
+        axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then(res=>{
           this.isProcessing = true;
           let data = res.data;
           if (data.password_status){
@@ -96,6 +98,7 @@ export default({
             this.isIncorrect = true;
           }
         })
+        console.log(this.password_status);
       }
     },
   },

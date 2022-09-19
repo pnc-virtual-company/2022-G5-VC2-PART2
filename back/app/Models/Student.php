@@ -20,4 +20,8 @@ class Student extends Model
     public function batch() {
         return $this->belongsTo(Batch::class);
     }
+
+    public function followup() {
+        return $this->belongsTo(FollowUp::class,'id');
+    }
 }
