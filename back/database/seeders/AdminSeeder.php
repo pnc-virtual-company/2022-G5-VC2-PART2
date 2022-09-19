@@ -17,9 +17,9 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $coordinator = [
-            'first_name' => 'Sim',
-            'last_name' => 'Hul',
-            'email' => 'simhul@passerellesnumeriques.org',
+            'first_name' => 'sauth',
+            'last_name' => 'phouek',
+            'email' => 'sauth.phouek@passerellesnumeriques.org',
             'password' => Hash::make('pnc'),
             'roles' => 'Coordinator',
             'gender' => 'Male',

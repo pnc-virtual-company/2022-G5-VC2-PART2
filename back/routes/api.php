@@ -59,3 +59,6 @@ Route::prefix('/login')->group(function() {
     // Public route to get image
     Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
 // });
+
+
+Route::get('/getStudent',[StudentController::class,'getStudent']);
