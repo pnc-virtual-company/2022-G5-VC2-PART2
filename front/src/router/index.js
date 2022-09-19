@@ -88,7 +88,6 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const publicPages = ['/login'];
-  // const authRequired = to.meta.auth;
   const authRequired = !publicPages.includes(to.path);
   if (authRequired && !store.state.authenticated) {
     return '/login';
