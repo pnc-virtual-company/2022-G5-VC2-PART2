@@ -75,6 +75,7 @@ export default {
         getAllBatches() {
             axiosHttp.get('/batches').then(res => {
                 this.batches = res.data;
+                console.log(this.batches)
             })
         }
     },

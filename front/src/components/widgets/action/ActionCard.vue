@@ -13,7 +13,6 @@
                 <p>Remove</p>
             </div>
         </div>
-        
         <edit-batch v-if="isEditBatch" @closeForm="closeForm"/>
 </template>
 

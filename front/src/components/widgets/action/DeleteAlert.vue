@@ -33,7 +33,7 @@ export default({
                     console.log(res.data);
                     // this.$emit('delete-batch');
                 });
-            }else{
+            } else {
                 axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
             }
         }
