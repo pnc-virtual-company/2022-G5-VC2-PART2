@@ -26,12 +26,10 @@ export default {
       if (this.$store.state.authenticated){
         axios.get('account/find').then((res)=>{
           let data = res.data;
-          console.log(data);
             this.user = data;
             this.isLogin = true;
             this.$store.state.userId = data.id;
             this.$store.state.role = data.role;
-            this.$router.push('/')
         })
       }
     }

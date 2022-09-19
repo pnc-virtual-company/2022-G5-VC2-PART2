@@ -90,8 +90,7 @@ router.beforeEach(async (to) => {
   const publicPages = ['/login'];
   const authRequired = !publicPages.includes(to.path);
   if (authRequired && !store.state.authenticated) {
-    return '/login';
+    return 'login';
   }
 });
-
 export default router

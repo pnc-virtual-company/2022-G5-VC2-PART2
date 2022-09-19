@@ -15,7 +15,7 @@
             >Dashboard</router-link
           >
         </li>
-        <li v-if="role == 'Coordinator' ">
+        <li v-if="user.roles == 'Coordinator' ">
           <router-link
             class="p-3 px-6"
             exact-active-class="exact-active-link"
