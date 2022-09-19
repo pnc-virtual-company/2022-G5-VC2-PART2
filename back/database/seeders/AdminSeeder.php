@@ -23,6 +23,7 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('pnc'),
             'roles' => 'Coordinator',
             'gender' => 'Male',
+            'profile' => 'admin.png'
         ];
         User::create($coordinator);
     }

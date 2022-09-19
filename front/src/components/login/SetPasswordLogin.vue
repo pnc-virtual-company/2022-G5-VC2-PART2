@@ -82,16 +82,15 @@ export default({
         this.isEmptyPassword = false;
         this.isIncorrect = false;
         this.isProcessing = false;
-        console.log('ass');
         axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then((res)=>{
           this.isProcessing = true;
-          console.log(res.data);
-          if (res.data.password_status){
-            console.log(res.data);
-              const secret_role = aesEncrypt(res.data.role, 'my_role');
+          let data = res.data;
+          if (data.password_status){
+              const secret_role = aesEncrypt(data.user.role, 'my_role');
               this.$cookies.set('role',secret_role);
-              const secret_token = aesEncrypt(res.data.token, 'my_token');
+              const secret_token = aesEncrypt(data.token, 'my_token');
               this.$cookies.set('token',secret_token);
+              this.$store.state.userId = data.user.id;
               window.location.reload();
           }else{
             this.isEmptyPassword = true;
@@ -102,13 +101,9 @@ export default({
     },
   },
   created(){
-    if (this.$cookies.token){
-      if (this.$cookies.role=="TEACHER"){
-        console.log("teacher");
-      } else if (this.$cookies.role == "STUDENT"){
-        console.log();
-      } else{
-        this.$router.push('/dashboard');
+    if (this.$cookies.get('token')){
+      if (this.$cookies.get('role') == 'Coordinator'){
+        this.$router.push('/');
       }
     }
   }

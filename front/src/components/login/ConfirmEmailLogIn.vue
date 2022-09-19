@@ -69,11 +69,9 @@ export default ({
                     const response = res.data;
                     this.is_empty = false;
                     this.isProcessing = true;
-                      console.log(response);
                     if (response.email_status){
-                      this.$store.state.userEmail = response.email
-                      this.$store.state.userId = response.id
-                      this.$emit('confirm-email', response)
+                      this.$store.state.userEmail = response.email;
+                      this.$emit('confirm-email', response);
                     }else{
                       this.is_empty = true;
                     }

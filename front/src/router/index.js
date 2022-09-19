@@ -10,7 +10,7 @@ import { store } from '@/store/store';
 import BatchView from "../views/Admin/people/student/BatchView"
 const routes = [
   {
-    path: '/dashboard',
+    path: '/',
     name: 'dashboard',
     component: DashboardView,
     meta: {
