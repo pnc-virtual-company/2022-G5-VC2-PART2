@@ -1,7 +1,7 @@
 <template>
   <div>
-    <navbar-view v-if="isLogin" :userId="this.$store.state.userId" :role="this.$store.state.role"/>
-    <router-view v-slot="{ Component }" :role="this.$store.state.role">
+    <navbar-view v-if="isLogin" :user="user"/>
+    <router-view v-slot="{ Component }" >
       <transition name="fade">
         <component :is="Component" />
       </transition>
@@ -17,24 +17,27 @@ export default {
   },
   data(){
     return {
-      isLogin: false
+      isLogin: false,
+      user: {}
     }
   },
   methods: {
     findUserInfo(){
-      axios.get('account/find').then((res)=>{
-        console.log(res.data);
-      })
       if (this.$store.state.authenticated){
-        this.isLogin = true;
-        this.$router.push('/');
-      }else{
-        this.$router.push('/login');
+        axios.get('account/find').then((res)=>{
+          let data = res.data;
+          console.log(data);
+            this.user = data;
+            this.isLogin = true;
+            this.$store.state.userId = data.id;
+            this.$store.state.role = data.role;
+            this.$router.push('/')
+        })
       }
     }
   },
   created(){
-    this.findUserInfo()
+    this.findUserInfo();
   }
 };
 </script>

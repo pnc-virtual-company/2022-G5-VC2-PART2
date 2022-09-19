@@ -23,7 +23,7 @@ class UserController extends Controller
             if (!$user->password) {
                 $password_status = false;
             }
-            $response = ['email'=>$user->email,'id'=> $user->id, "email_status"=>true,'password_status'=>$password_status];
+            $response = ['email'=>$user->email, "email_status"=>true,'password_status'=>$password_status];
         } else{
             $response = ['email_status'=> false, 'password_status'=> false];
         }
@@ -111,6 +111,7 @@ class UserController extends Controller
     // Get user by access token
     public function getUserByToken(){
         $user =  auth('sanctum')->user();
+        return $user;
     }
     // Get all Student only
     public function studentOnly() {

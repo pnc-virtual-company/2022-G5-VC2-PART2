@@ -84,12 +84,13 @@ export default({
         this.isProcessing = false;
         axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then((res)=>{
           this.isProcessing = true;
-          if (res.data.password_status){
-              const secret_role = aesEncrypt(res.data.role, 'my_role');
+          let data = res.data;
+          if (data.password_status){
+              const secret_role = aesEncrypt(data.user.role, 'my_role');
               this.$cookies.set('role',secret_role);
-              const secret_token = aesEncrypt(res.data.token, 'my_token');
+              const secret_token = aesEncrypt(data.token, 'my_token');
               this.$cookies.set('token',secret_token);
-              this.$router.push('/dashboard')
+              this.$store.state.userId = data.user.id;
               window.location.reload();
           }else{
             this.isEmptyPassword = true;
@@ -99,5 +100,12 @@ export default({
       }
     },
   },
+  created(){
+    if (this.$cookies.get('token')){
+      if (this.$cookies.get('role') == 'Coordinator'){
+        this.$router.push('/');
+      }
+    }
+  }
 })
 </script>
