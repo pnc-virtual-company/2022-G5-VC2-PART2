@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center w-[40%] duration-400 ease-in-out">
+    <div class="flex items-center justify-center w-[40%] ease-in-out duration-400 ">
           <form class="w-full m-auto p-4 rounded bg-gray-100 px-12" @submit.prevent="handleLogin">
             <div class="text-center text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-28 p-4 border-4 border-primary h-28 bg-gray-100  shadow rounded-full m-auto">
@@ -60,6 +60,7 @@
 import axios from "../../axios-http"
 import aesEncrypt from "../../secret/aesEncrypt"
 export default({
+  emits: ['set-password'],
   data(){
     return {
       type: "password",
@@ -86,9 +87,9 @@ export default({
           this.isProcessing = true;
           let data = res.data;
           if (data.password_status){
-              const secret_role = aesEncrypt(data.user.role, 'my_role');
-              this.$cookies.set('role',secret_role);
+              const secret_role = aesEncrypt(data.user.roles, 'my_role');
               const secret_token = aesEncrypt(data.token, 'my_token');
+              this.$cookies.set('role',secret_role);
               this.$cookies.set('token',secret_token);
               this.$store.state.userId = data.user.id;
               window.location.reload();
@@ -103,9 +104,10 @@ export default({
   created(){
     if (this.$cookies.get('token')){
       if (this.$cookies.get('role') == 'Coordinator'){
-        this.$router.push('/');
+        this.$router.push('/');   
       }
     }
   }
 })
+
 </script>

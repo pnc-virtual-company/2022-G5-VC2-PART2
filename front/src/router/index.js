@@ -1,16 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from "../views/Admin/login&signout/LoginView"
+import { createRouter, createWebHistory } from 'vue-router';
+import LoginView from "../views/Admin/login&signout/LoginView";
 import DashboardView from '../views/Admin/dashboard/DashboardView.vue';
 import FollowUpView from '../views/Admin/followUp/FollowUpView.vue';
 import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue';
 import PeopleDetailView from '../views/Admin/people/PeopleDetailView';  
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
+import BatchView from "../views/Admin/people/student/BatchView";
 import { store } from '@/store/store';
-import BatchView from "../views/Admin/people/student/BatchView"
 const routes = [
   {
-    path: '/',
+    path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
     meta: {
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: '/followUp',
-    name: 'foolowUp',
+    name: 'followUp',
     component: FollowUpView,
     meta: {
       auth: true
@@ -87,12 +87,12 @@ const router = createRouter({
 
 
 router.beforeEach(async (to) => {
-  const publicPages = ['/login'];
-  // const authRequired = to.meta.auth;
-  const authRequired = !publicPages.includes(to.path);
+  // const publicPages = ['/login'];
+  // const authRequired = !publicPages.includes(to.path);
+  const authRequired = to.meta.auth;
   if (authRequired && !store.state.authenticated) {
     return '/login';
-  }
+  } 
 });
 
 export default router

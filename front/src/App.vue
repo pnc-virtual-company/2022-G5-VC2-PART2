@@ -22,21 +22,38 @@ export default {
     }
   },
   methods: {
-    findUserInfo(){
-      if (this.$store.state.authenticated){
-        axios.get('account/find').then((res)=>{
-          let data = res.data;
-          console.log(data);
-            this.user = data;
+    // findUserInfo(){
+    //   console.log(this.$store.state.authenticated);
+    //   if (this.$store.state.authenticated){
+    //     axios.get('account/find').then((res)=>{
+    //         this.user = res.data;
+    //         this.isLogin = true;
+    //         this.$store.state.userId = res.data.id;
+    //         this.$store.state.role = res.data.role;
+    //     });
+    //   }else{
+    //       this.$store.dispatch('logout');
+    //       this.$router.push('/login');
+    //   }
+    // }
+    async findUserInfo(){
+      console.log(this.$store.state.authenticated);
+      if(this.$store.state.authenticated){
+          await axios.get('account/find').then((res)=>{
+            this.user = res.data;
+            console.log(this.user);
+            if (this.user == null){
+                this.$store.dispatch('logout')
+                this.$router.push('/login')
+            }
             this.isLogin = true;
-            this.$store.state.userId = data.id;
-            this.$store.state.role = data.role;
-            this.$router.push('/')
-        })
+            // this.$store.state.userId = res.data.id;
+            // this.$store.state.role = res.data.role;
+          });
       }
-    }
+    },
   },
-  created(){
+  async created(){
     this.findUserInfo();
   }
 };
