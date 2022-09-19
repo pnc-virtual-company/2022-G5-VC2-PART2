@@ -47,8 +47,6 @@ export default {
                 this.$router.push('/login')
             }
             this.isLogin = true;
-            // this.$store.state.userId = res.data.id;
-            // this.$store.state.role = res.data.role;
           });
       }
     },
