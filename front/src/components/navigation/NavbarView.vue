@@ -15,7 +15,7 @@
             >Dashboard</router-link
           >
         </li>
-        <li>
+        <li v-if="role == 'Admin' ">
           <router-link
             class="p-3 px-6"
             exact-active-class="exact-active-link"
@@ -83,7 +83,8 @@ export default {
     'loading-logout': loadingLogout
   },
   props: {
-    user: Object
+    userId: Number,
+    role: String
   },
   data() {
     return {

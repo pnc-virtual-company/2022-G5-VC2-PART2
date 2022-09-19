@@ -1,7 +1,7 @@
 <template>
   <div>
-    <navbar-view v-if="isLogin" />
-    <router-view v-slot="{ Component }">
+    <navbar-view v-if="isLogin" :userId="this.$store.state.userId" :role="this.$store.state.role"/>
+    <router-view v-slot="{ Component }" :role="this.$store.state.role">
       <transition name="fade">
         <component :is="Component" />
       </transition>
@@ -10,12 +10,10 @@
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
-import FormLogin from './views/Admin/login&signout/LoginView.vue'
 import axios from "./axios-http"
 export default {
   components: {
     "navbar-view": NavBar,
-    "form-login" : FormLogin,
   },
   data(){
     return {
@@ -31,7 +29,7 @@ export default {
         this.isLogin = true;
         this.$router.push('/');
       }else{
-        this.$router.push('/login')
+        this.$router.push('/login');
       }
     }
   },
