@@ -99,16 +99,5 @@ export default({
       }
     },
   },
-  // created(){
-  //   if (this.$cookies.get('token')){
-  //     if (this.$cookies.get('role')== "TEACHER"){
-  //       console.log("teacher");
-  //     } else if (this.$cookies.get('role') == "STUDENT"){
-  //       console.log('student');
-  //     } else{
-  //       this.$router.push('/dashboard');
-  //     }
-  //   }
-  // }
 })
 </script>
