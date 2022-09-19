@@ -20,4 +20,12 @@ class Student extends Model
     public function batch() {
         return $this->belongsTo(Batch::class);
     }
+
+    public function followup() {
+        return $this->belongsTo(Followup::class); 
+    }
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 }

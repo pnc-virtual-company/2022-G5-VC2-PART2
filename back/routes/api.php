@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassBatchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\FollowupController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
