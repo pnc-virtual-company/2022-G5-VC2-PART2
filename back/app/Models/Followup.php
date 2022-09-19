@@ -9,19 +9,18 @@ class Followup extends Model
 {
     use HasFactory;
 
-     /**
-    * get the tutor that own of the follow up.
-    */
-    public function users()
-    {
-        return $this->hasMany(User::class,'id');
+    protected $hidden = [
+        'remember_token',
+        'updated_at',
+        'email_verified_at',
+        'remember_token',
+        'password',
+    ];
+    public function students() {
+        return $this->hasMany(Student::class,'id');
     }
 
-    /**
-    * get the student that own of the follow up.
-    */
-    public function students()
-    {
-        return $this->hasMany(Student::class,'student_id');
+    public function totor() {
+        return $this->belongsTo(User::class,'user_id');
     }
 }

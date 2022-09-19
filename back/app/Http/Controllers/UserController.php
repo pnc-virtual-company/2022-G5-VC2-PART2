@@ -86,14 +86,9 @@ class UserController extends Controller
         if ($request->roles == "STUDENT"){
             $student = new Student();
             $user->student_id = $request->student_id;
-<<<<<<< HEAD
-            $student->batch_id = $request->batch_id;
-            $student->class_id = $request->class_id;
-=======
             $student->batch = $request->batch;
             $student->status = false;
             $student->class = $request->class;
->>>>>>> 0138e683cfb198d9b7dec6ad80055d0caf532bdf
             $student->date_birth = $request->date_birth;
             $idStudents = Student::where('students.batch_id','=',$request->batch_id)->get(['students.id_student']);
             // return $idStudents;

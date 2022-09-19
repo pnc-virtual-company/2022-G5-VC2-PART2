@@ -12,7 +12,7 @@ class FollowupController extends Controller
      */
     public function index()
     {
-        return Followup::all();
+        return Followup::join('students','students.id','=','followups.student_id')->join('users','users.student_id','=','students.id')->join('class_batches','class_batches.id','=','students.class_id')->join('batches','students.batch_id','=','batches.id')->get();
     }
 
     /**
@@ -28,10 +28,11 @@ class FollowupController extends Controller
         $followup->user_id = $request->user_id;
         $followup->type = $request->type;
         $followup->description = $request->description;
+        $followup->status = true;
+
         $followup->save();
 
-        return $followup;
-        // return response()->json(['message' => 'The student has added to follow up succesfully.', $followup]);
+        return response()->json(['message' => 'The student has added to follow up succesfully.'],201);
     }
 
     /**

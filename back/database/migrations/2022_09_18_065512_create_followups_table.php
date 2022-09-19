@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('followups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->onDelete('CASCADE');
-            $table->foreignId('user_id')->onDelete('CASCADE');
+            $table->foreignId('user_id')->onDelete('CASCADE')->nullable();
             $table->string('description');
             $table->string('type');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

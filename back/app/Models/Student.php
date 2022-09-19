@@ -22,10 +22,6 @@ class Student extends Model
     }
 
     public function followup() {
-        return $this->belongsTo(Followup::class,'id'); 
+        return $this->belongsTo(FollowUp::class,'id');
     }
-
-    protected $casts = [
-        'status' => 'boolean',
-    ];
 }
