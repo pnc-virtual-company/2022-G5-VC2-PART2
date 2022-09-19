@@ -39,7 +39,7 @@
                 <label for="filter-status" class="mx-3 font-medium mt-2"><span class="text-red-600">*</span>Filter By
                   Batch:
                 </label>
-                <select v-model="filterByBatch" id="filter-status"
+                <select v-model="filterByBatch" id="filter-status" @change="filterStudent"
                   class="shadow appearance-none w-44 rounded border border-gray-250 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
                   <option value="All">All</option>
                   <option v-for="(batch,index) in allBatch" :key="index" :value="batch.id">{{batch.year}}</option>
@@ -49,7 +49,7 @@
               <label for="filter-status" class="mx-3 font-medium mt-2"><span class="text-red-600">*</span>Filter By
                 Class:
               </label>
-              <select v-model="filterByClass" id="filter-status"
+              <select v-model="filterByClass" id="filter-status" @change="filterStudent"
                 class="shadow appearance-none w-44 rounded border border-gray-250 p-[0.4rem] focus:border-2 focus:outline-none focus:border-primary">
                 <option value="All">All</option>
                 <option v-for="(oneClass,index) in allClass" :key="index" :value="oneClass.id">{{oneClass.class_name}}</option>
@@ -57,10 +57,10 @@
             </div>
   
           </div>
-          <searchbar-form @newKeyword="updateKeyword" placeholder="Search Name "/>
+          <searchbar-form @newKeyword="filterSearch" placeholder="Search Name "/>
         </div>
         <div class="flex justify-center mt-4 w-full">
-          <people-list :peopleList="filterStudent" @showDetail="showDetail" @alertDelete="alertDelete"/>
+          <people-list :peopleList="listStudents" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
         <div class="ml-[38vw] mt-3" v-if="loading">
           <span class="" id="wait">
@@ -74,10 +74,6 @@
         <div v-else-if="listStudents.length === 0" class="flex flex-col items-center mt-8 mb-3">
           <img class="w-40" src="./../../assets/noRequestFound.png" alt="Image not found">
           <h1 class="text-stone-500 mt-5 ">No Student!</h1>
-        </div>
-        <div v-if="filterStudent.length === 0" class="flex flex-col items-center mt-8 mb-3">
-          <img class="w-40" src="./../../assets/requestEmpty.png" alt="Image not found">
-          <h1 class="text-stone-500 mt-5 ">Not Found!</h1>
         </div>
           <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listStudents.length > 3" >
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
@@ -126,7 +122,6 @@ export default {
         userId:null,
         dataToShow: 3,
         showShortList: true,
-        keyword:'',
         errorIdStudent: '',
         filterByBatch: "All",
         filterByClass: "All",
@@ -170,9 +165,6 @@ export default {
         }
       });
     },
-    updateKeyword(keyword){
-      this.keyword = keyword
-    },
     deletedPerson(){
       this.isDeleteAlert = false;
     },
@@ -193,9 +185,29 @@ export default {
         this.allClass = res.data;
       });
     },
-    filterStudent () {
-      // let studentToDisplay = this.listStudents;
-
+    filterStudent() {
+      if (this.filterByBatch !== 'All' && this.filterByClass !== 'All') {
+        axiosHttp.get('/users/students').then(res => {
+          this.listStudents = res.data.filter((student) => student.class_id == this.filterByClass && student.batch_id == this.filterByBatch);
+        });
+      }else if (this.filterByBatch == 'All' && this.filterByClass !== 'All') {
+        axiosHttp.get('/users/students').then(res => {
+          this.listStudents = res.data.filter((student) => student.class_id == this.filterByClass);
+        });
+      }
+      else if (this.filterByClass == 'All' && this.filterByBatch !== 'All') {
+        axiosHttp.get('/users/students').then(res => {
+          this.listStudents = res.data.filter((student) => student.batch_id == this.filterByBatch);
+        });
+      }else
+      {
+        this.getStudentData();
+      }
+    },
+    filterSearch(keyword) {
+      axiosHttp.get('users/students').then(res => {
+        this.listStudents = res.data.filter((student) => student.first_name.toLowerCase().includes(keyword.toLowerCase()) || student.last_name.toLowerCase().includes(keyword.toLowerCase()));
+      });
     }
   },
   mounted(){
@@ -206,28 +218,6 @@ export default {
     this.getAllBatch();
     this.getAllClass();
   },
-  computed:{
-    // filterStudent(){
-    //   let studentToDisplay = this.listStudents;
-    //   if(this.keyword){
-    //     studentToDisplay = this.listStudents.filter((person) => (person.first_name+" "+person.last_name+" "+person.id_student).toLowerCase().includes(this.keyword.toLowerCase()));
-    //   }
-    //   if (this.showShortList){
-    //     studentToDisplay = studentToDisplay.slice(0,this.dataToShow);
-    //   }
-    //   if (this.filterByBatch != "All" && this.filterByClass != "All") {
-    //     studentToDisplay = studentToDisplay.filter((person) => person.id == this.filterByBatch && person.id == this.filterByClass);
-    //   } else if (this.filterByBatch != "All") {
-    //     studentToDisplay = studentToDisplay.filter((person) => person.batch == this.filterByBatch);
-    //   } else if (this.filterByClass != "All") {
-    //     studentToDisplay = studentToDisplay.filter((person) => person.class == this.filterByClass);
-    //   }
-    //   return studentToDisplay
-    // }
-  },
-  watch: {
-    
-  }
 }
 
 </script>
