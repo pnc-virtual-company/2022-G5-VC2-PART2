@@ -1,17 +1,44 @@
 <template>
-  <navbar-view />
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" />
-    </transition>
-  </router-view>
+  <div>
+    <navbar-view v-if="isLogin" :user="user"/>
+    <router-view v-slot="{ Component }" >
+      <transition name="fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 <script>
 import NavBar from "./components/navigation/NavbarView.vue";
+import axios from "./axios-http"
 export default {
   components: {
     "navbar-view": NavBar,
   },
+  data(){
+    return {
+      isLogin: false,
+      user: {}
+    }
+  },
+  methods: {
+    findUserInfo(){
+      if (this.$store.state.authenticated){
+        axios.get('account/find').then((res)=>{
+          let data = res.data;
+          console.log(data);
+            this.user = data;
+            this.isLogin = true;
+            this.$store.state.userId = data.id;
+            this.$store.state.role = data.role;
+            this.$router.push('/')
+        })
+      }
+    }
+  },
+  created(){
+    this.findUserInfo();
+  }
 };
 </script>
 <style>
@@ -30,16 +57,4 @@ body{
 .fade-leave-active {
   transition: all 0.3s ease-out;
 }
-/*nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-} */
-
-/* nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>
