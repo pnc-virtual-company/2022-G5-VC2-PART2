@@ -60,7 +60,6 @@
 import axios from "../../axios-http"
 import aesEncrypt from "../../secret/aesEncrypt"
 export default({
-  emits: ['set-password'],
   data(){
     return {
       type: "password",
@@ -91,7 +90,6 @@ export default({
               const secret_token = aesEncrypt(data.token, 'my_token');
               this.$cookies.set('role',secret_role);
               this.$cookies.set('token',secret_token);
-              this.$store.state.userId = data.user.id;
               window.location.reload();
           }else{
             this.isEmptyPassword = true;
@@ -101,13 +99,6 @@ export default({
       }
     },
   },
-  created(){
-    if (this.$cookies.get('token')){
-      if (this.$cookies.get('role') == 'Coordinator'){
-        this.$router.push('/');   
-      }
-    }
-  }
 })
 
 </script>

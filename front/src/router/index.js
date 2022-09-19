@@ -79,20 +79,22 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  base: process.env.BASE_URL,
+  history: createWebHistory(process.env.BASE_URL),
+  routes: routes,
+  mode: "hash",
   linkExactActiveClass: 'active'
 });
 
-
-router.beforeEach(async (to) => {
-  // const publicPages = ['/login'];
-  // const authRequired = !publicPages.includes(to.path);
-  const authRequired = to.meta.auth;
-  if (authRequired && !store.state.authenticated) {
-    return '/login';
-  } 
-});
+router.beforeEach((to, from ,next) => {
+  if (to.meta.auth && !store.state.authenticated) {
+    next('/login')
+  } else if (
+    !to.meta.auth && store.state.authenticated
+  ){
+    next ('/dashboard');
+  }else{
+    next();
+    }
+})
 
 export default router
