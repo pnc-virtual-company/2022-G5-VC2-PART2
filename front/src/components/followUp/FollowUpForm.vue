@@ -14,11 +14,11 @@
         <br />
         <input class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 mt-2 leading-tight focus:outline-blue-500 focus:shadow-outline" type="text" v-model="search" placeholder="Search . . ." @click="showListStudent">
         <div v-if="isShow" >
-          <ul class="overflow-y-scroll bg-white h-[16rem] w-[95%] absolute" >
+          <ul class="overflow-y-scroll bg-white h-[16rem] w-[95%] absolute" @click="showListStudent">
             <div class="flex p-2 cursor-pointer hover:bg-gray-200 ease-in duration-400" v-for:="(student, i ) in filterStudent"
               @click="clickStudent(student)">
               <li class="ml-2"><img :src="getProfile(student.profile)" class="w-12 h-12 rounded-full border-2 border-primary "></li>
-              <li class="p-3 ml-2" :class="i==0?'font-bold':''">{{student.first_name}} {{student.last_name}}</li>
+              <li class="p-3 ml-2 " :class="i==0?'font-bold':''">{{student.first_name}} {{student.last_name}}</li>
             </div>
           </ul>
         </div>
@@ -60,13 +60,13 @@
         </div >
         <div class="mt-4">
           <label >Description :</label>
-          <textarea v-model="description" class="mt-2 p-2 w-full" name="" id="" cols="73" rows="4" placeholder="Description . . ."></textarea>
+          <textarea v-model="description" class="mt-2 p-2 w-[95%] resize-none" name="" id="" cols="70" rows="4" placeholder="Description . . ." required></textarea>
         </div>
-        <div class="flex justify-end p-2 w-[98%]">
-        <button-cancel @click="$emit('closeForm')">
+        <div class="flex justify-end p-2 mr-10 w-[98%]">
+        <button-cancel @click="$emit('closeForm')" >
             <template v-slot:button_cancel>Cancel</template>     
         </button-cancel>
-        <button-create>
+        <button-create >
           <template v-slot:button_create>Add Student</template>      
         </button-create>
       </div>
