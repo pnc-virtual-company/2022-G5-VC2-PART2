@@ -29,10 +29,8 @@ export default({
     methods:{
         handleDelete(){
             if (this.content == "batch"){
-                axiosHttp.delete('batch/delete/'+ this.id).then((res)=>{
-                    console.log(res.data);
-                    // this.$emit('delete-batch');
-                });
+                this.$emit('delete-batch');
+
             }else{
                 axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
             }
