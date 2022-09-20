@@ -12,13 +12,26 @@
       <form @submit.prevent="onAddStudent" class="ml-9 mt-5 relative">
         <label >Search list student :</label>
         <br />
-        <input class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 mt-2 leading-tight focus:outline-blue-500 focus:shadow-outline" type="text" v-model="search" placeholder="Search . . ." @click="showListStudent">
-        <div v-if="isShow" >
+        <input class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 mt-2 leading-tight focus:outline-blue-500 focus:shadow-outline" type="text" v-model="searchStudent" placeholder="Search . . ." @click="showListStudent">
+        <div v-if="isShowListStudent" >
           <ul class="overflow-y-scroll bg-white h-[16rem] w-[95%] absolute" @click="showListStudent">
             <div class="flex p-2 cursor-pointer hover:bg-gray-200 ease-in duration-400" v-for:="(student, i ) in filterStudent"
               @click="clickStudent(student)">
               <li class="ml-2"><img :src="getProfile(student.profile)" class="w-12 h-12 rounded-full border-2 border-primary "></li>
               <li class="p-3 ml-2 " :class="i==0?'font-bold':''">{{student.first_name}} {{student.last_name}}</li>
+            </div>
+          </ul>
+        </div>
+        <!-- for search tutor -->
+        <label >Assign tutor :</label>
+        <br />
+        <input class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 mt-2 leading-tight focus:outline-blue-500 focus:shadow-outline" type="text" v-model="searchTutor" placeholder="Search . . ." @click="showListTutor">
+        <div v-if="isShowListTutor" >
+          <ul class=" bg-white h-[13rem] w-[95%] absolute" @click="showListTutor">
+            <div class="flex p-2 cursor-pointer hover:bg-gray-200 ease-in duration-400" v-for:="(tutor, i ) in filterTutor"
+              @click="clickTutor(tutor)">
+              <li class="ml-2"><img :src="getProfile(tutor.profile)" class="w-12 h-12 rounded-full border-2 border-primary "></li>
+              <li class="p-3 ml-2 " :class="i==0?'font-bold':''">{{tutor.first_name}} {{tutor.last_name}}</li>
             </div>
           </ul>
         </div>
@@ -82,23 +95,34 @@ export default {
   emits: ['add-student'],
 data(){
   return{
-    isShow:false,
+    isShowListStudent:false,
+    isShowListTutor:false,
     description: "",
     student_id: "",
+    tutor_id: "",
     type: [],
-    search:"",
+    searchStudent:"",
+    searchTutor:"",
     listStudents : [],
+    listTutor : [],
   }
 },
 
 methods:{
   showListStudent(){
-    this.isShow = !this.isShow
+    this.isShowListStudent = !this.isShowListStudent
+  },
+  showListTutor(){
+    this.isShowListTutor = !this.isShowListTutor
   },
 
   clickStudent(student){
-    this.search=student.first_name +" "+ student.last_name
+    this.searchStudent=student.first_name +" "+ student.last_name
     this.student_id = student.id_student;
+  },
+  clickTutor(tutor){
+    this.searchTutor=tutor.first_name +" "+ tutor.last_name
+    this.tutor_id = tutor.user_id;
   },
 
   getStudentData(){
@@ -107,7 +131,12 @@ methods:{
       console.log(this.listStudents);
     })
   },
-
+  getTutorData(){
+    axios.get("/users/teachers").then((res)=>{
+        this.listTutor = res.data.reverse();
+        console.log(this.listTutor)
+      })
+  },
   getProfile(image) {
     return axios.defaults.baseURL + "storage/image/" + image;
   },
@@ -118,6 +147,7 @@ methods:{
       student_id: this.student_id,
       description: this.description,
       type: this.type,
+      user_id:this.tutor_id
     };
     axios.post('/users/follow_ups/', newFollowUpInfo)
     this.$emit('add-student');
@@ -125,15 +155,23 @@ methods:{
 },
 computed:{
   filterStudent(){
-    if(this.search==""){
+    if(this.searchStudent==""){
       return this.listStudents;
     }else{
-      return this.listStudents.filter(student => (student.first_name + " "+ student.last_name).toLowerCase().includes(this.search.toLowerCase()))
+      return this.listStudents.filter(student => (student.first_name + " "+ student.last_name).toLowerCase().includes(this.searchStudent.toLowerCase()))
+    }
+  },
+  filterTutor(){
+    if(this.searchTutor==""){
+      return this.listTutor;
+    }else{
+      return this.listTutor.filter(tutor => (tutor.first_name + " "+ tutor.last_name).toLowerCase().includes(this.searchTutor.toLowerCase()))
     }
   },
 },
 mounted(){
   this.getStudentData()
+  this.getTutorData()
 }
 
 }
