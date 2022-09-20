@@ -24,4 +24,8 @@ class Student extends Model
     public function followup() {
         return $this->belongsTo(FollowUp::class,'id');
     }
+
+    public function  comment() {
+        return $this->hasMany(Comment::class,'id');
+    }
 }
