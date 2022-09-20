@@ -37,10 +37,11 @@
       },
       methods: {
         handleLogin(response){
-          if (!response.password_status){
-            this.isPasswordNull = true;
-          } else {
+          console.log(response);
+          if (response.password_status){
             this.isPasswordNotNull = true;
+          } else {
+            this.isPasswordNull = true;
           }
         },
         createPassword(){

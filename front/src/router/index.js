@@ -79,7 +79,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes: routes,
   mode: "hash",
   linkExactActiveClass: 'active'
@@ -92,9 +92,7 @@ router.beforeEach((to, from ,next) => {
     !to.meta.auth && store.state.authenticated
   ){
     next ('/dashboard');
-  }else{
-    next();
-    }
+  }
 })
 
 export default router
