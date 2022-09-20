@@ -28,6 +28,6 @@ class NewUserMail extends Mailable
      */
     public function build()
     {
-        return $this->from('soklimhin@gmail.com','Socail Affair')->view('mailer')->subject('Activate Account');
+        return $this->from('soklimhin@gmail.com','Coordinator')->view('mailer')->subject('Activate Account');
     }
 }

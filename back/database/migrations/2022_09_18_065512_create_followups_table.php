@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('batches', function (Blueprint $table) {
+        Schema::create('followups', function (Blueprint $table) {
             $table->id();
-            $table->integer('year')->unique();
+            $table->foreignId('student_id')->onDelete('CASCADE');
+            $table->foreignId('user_id')->onDelete('CASCADE')->nullable();
+            $table->string('description');
+            $table->string('type');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('batches');
+        Schema::dropIfExists('followups');
     }
 };

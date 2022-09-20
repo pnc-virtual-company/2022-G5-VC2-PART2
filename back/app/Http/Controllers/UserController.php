@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
@@ -20,10 +21,10 @@ class UserController extends Controller
         $user = User::where('email', $email)->first();
         if ($user) {
             $password_status = true;
-            if ($user->password == 'null') {
+            if (!$user->password) {
                 $password_status = false;
             }
-            $response = ['email'=>$user->email,'id'=> $user->id, "email_status"=>true,'password_status'=>$password_status];
+            $response = ['email'=>$user->email, 'id'=>$user->id, "email_status"=>true,'password_status'=>$password_status];
         } else{
             $response = ['email_status'=> false, 'password_status'=> false];
         }
@@ -58,23 +59,6 @@ class UserController extends Controller
         return response()->json(['message' => 'User logout']);
     }
 
-    // Reset password
-    // public function resetPassword(Request $request, $id) {
-    //     $user = User::findOrFail($id);
-    //     if (Hash::check($request->currentPassword,$user->password)) {
-    //         if ($request->newPassword == $request->confirmPassword) {
-    //             $user->password = Hash::make($request->newPassword);
-    //             $user->save();
-    //             return response()->json(['message' => 'Password Updated!']);
-    //         }
-    //         else{
-    //             return response()->json(['message' => 'Confirm password does not match!']);
-    //         }
-    //     }
-    //     else {
-    //         return response()->json(['message' => 'Current password incorrect!']);
-    //     }
-    // }
     // Create New User 
     public function registerUser(Request $request) {
         // Validation sign Up user
@@ -103,8 +87,9 @@ class UserController extends Controller
         if ($request->roles == "STUDENT"){
             $student = new Student();
             $user->student_id = $request->student_id;
-            $student->batch_id = $request->batch_id;
-            $student->class_id = $request->class_id;
+            $student->batch = $request->batch;
+            $student->status = false;
+            $student->class = $request->class;
             $student->date_birth = $request->date_birth;
             $idStudents = Student::where('students.batch_id','=',$request->batch_id)->get(['students.id_student']);
             // return $idStudents;
@@ -125,6 +110,11 @@ class UserController extends Controller
         return response()->json(['message' => 'User created success!']);
     }
 
+    // Get user by access token
+    public function getUserByToken(){
+        $user =  auth('sanctum')->user();
+        return $user;
+    }
     // Get all Student only
     public function studentOnly() {
         

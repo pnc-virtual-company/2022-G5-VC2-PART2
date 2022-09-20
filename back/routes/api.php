@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ClassBatchController;
+use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -23,8 +24,9 @@ Route::prefix('/login')->group(function() {
     Route::post('/createPassword/{id}',[UserController::class,'createNewPassword']);
     Route::post('/', [UserController::class, 'setPasswordLogin']);
 });
+Route::get('account/find',[UserController::class,'getUserByToken']);
 // Private Route ------------=========
-// Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //
     Route::prefix('/students')->group(function() {
         Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
@@ -40,22 +42,24 @@ Route::prefix('/login')->group(function() {
         Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
-    });
-
-    // Route Batchs
-    Route::get('/batches',[BatchController::class,'index']);
-    Route::post('/batches',[BatchController::class,'store']);
-    Route::post('/batch/{id}',[BatchController::class,'update']);
-    Route::get('/batch/{id}',[BatchController::class,'show']);
-    Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
-
+        // route to add student into the follow up list 
+    Route::post('/follow_ups',[FollowupController::class,'store']);
+    Route::get('/follow_ups',[FollowupController::class,'index']);
+    Route::get('/follow_ups/{id}',[FollowupController::class, 'show']);
+    Route::delete('/follow_ups/{id}',[FollowupController::class,'destroy']);
     // Route Class
     Route::get('/classes',[ClassBatchController::class,'index']);
     Route::post('/classes',[ClassBatchController::class,'store']);
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);
     Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
+    });
 
-    // Public route to get image
-    Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
-// });
+    // Route Batchs
+    Route::get('/batches',[BatchController::class,'index']);
+    Route::post('/batches',[BatchController::class,'store']);
+    Route::put('/batch/{id}',[BatchController::class,'update']);
+    Route::get('/batch/{id}',[BatchController::class,'show']);
+    Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
+});
+Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
