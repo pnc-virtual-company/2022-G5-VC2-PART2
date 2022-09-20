@@ -22,21 +22,20 @@ export default {
     }
   },
   methods: {
-    findUserInfo(){
-      if (this.$store.state.authenticated){
-        axios.get('account/find').then((res)=>{
-          let data = res.data;
-          console.log(data);
-            this.user = data;
+    async findUserInfo(){
+      if(this.$store.state.authenticated){
+          await axios.get('account/find').then((res)=>{
+            this.user = res.data;
+            if (this.user == null){
+                this.$store.dispatch('logout')
+                this.$router.push('/login')
+            }
             this.isLogin = true;
-            this.$store.state.userId = data.id;
-            this.$store.state.role = data.role;
-            this.$router.push('/')
-        })
+          });
       }
     }
   },
-  created(){
+  async created(){
     this.findUserInfo();
   }
 };

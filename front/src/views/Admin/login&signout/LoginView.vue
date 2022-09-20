@@ -8,7 +8,7 @@
       </div>
         <create-password v-if="isPasswordNull" @create-password="createPassword"></create-password>
         <set-password v-else-if="isPasswordNotNull"></set-password>
-        <login-form v-else @confirm-email="handleLogin"></login-form>
+        <login-form v-else @confirm-email="handleLogin" ></login-form>
     </div>  
 </div>
 </template>
@@ -31,7 +31,8 @@
           isPasswordNull: false,
           isPasswordNotNull: false,
           isCreatedPassword: false,
-          message: "Password created successfull"
+          message: "Password created successfull",
+          isReset: true,
         }
       },
       methods: {

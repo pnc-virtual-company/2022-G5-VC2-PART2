@@ -30,11 +30,11 @@
         </div>
       </div>
       <div class="rounded shadow p-4 relative mt-2 bg-white">
-        <searchbar-form @newKeyword="newKeyword" placeholder="Search Name"/>
+        <searchbar-form @newKeyword="filterTeacher" placeholder="Search Name"/>
         <div class="flex justify-center mt-4">
-          <people-list :peopleList="filterTeacher" @showDetail="showDetail" @alertDelete="alertDelete"/>
+          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
-        <div class="ml-[38vw] mt-3" v-if="listTeachers.length === 0">
+        <div class="ml-[38vw] mt-3" v-if="loading">
           <span class="" id="wait">
             <svg class="ml-4 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -43,11 +43,11 @@
             Loading.....
           </span>
         </div>
-        <div v-else-if="filterTeacher.length === 0" class="flex flex-col items-center mt-8 mb-3">
-          <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
-          <h1 class="text-stone-500 mt-5">No requests found!</h1>
+        <div v-else-if="listTeachers.length === 0" class="flex flex-col items-center mt-8 mb-3">
+          <img class="w-40" src="./../../assets/noRequestFound.png" alt="Image not found">
+          <h1 class="text-stone-500 mt-5">No Teacher</h1>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="filterTeacher.length > 3"> 
+          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listTeachers.length > 3"> 
               <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
                 <div v-if="showShortList" class="flex">
                   <p class="text-sm">View All</p>
@@ -88,13 +88,13 @@ export default {
     return {
       isShowForm:false,
       listTeachers: [],
-      keyword:'',
       messageError: '',
       isDeleteAlert:false,
       userId:null,
       dataToShow: 3,
       showShortList: true,
       isSuccess: false,
+      loading: true
     }
   },
   methods: {
@@ -132,29 +132,19 @@ export default {
         }
       });
     },
-    newKeyword(keyword){
-      this.keyword= keyword
-    },
-    showAll(){
-      this.showShortList = !this.showShortList;
-    }
+    filterTeacher(keyword) {
+    axiosHttp.get('/users/teachers').then(res => {
+      this.listTeachers = res.data.filter((teacher) => teacher.first_name.toLowerCase().includes(keyword.toLowerCase()) || teacher.last_name.toLowerCase().includes(keyword.toLowerCase()));
+    });
+  }
   },
   mounted(){
+    setTimeout(() => {
+      this.loading = false;
+    },1000);
     this.getTeacherData();
   },
-  computed:{
-    filterTeacher(){
-      let teacherToDisplay = this.listTeachers
-      if(this.keyword){
-        teacherToDisplay = this.listTeachers.filter((person) => (person.first_name +" "+ person.last_name).toLowerCase().includes(this.keyword.toLowerCase()));
-      }
-      if (this.showShortList){
-        teacherToDisplay = teacherToDisplay.slice(0,this.dataToShow);
-      }
-      console.log(teacherToDisplay);
-      return teacherToDisplay
-    }
-  },
+  
 };
 </script>
 

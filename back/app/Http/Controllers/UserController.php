@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
@@ -23,7 +24,7 @@ class UserController extends Controller
             if (!$user->password) {
                 $password_status = false;
             }
-            $response = ['email'=>$user->email, "email_status"=>true,'password_status'=>$password_status];
+            $response = ['email'=>$user->email, 'id'=>$user->id, "email_status"=>true,'password_status'=>$password_status];
         } else{
             $response = ['email_status'=> false, 'password_status'=> false];
         }
@@ -86,9 +87,8 @@ class UserController extends Controller
         if ($request->roles == "STUDENT"){
             $student = new Student();
             $user->student_id = $request->student_id;
-            $student->batch = $request->batch;
-            $student->status = false;
-            $student->class = $request->class;
+            $student->batch_id = $request->batch_id;
+            $student->class_id = $request->class_id;
             $student->date_birth = $request->date_birth;
             $idStudents = Student::where('students.batch_id','=',$request->batch_id)->get(['students.id_student']);
             // return $idStudents;

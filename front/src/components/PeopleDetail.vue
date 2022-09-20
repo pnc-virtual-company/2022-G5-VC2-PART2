@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <form-edit :userDataDetail="userDataDetail" :studentDataDetail="studentDataDetail" v-if="isEditStudent" @closeForm="isEditStudent=false" @save-edit="saveEdit"/>
+<form-edit :userDataDetail="userDataDetail" :studentDataDetail="studentDataDetail" v-if="isEditStudent" @closeForm="isEditStudent=false" @save-edit="saveEdit"/>
 </div>
 
 </template>

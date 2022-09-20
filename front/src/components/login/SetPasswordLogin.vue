@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center w-[40%] duration-400 ease-in-out">
+    <div class="flex items-center justify-center w-[40%] ease-in-out duration-400 ">
           <form class="w-full m-auto p-4 rounded bg-gray-100 px-12" @submit.prevent="handleLogin">
             <div class="text-center text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-28 p-4 border-4 border-primary h-28 bg-gray-100  shadow rounded-full m-auto">
@@ -29,12 +29,12 @@
               <label for="show"> Show password </label>
             </div>
             <div class="flex items-center justify-between mt-8  ">
-              <router-link
+              <!-- <router-link
                 class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-600"
                 to="forgot"
               >
                 Forgot Password?
-              </router-link>
+              </router-link> -->
                 <button
                   :disabled="inputPassword==''"
                   class=" bg-blue-500 ground  hover:bg-blue-600 text-white py-1.5 px-4 rounded focus:outline-primary focus:shadow-outline  shadow"
@@ -60,13 +60,15 @@
 import axios from "../../axios-http"
 import aesEncrypt from "../../secret/aesEncrypt"
 export default({
+  
   data(){
     return {
       type: "password",
       inputPassword: "",
       isEmptyPassword: false,
       isProcessing: true,
-      isIncorrect: false
+      isIncorrect: false,
+      password_status: false
     }
   },
   methods: {
@@ -82,30 +84,24 @@ export default({
         this.isEmptyPassword = false;
         this.isIncorrect = false;
         this.isProcessing = false;
-        axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then((res)=>{
+        axios.post('/login',{email: this.$store.state.userEmail, password: this.inputPassword}).then(res=>{
           this.isProcessing = true;
           let data = res.data;
           if (data.password_status){
-              const secret_role = aesEncrypt(data.user.role, 'my_role');
-              this.$cookies.set('role',secret_role);
+              const secret_role = aesEncrypt(data.user.roles, 'my_role');
               const secret_token = aesEncrypt(data.token, 'my_token');
+              this.$cookies.set('role',secret_role);
               this.$cookies.set('token',secret_token);
-              this.$store.state.userId = data.user.id;
               window.location.reload();
           }else{
             this.isEmptyPassword = true;
             this.isIncorrect = true;
           }
         })
+        console.log(this.password_status);
       }
     },
   },
-  created(){
-    if (this.$cookies.get('token')){
-      if (this.$cookies.get('role') == 'Coordinator'){
-        this.$router.push('/');
-      }
-    }
-  }
 })
+
 </script>
