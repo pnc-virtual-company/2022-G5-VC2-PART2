@@ -27,7 +27,7 @@ export default {
       })
       if (this.$store.state.authenticated){
         this.isLogin = true;
-        this.$router.push('/');
+        this.$router.push('/student');
       }else{
         this.$router.push('/login');
       }
