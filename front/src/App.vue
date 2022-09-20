@@ -33,7 +33,7 @@ export default {
             this.isLogin = true;
           });
       }
-    },
+    }
   },
   async created(){
     this.findUserInfo();

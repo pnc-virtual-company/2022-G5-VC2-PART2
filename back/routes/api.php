@@ -42,14 +42,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
-    });
-
-    // Route Batchs
-    Route::get('/batches',[BatchController::class,'index']);
-    Route::post('/batches',[BatchController::class,'store']);
-    Route::post('/batch/{id}',[BatchController::class,'update']);
-    Route::get('/batch/{id}',[BatchController::class,'show']);
-    Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
+        // route to add student into the follow up list 
     Route::post('/follow_ups',[FollowupController::class,'store']);
     Route::get('/follow_ups',[FollowupController::class,'index']);
     Route::get('/follow_ups/{id}',[FollowupController::class, 'show']);
@@ -60,5 +53,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);
     Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
+    });
+
+    // Route Batchs
+    Route::get('/batches',[BatchController::class,'index']);
+    Route::post('/batches',[BatchController::class,'store']);
+    Route::put('/batch/{id}',[BatchController::class,'update']);
+    Route::get('/batch/{id}',[BatchController::class,'show']);
+    Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
 });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
