@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-primary w-full fixed top-0 z-50">
+  <div class="bg-primary w-full fixed top-0 z-50 shadow">
     <nav class="flex w-full p-2 text-white justify-between items-center px-4">
       <ul>
         <li>
@@ -11,11 +11,11 @@
           <router-link
             class="p-3 px-6"
             exact-active-class="exact-active-link"
-            to="/"
+            to="/dashboard"
             >Dashboard</router-link
           >
         </li>
-        <li v-if="role == 'Admin' ">
+        <li v-if="user.roles == 'Coordinator' ">
           <router-link
             class="p-3 px-6"
             exact-active-class="exact-active-link"
@@ -43,34 +43,37 @@
         @click="show = !show"
         class="flex flex-col items-end min-w-[9rem] space-x-2 cursor-pointer"
       >
-        <div class="flex justify-center items-center">
-          <router-link class="p-2 flex items-center" to="/profile">coordinator
-              <img src="../../assets/avatar.png" alt="" class=" w-8 h-8 rounded-full">
-          </router-link>
-          <div class="group">
-            <svg
-              @click="handleLogout"
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-10 w-10 mr-1 p-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            <div
-              id="logout"
-              class="add-button absolute z-50 hidden group-hover:block right-2 top-14 text-md w-20 bg-[#19afd8] rounded-full text-white p-1.5 text-center">
-              Logout
-            </div>
+        <div class="flex justify-center items-center group">
+          {{user.first_name}} {{user.last_name}}
+          <img :src="getProfile(user.profile)" alt="" class=" w-10 ml-2 mr-4 h-10 rounded-full ">
+          <div id="card" class="bg-[#e7e2e2] ease-in-out duration-500 rounded shadow absolute right-4 top-12 text-primary w-40 p-2 hidden group-hover:block">
+              <router-link to="/profile" class="flex items-center p-2 px-2 hover:bg-blue-200 ease-in-out duration-300 rounded ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                View Profile
+              </router-link >
+              <li class="flex items-center p-2 px-2 hover:bg-blue-200 ease-in-out duration-300 rounded" @click="handleLogout">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 mr-2 "
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg> 
+                Logout
+              </li>
           </div>
         </div>
       </li>
+
     </nav>
     <loading-logout v-if="isLogout"></loading-logout>
   </div>
@@ -78,18 +81,19 @@
 
 <script>
 import loadingLogout from "../animations/LoadingAnimate.vue"
+import axios from "../../axios-http"
 export default {
   components: {
     'loading-logout': loadingLogout
   },
   props: {
-    userId: Number,
-    role: String
+    user: Object
   },
   data() {
     return {
       show: false,
-      isLogout: false
+      isLogout: false,
+      
     };
   },
   methods: {
@@ -100,8 +104,11 @@ export default {
           window.location.reload();
           this.$store.dispatch('logout');
           this.$router.push('/login');
-      }, 1000);
-    }
+      }, 500);
+    },
+    getProfile(image) {
+      return axios.defaults.baseURL + "storage/image/" + image;
+    },
   },
 };
 </script>
@@ -115,9 +122,15 @@ li a:hover {
   transition: 2s;
   transform: ease-in-out;
 }
-#logout::before{
-  background: #19afd8;
-  left: 40px;
-  top: -4px;
+
+#card::before{
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  background: #e7e2e2;
+  left: 80px;
+  top: -7px;
+  transform: translateX(-50%) rotate(45deg);
 }
 </style>

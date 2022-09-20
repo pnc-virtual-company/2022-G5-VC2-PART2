@@ -1,17 +1,15 @@
 import { createStore } from 'vuex'
 import getDataCookie from "@/secret/getDataCookie"
 import aesDecrypt from '@/secret/aesdecrypt'
+// import aesEncrypt from '@/secret/aesEncrypt'
 import axios from '../axios-http'
+// import { useCookies } from "vue3-cookies"
 export const store = new createStore({
   state: {
     authenticated: aesDecrypt(getDataCookie('token'), 'my_token'),
     role: aesDecrypt(getDataCookie('role'), 'my_role'),
     userEmail: null,
     userId: null
-  },
-  getters: {
-  },
-  mutations: {
   },
   actions: {
     logout(){
@@ -20,6 +18,10 @@ export const store = new createStore({
       axios.get('logout')
     }
   },
-  modules: {
+  mutations: {
+    confirmEmail(state,data){
+      state.userEmail = data.email;
+      state.userId = data.id;
+    },
   }
 })

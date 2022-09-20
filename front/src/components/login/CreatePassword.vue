@@ -78,7 +78,7 @@ export default({
             this.isValid = false
             if (this.newPassword == this.confirmPassword){
                 this.isValid = false;
-                // console.log(this.$store.state.userId);
+                console.log(this.$store.state.userId);
                 const newPassword = {newPassword: this.newPassword, confirmPassword: this.confirmPassword}
                 axios.post("/login/createPassword/" +  this.$store.state.userId,newPassword);
                 this.$emit('create-password');
@@ -99,7 +99,6 @@ export default({
     computed: {
         // to check validation of both password
         checkValidation(){
-            // this.isFilledNew = false;
             let sms = false;
             if (this.newPassword.trim() == "" || this.confirmPassword.trim()== ''){
                 sms = true;
