@@ -49,7 +49,6 @@ export default {
                     year: this.year
                 };
                 this.$emit('createNewBatch', newBatch);
-
             }else{
                 this.isEmpty = true;
             }

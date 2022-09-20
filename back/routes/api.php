@@ -6,7 +6,6 @@ use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\FollowupController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,7 +26,7 @@ Route::prefix('/login')->group(function() {
 });
 Route::get('account/find',[UserController::class,'getUserByToken']);
 // Private Route ------------=========
-// Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //
     Route::prefix('/students')->group(function() {
         Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
@@ -48,20 +47,9 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
     // Route Batchs
     Route::get('/batches',[BatchController::class,'index']);
     Route::post('/batches',[BatchController::class,'store']);
-    Route::put('/batch/{id}',[BatchController::class,'update']);
+    Route::post('/batch/{id}',[BatchController::class,'update']);
     Route::get('/batch/{id}',[BatchController::class,'show']);
     Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
-});
-// Route User(teacher and student)
-Route::prefix('/users')->group(function() {
-    Route::post('/',[UserController::class,'registerUser']);
-    Route::put('/{id}',[UserController::class,'update']);
-    Route::get('/students',[UserController::class,'studentOnly']);
-    Route::get('/teachers',[UserController::class,'teacherOnly']);
-    Route::get('/student/{id}',[UserController::class,'showOneStudent']);
-    Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
-    Route::delete('/delete/{id}',[UserController::class,'destroy']);
-    // route to add student into the follow up list 
     Route::post('/follow_ups',[FollowupController::class,'store']);
     Route::get('/follow_ups',[FollowupController::class,'index']);
     Route::get('/follow_ups/{id}',[FollowupController::class, 'show']);
@@ -72,7 +60,5 @@ Route::prefix('/users')->group(function() {
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);
     Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
-
-    // Public route to get image
-// });
+});
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
