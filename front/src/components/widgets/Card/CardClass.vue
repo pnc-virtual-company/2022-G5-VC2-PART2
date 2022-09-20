@@ -74,6 +74,7 @@
         :classId="classId"
         @delete-class ="confirmDelete"
       />
+    <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" />
   </div>
 </template>
 
