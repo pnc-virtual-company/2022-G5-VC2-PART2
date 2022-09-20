@@ -22,11 +22,19 @@
                     </svg>
                 </div>
             </div>
-            <card-class />
+            <div class="flex flex-wrap items-center">
+                <card-class v-for="(cardClass,index) in batch.classbatches" :key="index" :cardName="cardClass.class_name" :classId="cardClass.id"/> 
+                <div class="bg-gray-100 shadow rounded-[60rem] group w-15 flex justify-center items-center text-primary m-[60px] ml-8 cursor-pointer hover:bg-white" @click="showFormCreateClass(batch.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>  
 </div>
     <class-batch v-if="isShowForm" @createNewBatch="createBatch" @closeForm="isShowForm=false"/>
+    <class-create v-if="isCreateClass" @closeForm="isCreateClass=false" @addNewClass = "createNewClass"/>
     <delete-alert v-if="isDeleteAlert" :id="id" @delete-batch="confirmDelete" @cancelDelete="isDeleteAlert=false"/>
 </template>
 
@@ -34,10 +42,12 @@
 import axiosHttp from '../../../axios-http'
 import deleteAlert from '../action/DeleteAlert.vue'
 import CardClass from "../Card/CardClass.vue"
+import ClassCreate from '../form_create/CreateClass.vue';
 export default {
     components:{
         "card-class": CardClass,
         'delete-alert':deleteAlert,
+        'class-create': ClassCreate,
     },
     data(){
         return {
@@ -45,6 +55,9 @@ export default {
             isShowForm: false,
             isDeleteAlert:false,
             batches: [],
+            isCreateClass: false,
+            storeBatchId: null,
+            storeClassEdit: null,
         }
     },
     provide:{
@@ -72,12 +85,26 @@ export default {
         showActions(){     
             this.isRemoveBatch=true;
         },
+        showFormCreateClass(batch_id) {
+            this.isCreateClass = true;
+            this.storeBatchId = batch_id;
+        },
         getAllBatches() {
             axiosHttp.get('/batches').then(res => {
                 this.batches = res.data;
-                console.log(this.batches)
             })
-        }
+        },
+        createNewClass(newClass) {
+            let makeNewClass = {
+                batch_id: this.storeBatchId,
+                class_name: newClass
+            }
+            axiosHttp.post('/classes',makeNewClass).then(res => {
+                console.log(res.data);
+                this.isCreateClass = false;
+                this.getAllBatches();
+            });
+        },
     },
     mounted() {
         this.getAllBatches();

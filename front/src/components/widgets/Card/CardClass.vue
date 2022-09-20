@@ -1,18 +1,15 @@
 <template>
-  <div class="w-full flex mt-1">
+  <div class="w-[30%] mt-4">
     <div
-      class="w-4/12 mt-2 mr-4 items-center justify-between bg-gray-100 shadow rounded group"
-      v-for="card of classes"
-      :key="card"
-      @click="isRemoveClass"
+      class="w-[95%] bg-gray-100 shadow rounded group h-[28vh]"
     >
       <div
-        class="w-full flex justify-between items-center bg-blue-400 shadow p-2 relative"
+        class="flex bg-blue-400 shadow p-2 relative"
       >
         <h1
-          class="w-full h-full text-center justify-center rounded uppercase text-white text-lg font-bold"
+          class="text-center justify-center rounded uppercase text-white text-lg font-bold"
         >
-          {{ card.name }}
+          {{ cardName }}
         </h1>
         <div
           class="items-center justify-center p-2 hidden group-hover:flex absolute right-2 ease-in duration-300"
@@ -50,7 +47,7 @@
         </div>
       </div>
       <div class="text-center text-xl p-4">
-        {{ card.students.number }} Students
+        {{classId}}
         <div class="flex justify-end mt-2 text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +55,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="w-10"
           >
             <path
               stroke-linecap="round"
@@ -69,12 +66,13 @@
         </div>
       </div>
     </div>
-      <edit-class @click="editClass" v-if="iseditClass" />
+      <edit-class @click="editClass" v-if="iseditClass" @closeForm ="closeForm" :classId="classId"/>
       <delete-alert
         v-if="isDeleteAlert"
-        :id="id"
         @click="isDeleteAlert"
         @cancelDelete="isDeleteAlert = false"
+        :classId="classId"
+        @delete-class ="confirmDelete"
       />
   </div>
 </template>
@@ -87,42 +85,33 @@ export default {
     "delete-alert": DeleteAlert,
     "edit-class": EditClass,
   },
+  props: {
+      cardName:String,
+      classId: Number
+    },
+    provide:{
+        content: "classCard"
+    },
   data() {
     return {
-      classes: [
-        { name: "WEB 2022A", students: { number: 25 } },
-        { name: "WEB 2022B", students: { number: 22 } },
-        { name: "SNA 2022", students: { number: 20 } },
-      ],
-      id: "",
-      isRemoveClass: false,
       isDeleteAlert: false,
       iseditClass: false,
+      isCreateClass: false
     };
   },
   methods: {
-    removeClass() {
-      this.isRemoveClass = !this.isRemoveClass;
-    },
     alertDelete() {
       this.isDeleteAlert = true;
     },
     editClass() {
       this.iseditClass = true;
     },
+    closeForm() {
+      this.iseditClass = false;
+    },
+    confirmDelete(){
+      this.isDeleteAlert = false
+    }
   },
 };
 </script>
-
-<style>
-#cardAction::before {
-  position: absolute;
-  content: "";
-  height: 13px;
-  width: 13px;
-  background: #fff;
-  left: 60px;
-  top: -7px;
-  transform: translateX(-50%) rotate(45deg);
-}
-</style>

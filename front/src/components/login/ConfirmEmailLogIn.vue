@@ -1,7 +1,7 @@
 <template>
-    <div class="flex items-center justify-center w-[30%]">
+    <div class="flex items-center justify-center w-[40%]">
 
-      <form class="w-full" @submit.prevent="handleLogin">
+      <form class="w-full m-auto p-4 rounded bg-gray-100 px-12" @submit.prevent="handleLogin">
         <img src="../../assets/people.png" alt="" class="m-auto">
 
         <h1 class="text-xl font-semibold text-center p-1 uppercase mt-6 text-primary">
@@ -13,7 +13,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
             </svg>
               <input
-                class="appearance-none rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
+                class="appearance-none bg-gray-100 rounded w-full px-2 py-3 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline pl-10 border-b-2 border-primary"
                 :class="{'border-red-500 bg-red-200':is_empty}"
                 type="email"
                 id="email"

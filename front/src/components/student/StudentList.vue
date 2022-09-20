@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
+      <div class="mb-3 bg-green-500" v-if="isSuccess">
+        <p class="text-center text-white rounded">Created Successfully</p>
+      </div>
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
         <div class="flex">
@@ -123,6 +126,7 @@ export default {
         errorIdStudent: '',
         filterByBatch: "All",
         filterByClass: "All",
+        isSuccess : false
       }
   },
   methods: {
@@ -145,6 +149,10 @@ export default {
         this.errorIdStudent = errorMessageBack;
         this.getStudentData()
         this.isShowForm = false;
+        this.isSuccess  = true
+        setTimeout(() => {
+          this.isSuccess = false;
+        },1000);
       }).catch((error) =>{
         if (error.response.status === 422) {
           this.errorMessage = error.response.data.message;

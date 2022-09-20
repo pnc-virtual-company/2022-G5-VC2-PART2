@@ -50,6 +50,7 @@ Route::prefix('/login')->group(function() {
     Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
 
     // Route Class
+    Route::get('/classes',[ClassBatchController::class,'index']);
     Route::post('/classes',[ClassBatchController::class,'store']);
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);

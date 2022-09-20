@@ -61,31 +61,21 @@
                     />
                 </div>
                 <div class="flex justify-between mr-2 mb-2">
-                    <div class="batch mr-2">
-                    <b><label for="batchInput">Batch</label></b>
-                    <br />
-                    <input
-                        v-model="batch"
-                        type="text"
-                        name="batchInput"
-                        class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                        id="batchInput"
-                        placeholder="Batch ..."
-                    />
+                    <div>
+                        <b><label for="batchInput">Batch</label></b>
+                        <br />
+                        <select class="form-select w-[12.2vw] shadow appearance-none border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="batch_id">
+                            <option v-for="(batch,index) in allBatch" :key="index" :value = batch.id>{{batch.year}}</option>
+                        </select>
                     </div>
-                    <div class="class mr-2">
-                    <b><label for="classInput">Class</label></b>
-                    <br />
-                    <input
-                        v-model="student_class"
-                        type="text"
-                        name="classInput"
-                        class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
-                        id="classInput"
-                        placeholder="Class ..."
-                    />
+                    <div>
+                        <b><label for="batchInput">Class</label></b>
+                        <br />
+                        <select class="form-select w-[12.2vw] shadow appearance-none border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline ml-2" v-model="class_id">
+                            <option v-for="(oneClass,index) in allClass" :key="index" :value = oneClass.id>{{oneClass.class_name}}</option>
+                        </select>
                     </div>
-                    <div class="studentId mr-2">
+                    <div class="studentId ml-2 w-[12.2vw]">
                     <b><label for="studentIdInput">Student ID</label></b>
                     <br />
                     <input
@@ -152,11 +142,13 @@ export default {
             last_name: this.userDataDetail.last_name,
             email: this.userDataDetail.email,
             phone: this.userDataDetail.phone,
-            batch: this.studentDataDetail.batch,
-            student_class: this.studentDataDetail.class,
+            batch_id: this.studentDataDetail.batch_id,
+            class_id: this.studentDataDetail.class_id,
             id_student: this.studentDataDetail.id_student,
             gender: this.userDataDetail.gender,
             date_birth: this.studentDataDetail.date_birth,
+            allBatch: [],
+            allClass: []
         }
     },
 
@@ -169,8 +161,8 @@ export default {
                     last_name: this.last_name,
                     email: this.email,
                     phone: this.phone,
-                    batch: this.batch,
-                    class: this.student_class,
+                    batch_id: this.batch_id,
+                    class_id: this.class_id,
                     id_student: this.id_student,
                     roles: this.roles,
                     gender: this.gender,
@@ -183,7 +175,21 @@ export default {
 
                 }))
             }
+        },
+        getAllBatch() {
+            axios.get('/batches').then(res => {
+                this.allBatch = res.data;
+            })
+        },
+        getAllClass() {
+            axios.get('/classes').then(res => {
+                this.allClass = res.data;
+            })
         }
+    },
+    mounted() {
+        this.getAllBatch();
+        this.getAllClass();
     },
     watch: {
         first_name: function (newValue) {

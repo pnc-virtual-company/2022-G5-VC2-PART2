@@ -32,10 +32,10 @@
           <people-list :peopleList="filterTeacher" @showDetail="showDetail" @alertDelete="alertDelete"/>
         </div>
         <div v-if="listTeachers.length <= 0" class="flex flex-col items-center mt-8 mb-3">
-          <img class="w-80" src="./../../assets/noRequestFound.png" alt="Image not found">
+          <img class="w-40" src="./../../assets/noRequestFound.png" alt="Image not found">
           <h1 class="text-stone-500">No any requests for now!</h1>
         </div>
-        <div v-else-if="filterTeacher.length <= 0" class="flex flex-col items-center mt-8 mb-3">
+        <div v-else-if="filterTeacher.length === 0" class="flex flex-col items-center mt-8 mb-3">
           <img class="w-60" src="./../../assets/requestEmpty.png" alt="Image not found">
           <h1 class="text-stone-500 mt-5">No requests found!</h1>
         </div>

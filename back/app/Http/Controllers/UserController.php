@@ -92,7 +92,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
-        $user->password= null;
+        $user->password = null;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';
@@ -144,7 +144,7 @@ class UserController extends Controller
     // Show only one user (student)
     public function showOneStudent($id) {
         $userData = User::where('users.student_id','=',$id)->get();
-        $studentData = Student::findOrFail($id);
+        $studentData = Student::join('class_batches','students.class_id','=','class_batches.id')->join('batches','batches.id','=','students.batch_id')->findOrFail($id);
         return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 

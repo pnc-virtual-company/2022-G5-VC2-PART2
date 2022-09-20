@@ -29,6 +29,7 @@ export default {
     data(){
         return{
             isEditBatch: false,
+            isEditClass: false,
         }
     },
     methods:{
