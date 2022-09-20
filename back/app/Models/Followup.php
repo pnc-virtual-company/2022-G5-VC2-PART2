@@ -16,6 +16,11 @@ class Followup extends Model
         'remember_token',
         'password',
     ];
+
+    protected $casts = [
+        'type' => 'array'
+    ];
+
     public function students() {
         return $this->hasMany(Student::class,'id');
     }
