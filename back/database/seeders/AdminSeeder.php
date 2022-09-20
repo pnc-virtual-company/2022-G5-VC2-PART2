@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             'first_name' => 'sauth',
             'last_name' => 'phouek',
             'email' => 'sauth.phouek@passerellesnumeriques.org',
-            'password' => Hash::make('pnc'),
+            'password' => null,
             'roles' => 'Coordinator',
             'gender' => 'Male',
             'profile' => 'admin.png'
