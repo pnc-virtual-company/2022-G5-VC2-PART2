@@ -145,7 +145,7 @@ export default {
       this.$emit('show-detail');
     },  
     createStudent(userData,errorMessageBack) {
-      axiosHttp.post('/users',userData).then((res) => {
+      axiosHttp.post('/users/',userData).then((res) => {
         console.log(res.data);
         this.errorMessage = errorMessageBack;
         this.errorIdStudent = errorMessageBack;
