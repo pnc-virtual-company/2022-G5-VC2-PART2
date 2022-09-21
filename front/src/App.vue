@@ -1,8 +1,8 @@
 <template>
   <div>
     <navbar-view v-if="isLogin" :user="user"/>
-    <router-view v-slot="{ Component }" :user="user">
-      <transition name="fade">
+    <router-view v-slot="{ Component }" >
+      <transition name="fade" :user="user">
         <component :is="Component" />
       </transition>
     </router-view>

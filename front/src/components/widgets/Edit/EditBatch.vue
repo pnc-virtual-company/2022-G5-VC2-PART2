@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
+    <div class="w-full h-full bg-black z-50 bg-opacity-30 flex items-center justify-center fixed top-0">
         <div class="main-form w-[30%]">
             <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
                 <p class="ml-3">UPDATE Batch</p>

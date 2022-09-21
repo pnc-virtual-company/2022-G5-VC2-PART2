@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
-      <div class="mb-3 bg-green-500" v-if="isSuccess">
-        <p class="text-center text-white rounded">Created Successfully</p>
+      <div class="relative  mt-0 mb-2 w-full" v-if="isSuccess" >
+          <alert-success :content="message"/>
       </div>
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
-        <div class="flex">
+        <div class="flex" v-if="user.roles == 'Coordinator'">
             <div class="relative mr-2">
             <router-link to="/batch">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="add-people w-12 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2 text-primary">
@@ -104,14 +104,18 @@ import peopleList from "../PeopleList.vue"
 import studentForm from './StudentForm.vue';
 import deleteAlert from "../widgets/action/DeleteAlert.vue";
 import searchBar from '../search/SearchBar.vue';
-
+import alertSuccess from "../widgets/AlertSuccess.vue"
 export default {
   components: {
     "people-list": peopleList,
     "student-form": studentForm,
     "delete-alert": deleteAlert,
     "searchbar-form": searchBar,
+    "alert-success" : alertSuccess
     
+  },
+  props: {
+    user: Object
   },
   data() {
       return {
@@ -128,7 +132,8 @@ export default {
         allBatch: [],
         allClass: [],
         isSuccess : false,
-        loading: true
+        loading: true,
+        message: "Created student successful"
       }
   },
   methods: {
@@ -145,16 +150,15 @@ export default {
       this.$emit('show-detail');
     },  
     createStudent(userData,errorMessageBack) {
-      axiosHttp.post('/users',userData).then((res) => {
-        console.log(res.data);
+      axiosHttp.post('/users',userData).then(() => {
         this.errorMessage = errorMessageBack;
         this.errorIdStudent = errorMessageBack;
-        this.getStudentData()
-        this.isShowForm = false;
         this.isSuccess  = true
+        this.isShowForm = false;
+        this.getStudentData();
         setTimeout(() => {
           this.isSuccess = false;
-        },1000);
+        },4000);
       }).catch((error) =>{
         if (error.response.status === 422) {
           this.errorMessage = error.response.data.message;
@@ -166,11 +170,13 @@ export default {
       });
     },
     deletedPerson(){
+      this.getStudentData();
       this.isDeleteAlert = false;
     },
     alertDelete(id){
       this.isDeleteAlert = true;
       this.userId = id;
+      console.log(id);
     },
     showAll(){
       this.showShortList = !this.showShortList;

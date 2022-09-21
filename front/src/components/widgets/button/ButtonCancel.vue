@@ -1,5 +1,5 @@
 <template>
-    <button class="bg-red-500 hover:bg-red-600  text-white p-1.5 px-3  rounded focus:outline-none focus:shadow-outline">
+    <button class="p-2 px-6 text-red-500 font-bold rounded cursor-pointer ml-1 hover:bg-red-200">
         <slot name="button_cancel"></slot>
     </button>
 </template>
