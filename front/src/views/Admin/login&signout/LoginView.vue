@@ -1,6 +1,6 @@
 <template>
   <div>
-      <alert-success v-if="isCreatedPassword" :content="message"> </alert-success>
+        <alert-success v-if="isCreatedPassword" :content="message"> </alert-success>
       <div class="w-full m-auto h-[100vh] flex items-center justify-center p-4">
         <div class="p-5 uppercase w-[50%] ">
           <img src="../../../assets/pic-login.png" alt="" class="w-[100%] m-auto" />
@@ -23,7 +23,6 @@
         'create-password':createPassword,
         'set-password': setPassword,
         'alert-success': alertSucess,
-
       },
       data(){
         return {
@@ -31,7 +30,6 @@
           isPasswordNotNull: false,
           isCreatedPassword: false,
           message: "Password created successfull",
-          isReset: true,
         }
       },
       methods: {
@@ -52,7 +50,7 @@
             this.isCreatedPassword = true;
             setTimeout(() => {
                 this.isCreatedPassword = false;
-            }, 3000);
+            }, 4000);
         },
       }
     }
