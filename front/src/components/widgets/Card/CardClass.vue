@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="text-center text-xl p-4">
-        {{classId}}
+        {{cardName.students}}
         <div class="flex justify-end mt-2 text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +72,8 @@
         @click="isDeleteAlert"
         @cancelDelete="isDeleteAlert = false"
         :classId="classId"
-        @delete-class ="confirmDelete"
-      />
-    <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" />
+        @delete-class ="isDeleteAlert = false"
+      > </delete-alert>
   </div>
 </template>
 
@@ -110,9 +109,7 @@ export default {
     closeForm() {
       this.iseditClass = false;
     },
-    confirmDelete(){
-      this.isDeleteAlert = false
-    }
+
   },
 };
 </script>

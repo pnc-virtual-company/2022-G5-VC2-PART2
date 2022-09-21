@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewUserMail;
+use App\Mail\SendMailVerification;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
-
 
 class UserController extends Controller
 {
@@ -59,10 +59,6 @@ class UserController extends Controller
         return response()->json(['message' => 'User logout']);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dbc86e173384a23b9df07e80f178819e505cc03a
     // Create New User 
     public function registerUser(Request $request) {
         // Validation sign Up user
@@ -95,11 +91,9 @@ class UserController extends Controller
             $student->class_id = $request->class_id;
             $student->date_birth = $request->date_birth;
             $idStudents = Student::where('students.batch_id','=',$request->batch_id)->get(['students.id_student']);
-            // return $idStudents;
             foreach($idStudents as $idStudent) {
     
                 if ($idStudent['id_student'] === $request->id_student){
-                    // return abort(422,['message' => 'Id already exist!*']);
                     return response()->json(['message' => 'Id already exist!*'],402);
                 }
             }
@@ -112,7 +106,39 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
+    
+    //  Confirm email when clicked forgot password
+    public function findEmailAccount(Request $request){
+        $user= User::where('email',$request->email)->first();
+        $response = ['status'=>false];
+        if ($user){
+            $verificationCode = '';
+            foreach (range(0, 5) as $item){
+                $random = rand(1,9);
+                $verificationCode .= $random;
+            }
+            $user->code = $verificationCode;
 
+            $user->save();
+            $response = ['status'=>true];
+            Mail::to($user->email)->send(new SendMailVerification($user));
+        }
+
+        return response()->json($response);
+    }
+    // Confirm verification code
+    public function confirmVerificationCode(Request $request){
+        $user = User::where('email',$request->email)->first();
+        $response = ['status'=>false];
+        if ($user->code == $request->code){
+            $user->password = null;
+            $user->code = null;
+            $user->tokens()->delete();
+            $user->save();
+            $response = ['status'=>true];
+        }
+        return response()->json($response);
+    }
     // Get user by access token
     public function getUserByToken(){
         $user =  auth('sanctum')->user();
@@ -185,7 +211,6 @@ class UserController extends Controller
         }
         return response()->json(['message' => 'Deleted Success!']);
     }
-
     // Reset password
     public function resetPassword(Request $request, $id) {
         $user = User::findOrFail($id);
@@ -230,7 +255,6 @@ class UserController extends Controller
         }else{
             abort(404);
         }
-
         $type = File::mimeType($path);
         $response = Response::make($file,200);
         $response->header('Content-Type',$type);

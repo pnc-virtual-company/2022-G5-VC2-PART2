@@ -1,22 +1,17 @@
 <template>
-<div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
+<div class="w-full h-full bg-black z-50 bg-opacity-30 flex items-center justify-center fixed top-0">
   <div class="main-form w-[40%] ">
-    <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
-      <p></p>
-      <h2><b>Create Student</b></h2>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm')">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-
+    <div class="p-2 bg-white shadow text-center border-b-2 text-primary text-lg uppercase rounded-t">
+      <h2>Create Student</h2>
     </div>
-    <form class="shadow p-4 bg-white" @submit.prevent="createNewStudent">
-      <div class="flex w-full justify-between  mb-2">
-        <div class="w-full mr-2 mb-2">
-          <b><label for="firstNameInput">First name</label></b>
+    <form class="shadow rounded-b p-4 bg-white" @submit.prevent="createNewStudent">
+      <div class="flex w-full justify-between  mb-1">
+        <div class="w-full mr-2 mb-1">
+          <label for="firstNameInput">First name</label>
           <br />
           <input
             type="text"
-            class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline"
             name="firstNameInput"
             id="firstNameInput"
             placeholder="First name ..."
@@ -26,12 +21,12 @@
           />
         </div>
         <div class="w-full">
-          <b><label for="lastNameInput">Last name</label></b>
+          <label for="lastNameInput">Last name</label>
           <br />
           <input
             type="text"
             name="lastNameInput"
-            class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+            class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline"
             id="lastNameInput"
             placeholder="Last name ..."
             v-model="lastName"
@@ -40,13 +35,13 @@
           />
         </div>
       </div>
-      <div class="email mb-2">
-        <b><label for="emailInput">Email</label></b>
+      <div class="email mb-1">
+        <label for="emailInput">Email</label>
         <br />
         <input
           type="email"
           name="emailInput"
-          class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+          class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline"
           id="emailInput"
           placeholder="Email ..."
           v-model="email"
@@ -56,37 +51,37 @@
         <p>{{messageError}}</p>
         <p>{{forgotEmail}}</p>
       </div>
-      <div class="phone mb-2">
-        <b><label for="phoneInput">Phone</label></b>
+      <div class="phone mb-1">
+        <label for="phoneInput">Phone</label>
         <br />
         <input
           type="phone"
           name="phoneInput"
-          class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+          class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700  leading-tight focus:outline-blue-500 focus:shadow-outline"
           id="phoneInput"
           placeholder="Phone ..."
           v-model="phoneNumber"
           :disabled = isCreate
         />
-        <span>Optional*</span>
+        <span class="text-sm text-primary">Optional*</span>
       </div>
-      <div class="flex mb-2 box-border relative">
+      <div class="flex mb-1 box-border relative">
         <div>
-          <b><label for="batchInput">Batch</label></b>
+          <label for="batchInput">Batch</label>
           <br />
           <select class="form-select w-[12.2vw] shadow appearance-none border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="batchId" :disabled = isCreate>
             <option v-for="(batch,index) in allBatch" :key="index" :value = batch.id>{{batch.year}}</option>
           </select>
         </div>
         <div>
-          <b><label for="classInput">Class</label></b>
+          <label for="classInput">Class</label>
           <br />
           <select class="form-select w-[12.2vw] shadow appearance-none ml-1 border rounded px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline" v-model="classId" :disabled = isCreate>
             <option v-for="(oneClass,index) in allClass" :key="index" :value = oneClass.id>{{oneClass.class_name}}</option>
           </select>
         </div>
         <div>
-          <b><label for="studentIdInput">Student ID</label></b>
+          <label for="studentIdInput">Student ID</label>
           <br />
           <input
             type="text"
@@ -101,8 +96,8 @@
           <p>{{errorIdStudent}}</p>
         </div>
       </div>
-      <div class="{}">
-        <b><label for="classInput">Date of Birth</label></b>
+      <div>
+        <label for="classInput">Date of Birth</label>
         <input
             type="date"
             name="studentDateBirth"
@@ -113,11 +108,11 @@
             min="1999-01-01"
             :disabled = isCreate
           />
-           <p>{{forgotDateBirth}}</p>
+            <p>{{forgotDateBirth}}</p>
       </div>
       <div class="gender mr-2 mb-2">
-        <b>Gender</b>
-        <div class="mt-2 flex">
+        Gender
+        <div class="mt-1 flex">
           <div class="male">
             <input type="radio" class="ml-2 cursor-pointer" name="gender" value="Male" id="maleClick" v-model="gender"/>
             <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
@@ -262,18 +257,4 @@ export default{
 }
 
 </script>
-<style scoped>
-p{
-  color: red;
-  font-size: 15px;
-}
-span{
-  color: rgb(61, 61, 254);
-  font-size: 13px;
-  margin: 0;
-  padding: 0;
-}
-#wait {
-  color: #fff;
-}
-</style>
+// 

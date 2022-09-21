@@ -41,18 +41,12 @@
                             </svg>
                         </div>
                         </div>
-                    <div v-if="isValid" class="text-red-500 text-sm">Invalid confirm password</div>
+                        <div v-if="isValid" class="text-red-500 text-sm">Invalid confirm password</div>
                     <div class="block mt-2">
                         <input type="checkbox" class="cursor-pointer" name="" id="show" @click="checkVisibility">
                         <label for="show" class="ml-2 cursor-pointer text-sm">Show password</label>
                     </div>
                     <div class="flex items-center justify-end">
-                        <router-link
-                            class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-600"
-                            
-                        >
-                            Forgot Password?
-                        </router-link>
                         <button             
                             :disabled="checkValidation"
                             class=" bg-blue-500 ground  hover:bg-blue-600 text-white py-1.5 px-4 rounded focus:outline-primary focus:shadow-outline  shadow"
