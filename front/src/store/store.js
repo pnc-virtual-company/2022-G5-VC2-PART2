@@ -20,6 +20,7 @@ export const store = new createStore({
     confirmEmail(state,data){
       state.userEmail = data.email;
       state.userId = data.id;
+      console.log(state.userId);
     },
   }
 })

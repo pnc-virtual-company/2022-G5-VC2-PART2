@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     getProfile(image) {
+      console.log(this.peopleList);
       return axios.defaults.baseURL + "storage/image/" + image;
     },
   },

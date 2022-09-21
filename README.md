@@ -2,21 +2,14 @@
 
 ## BACK
 
-- On php MyAdmin, create a new database : example_db
-
+- On php MyAdmin, create a new database : g5_db
 - Go to /back
 - Copy the .env.example to .env
-
-- on .env file, update the database name :
-  DB_DATABASE=example_db
-
+- on .env file, update the database name
+  DB_DATABASE=g5_db
 - Launch composer install
-- Launch npm install
 - Launch php artisan migrate
-
-- Launch php artisan key:generate
-- Launch php artisan storage:link ( to allow the image folder to be public)
-
+- Create default admin => php artisan db:seed
 - Launch php artisan serve
 
 ## FRONT
@@ -31,17 +24,16 @@
 
     - Clone project
 
-    - On php MyAdmin, create a  new database : example_db
+    - On php MyAdmin, create a  new database :  (name of database it's up to you)
 
     - Go to /back
     - Copy the .env.example to .env
-    - on  .env file, update the database name :
-    	DB_DATABASE=example_db
+    - on  .env file, update the database name
+    	DB_DATABASE=(The database name that you create on php MyAdmin)
 
     - Launch  composer install
     - Launch  npm install
     - Launch php artisan migrate
-    - Launch  php artisan key:generate
 
     - Go to /front
     - Launch  npm install
