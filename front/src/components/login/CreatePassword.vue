@@ -41,7 +41,7 @@
                             </svg>
                         </div>
                         </div>
-                    <div v-if="isValid" class="text-red-500 text-sm">Invalid confirm password</div>
+                        <div v-if="isValid" class="text-red-500 text-sm">Invalid confirm password</div>
                     <div class="block mt-2">
                         <input type="checkbox" class="cursor-pointer" name="" id="show" @click="checkVisibility">
                         <label for="show" class="ml-2 cursor-pointer text-sm">Show password</label>

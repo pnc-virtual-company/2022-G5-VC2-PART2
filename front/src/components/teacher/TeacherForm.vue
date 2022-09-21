@@ -1,9 +1,10 @@
 <template>
-  <div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
+  <div class="w-full h-full bg-black z-50 bg-opacity-30 flex items-center justify-center fixed top-0">
     <div class="w-[40%]">
       <div
         class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t"
       >
+      <p></p>
         <h2>Create Teacher</h2>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,13 +52,13 @@
 
           </div>
         </div>
-        <div class="flex w-full justify-between mr-2 mb-2">
+        <div class="flex w-full justify-between mr-2">
           <div class="w-full mr-2 mb-2">
             <b><label for="roleInput">Position</label></b>
             <br />
             <input
               type="text"
-              class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline"
               name="roleInput"
               id="roleInput"
               placeholder="Role..."
@@ -70,14 +71,12 @@
             <input
               type="text"
               name="phoneInput"
-              class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
+              class="shadow appearance-none border rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline"
               id="phoneInput"
               placeholder="Phone number ..."
               v-model="phone"
             />
             <span class="text-primary text-sm">Optional*</span>
-          </div>
-          <div class="text-red-500 text-sm mb-2">
           </div>
         </div>
         <div class="email mb-2">
@@ -94,30 +93,33 @@
           />
           <p>{{message}}</p>
         </div>
-        <div class="mt-2 flex">
-          <div class="male">
-            <input
-              type="radio"
-              class="ml-2 cursor-pointer"
-              name="gender"
-              id="maleClick"
-              value="Male"
-              v-model="gender"
-            />
-            <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
-          </div>
-          <div class="female ml-8">
-            <input
-              type="radio"
-              class="ml-2 cursor-pointer"
-              name="gender"
-              value="Female"
-              id="femaleClick"
-              v-model="gender"
-            />
-            <label for="femaleClick" class="ml-2 cursor-pointer"
-              >Female
-            </label>
+        <div class="mb-2 ">
+          <label for="">Gender</label>
+          <div class="mt-1 ml-4 flex">
+            <div class="male">
+              <input
+                type="radio"
+                class=" cursor-pointer"
+                name="gender"
+                id="maleClick"
+                value="Male"
+                v-model="gender"
+              />
+              <label for="maleClick" class="ml-2 cursor-pointer">Male</label>
+            </div>
+            <div class="female ml-8">
+              <input
+                type="radio"
+                class=" cursor-pointer"
+                name="gender"
+                value="Female"
+                id="femaleClick"
+                v-model="gender"
+              />
+              <label for="femaleClick" class="ml-2 cursor-pointer"
+                >Female
+              </label>
+            </div>
           </div>
         </div>
         <div class="flex justify-end">
@@ -130,7 +132,7 @@
         </div>
       </form>
     </div>
-    <div class="fixed w-full h-screen bg-black bg-opacity-60 flex items-center justify-center top-0" v-if="isCreate">
+    <div class="fixed w-full h-screen bg-black bg-opacity-30 flex items-center justify-center top-0" v-if="isCreate">
         <span class="text-md">
           <svg class="ml-8 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -198,7 +200,7 @@ export default {
         this.$emit("create-teacher", userData,messageBack);
         setTimeout(() => {
           this.isCreate = false;
-        },10000);
+        },500);
       }
     },
   },

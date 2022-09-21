@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Admin/login&signout/LoginView";
+import ForgotPasswordView from "../views/Admin/login&signout/ForgotPasswordView"
 import DashboardView from '../views/Admin/dashboard/DashboardView.vue';
 import FollowUpView from '../views/Admin/followUp/FollowUpView.vue';
 import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue';
@@ -52,6 +53,14 @@ const routes = [
     }
   },
   {
+    path: '/forgot',
+    name: 'forgot',
+    component: ForgotPasswordView,
+    meta: {
+      auth: false
+    }
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: ProfileView,
@@ -86,6 +95,7 @@ const routes = [
     }
   },
 
+
 ]
 
 const router = createRouter({
@@ -104,7 +114,7 @@ router.beforeEach((to, from ,next) => {
     next ('/dashboard');
   }else{
     next();
-    }
+  }
 })
 
 export default router
