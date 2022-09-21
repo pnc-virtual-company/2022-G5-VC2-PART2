@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('student_id')->onDelete('CASCADE');
             $table->foreignId('user_id')->onDelete('CASCADE')->nullable();
             $table->string('description');
-            $table->string('type');
+            $table->json('type');
             $table->boolean('status');
             $table->timestamps();
         });
