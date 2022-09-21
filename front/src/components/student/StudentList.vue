@@ -6,7 +6,7 @@
       </div>
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
-        <div class="flex">
+        <div class="flex" v-if="user.roles == 'Coordinator'">
             <div class="relative mr-2">
             <router-link to="/batch">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="add-people w-12 h-10 rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2 text-primary">
@@ -113,6 +113,9 @@ export default {
     "searchbar-form": searchBar,
     "alert-success" : alertSuccess
     
+  },
+  props: {
+    user: Object
   },
   data() {
       return {
