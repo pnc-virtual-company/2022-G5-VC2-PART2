@@ -1,5 +1,4 @@
 <template>
-<div class="flex items-center justify-center w-full h-screen">
     <div class="flex items-center justify-center w-[40%]">
       <form class="w-full m-auto p-4 rounded bg-gray-100 px-12 shadow" @submit.prevent="handleSubmit">
         <h1 class="text-xl font-semibold text-center p-1 uppercase mt-6 text-primary border-b">
@@ -32,14 +31,14 @@
         </div>
       </form>
     </div>
-</div>
+
 
 </template>
 
 <script>
   import axios from "../../axios-http"
   export default ({
-    emits: ['verify-code'],
+    emits: ['confirmed-code'],
     props: {
       email: String
     },
@@ -57,8 +56,7 @@
           console.log(this.email);
           axios.post('forgot/confirmCode', {code:this.code,email:this.email}).then((res)=>{
             if (res.data.status){
-              console.log(res.data);
-              alert('Okay')
+              this.$emit('confirmed-code');
             }else{
               this.is_empty = true;
             }

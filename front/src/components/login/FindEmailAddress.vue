@@ -1,8 +1,7 @@
 <template>
-<div class="flex items-center justify-center w-full h-screen">
     <div class="flex items-center justify-center w-[40%]">
-      <form class="w-full m-auto p-4 rounded shadow bg-gray-100 px-12" @submit.prevent="handleFindAddress">
-        <h1 class="text-xl font-semibold text-center p-1 uppercase mt-6 text-primary">
+      <form class="w-full m-auto p-4 rounded shadow  px-12" @submit.prevent="handleFindAddress">
+        <h1 class="text-xl font-semibold text-center p-1 uppercase mt-6 text-primary border-b-2">
             Find Email Address
         </h1>
         <div class="mb-1 relative mt-5">
@@ -32,7 +31,7 @@
         </div>
       </form>
     </div>
-</div>
+
 
 </template>
 
