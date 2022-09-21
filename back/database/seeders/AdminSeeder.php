@@ -17,12 +17,13 @@ class AdminSeeder extends Seeder
     public function run()
     {
         $coordinator = [
-            'first_name' => 'Sim',
-            'last_name' => 'Hul',
-            'email' => 'simhul@passerellesnumeriques.org',
-            'password' => Hash::make('pnc'),
+            'first_name' => 'sauth',
+            'last_name' => 'phouek',
+            'email' => 'sauth.phouek@passerellesnumeriques.org',
+            'password' => null,
             'roles' => 'Coordinator',
             'gender' => 'Male',
+            'profile' => 'admin.png'
         ];
         User::create($coordinator);
     }

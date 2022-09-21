@@ -40,8 +40,7 @@ export default({
                     console.log(res.data);
                     this.$emit('delete-class');
                 });
-            }
-             else {
+            }else{
                 axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
             }
         }

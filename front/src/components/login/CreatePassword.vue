@@ -47,6 +47,12 @@
                         <label for="show" class="ml-2 cursor-pointer text-sm">Show password</label>
                     </div>
                     <div class="flex items-center justify-end">
+                        <router-link
+                            class="inline-block cursor-pointer align-baseline text-sm text-blue-500 hover:text-blue-600"
+                            
+                        >
+                            Forgot Password?
+                        </router-link>
                         <button             
                             :disabled="checkValidation"
                             class=" bg-blue-500 ground  hover:bg-blue-600 text-white py-1.5 px-4 rounded focus:outline-primary focus:shadow-outline  shadow"
@@ -78,7 +84,7 @@ export default({
             this.isValid = false
             if (this.newPassword == this.confirmPassword){
                 this.isValid = false;
-                // console.log(this.$store.state.userId);
+                console.log(this.$store.state.userId);
                 const newPassword = {newPassword: this.newPassword, confirmPassword: this.confirmPassword}
                 axios.post("/login/createPassword/" +  this.$store.state.userId,newPassword);
                 this.$emit('create-password');
@@ -99,7 +105,6 @@ export default({
     computed: {
         // to check validation of both password
         checkValidation(){
-            // this.isFilledNew = false;
             let sms = false;
             if (this.newPassword.trim() == "" || this.confirmPassword.trim()== ''){
                 sms = true;

@@ -9,10 +9,6 @@ export const store = new createStore({
     userEmail: null,
     userId: null
   },
-  getters: {
-  },
-  mutations: {
-  },
   actions: {
     logout(){
       document.cookie = `${'token'}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -20,6 +16,10 @@ export const store = new createStore({
       axios.get('logout')
     }
   },
-  modules: {
+  mutations: {
+    confirmEmail(state,data){
+      state.userEmail = data.email;
+      state.userId = data.id;
+    },
   }
 })

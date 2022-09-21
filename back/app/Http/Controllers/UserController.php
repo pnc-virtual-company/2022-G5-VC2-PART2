@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Response;
 
@@ -20,10 +21,10 @@ class UserController extends Controller
         $user = User::where('email', $email)->first();
         if ($user) {
             $password_status = true;
-            if ($user->password == 'null') {
+            if (!$user->password) {
                 $password_status = false;
             }
-            $response = ['email'=>$user->email,'id'=> $user->id, "email_status"=>true,'password_status'=>$password_status];
+            $response = ['email'=>$user->email, 'id'=>$user->id, "email_status"=>true,'password_status'=>$password_status];
         } else{
             $response = ['email_status'=> false, 'password_status'=> false];
         }
@@ -58,7 +59,10 @@ class UserController extends Controller
         return response()->json(['message' => 'User logout']);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dbc86e173384a23b9df07e80f178819e505cc03a
     // Create New User 
     public function registerUser(Request $request) {
         // Validation sign Up user
@@ -109,6 +113,11 @@ class UserController extends Controller
         return response()->json(['message' => 'User created success!']);
     }
 
+    // Get user by access token
+    public function getUserByToken(){
+        $user =  auth('sanctum')->user();
+        return $user;
+    }
     // Get all Student only
     public function studentOnly() {
         
