@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
-    <div class="main-form w-[50%] bg-gray-200">
+    <div class="main-form w-[50%] bg-gray-200 rounded">
       <div class="p-2  text-center flex justify-between text-lg uppercase">
         <p></p>
         <h2>add student to follow up</h2>
@@ -10,11 +10,11 @@
         </svg>
       </div>
       <form @submit.prevent="onAddStudent" class="ml-9 mt-5 relative">
-        <label>Search list student :</label>
-        <br />
+        <label>Search list student </label>
         <input
-          class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 mt-2 leading-tight focus:outline-blue-500 focus:shadow-outline"
+          class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           type="text" v-model="searchStudent" placeholder="Search . . ." @click="showListStudent">
+        <p>{{messageError}}</p>
         <div v-if="isShowListStudent">
           <ul class="overflow-y-scroll bg-white h-[16rem] w-[95%] absolute" @click="showListStudent">
             <div class="flex p-2 cursor-pointer hover:bg-gray-200 ease-in duration-400"
@@ -26,11 +26,9 @@
           </ul>
         </div>
         <!-- for search tutor -->
-        <label>Assign tutor :</label>
-        <p>{{messageError}}</p>
-        <br />
+        <label class="mt-2">Assign tutor </label>
         <input
-          class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 mt-2 leading-tight focus:outline-blue-500 focus:shadow-outline"
+          class="shadow appearance-none border  rounded w-[95%] px-2 p-2 text-gray-700 mb-1 leading-tight focus:outline-blue-500 focus:shadow-outline"
           type="text" v-model="searchTutor" placeholder="Search . . ." @click="showListTutor">
         <div v-if="isShowListTutor">
           <ul class=" bg-white h-[13rem] w-[95%] absolute" @click="showListTutor">
