@@ -10,7 +10,7 @@ class Student extends Model
     use HasFactory;
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'id');
     }
 
     public function classbatch() {
@@ -19,5 +19,9 @@ class Student extends Model
 
     public function batch() {
         return $this->belongsTo(Batch::class);
+    }
+
+    public function followup() {
+        return $this->belongsTo(FollowUp::class,'id');
     }
 }

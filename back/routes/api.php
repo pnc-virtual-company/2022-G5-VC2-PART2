@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ClassBatchController;
+use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
@@ -18,9 +19,12 @@ use App\Http\Controllers\StudentController;
 
 // Public route---------======
 // Login Route
-Route::post('/login', [UserController::class, 'login']);
-Route::get('/login/confirm-email',[UserController::class,'confirmEmail']);
-Route::post('/login/set-password/{id}',[UserController::class,'createNewPassword']);
+Route::prefix('/login')->group(function() {
+    Route::get('/confirmEmail/{email}', [UserController::class, 'confirmEmail']);
+    Route::post('/createPassword/{id}',[UserController::class,'createNewPassword']);
+    Route::post('/', [UserController::class, 'setPasswordLogin']);
+});
+Route::get('account/find',[UserController::class,'getUserByToken']);
 // Private Route ------------=========
 // Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //
@@ -31,28 +35,32 @@ Route::post('/login/set-password/{id}',[UserController::class,'createNewPassword
     Route::prefix('/users')->group(function() {
         // Route Coordinator 
         Route::post('/',[UserController::class,'registerUser']);
-        Route::put('/{id}',[UserController::class,'update']);
+        Route::post('/{id}',[UserController::class,'update']);
         Route::get('/students',[UserController::class,'studentOnly']);
         Route::get('/teachers',[UserController::class,'teacherOnly']);
         Route::get('/student/{id}',[UserController::class,'showOneStudent']);
         Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
+        Route::post('/updateProfile/{id}',[UserController::class,'updateProfile']);
+        // route to add student into the follow up list 
+        Route::post('/follow_ups',[FollowupController::class,'store']);
+        Route::get('/follow_ups',[FollowupController::class,'index']);
+        Route::get('/follow_ups/{id}',[FollowupController::class, 'show']);
+        Route::delete('/follow_ups/{id}',[FollowupController::class,'destroy']);
     });
 
     // Route Batchs
     Route::get('/batches',[BatchController::class,'index']);
     Route::post('/batches',[BatchController::class,'store']);
-    Route::post('/batch/{id}',[BatchController::class,'update']);
+    Route::put('/batch/{id}',[BatchController::class,'update']);
     Route::get('/batch/{id}',[BatchController::class,'show']);
-    Route::delete('delete/batch/{id}',[BatchController::class,'destroy']);
-
+    Route::delete('batch/delete/{id}',[BatchController::class,'destroy']);
     // Route Class
+    Route::get('/classes',[ClassBatchController::class,'index']);
     Route::post('/classes',[ClassBatchController::class,'store']);
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);
     Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
-
-    // Public route to get image
-    Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
 // });
+Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */

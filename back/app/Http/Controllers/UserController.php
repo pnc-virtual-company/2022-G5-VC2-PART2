@@ -16,40 +16,48 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller
 {
     // Log In user
-    public function login(Request $request) {
+    public function confirmEmail(Request $request,$email) {
         // Check email and password
-        $user = User::where('email', $request->email)->first();
-
-        // Check password
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'fail'], 401);
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $password_status = true;
+            if (!$user->password) {
+                $password_status = false;
+            }
+            $response = ['email'=>$user->email, 'id'=>$user->id, "email_status"=>true,'password_status'=>$password_status];
+        } else{
+            $response = ['email_status'=> false, 'password_status'=> false];
+        }
+        return response()->json($response );
+    }
+    public function setPasswordLogin(Request $request){
+        $user = User::where('email',$request->email)->first();
+        $response = ['password_status'=>false];
+        if (Hash::check($request->password,$user->password)){
+            $token = $user->createToken('mytoken')->plainTextToken;
+            $response = ['user'=>$user,'password_status'=>true,'token'=>$token];
         }
 
         // Create token for login
-        $token = $user->createToken('mytoken')->plainTextToken;
-
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-        ]);
+        return response()->json($response);
     }
 
-    public function confirmEmail(Request $request, $id) {
+    // Create New Password
+    public function createNewPassword(Request $request,$id) {
         $user = User::findOrFail($id);
-        // Check email first create
-        if ($user->email === $request->email) {
-            return response()->json(['status' => true ],200);
+        if($request->newPassword === $request->confirmPassword) {
+            $user->password = bcrypt($request->confirmPassword);
+            $user->save();
+            return response()->json(['message' => 'Password created!']);
         }else {
-            return response()->json(['message' => 'Email not true'],402);
+            return response()->json(['message' => 'Password not match!']);
         }
     }
-
     // Log out user
     public function logout() {
         auth()->user()->tokens()->delete();
         return response()->json(['message' => 'User logout']);
     }
-
 
     // Create New User 
     public function registerUser(Request $request) {
@@ -68,7 +76,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->roles = $request->roles;
-        $user->password= null;
+        $user->password = null;
         $user->gender = $request->gender;
         $user->phone = $request->phone;
         $ProfileImage = 'student_female.png';
@@ -87,7 +95,6 @@ class UserController extends Controller
             foreach($idStudents as $idStudent) {
     
                 if ($idStudent['id_student'] === $request->id_student){
-
                     // return abort(422,['message' => 'Id already exist!*']);
                     return response()->json(['message' => 'Id already exist!*'],402);
                 }
@@ -102,14 +109,20 @@ class UserController extends Controller
         return response()->json(['message' => 'User created success!']);
     }
 
+    // Get user by access token
+    public function getUserByToken(){
+        $user =  auth('sanctum')->user();
+        return $user;
+    }
     // Get all Student only
     public function studentOnly() {
+        
         return User::join('students','users.student_id','=','students.id')->join('class_batches','students.class_id','=','class_batches.id')->join('batches','students.batch_id','=','batches.id')->get(['users.*','students.*','class_batches.*','batches.*']);
     }
 
     // Get all Teacher only
     public function teacherOnly() {
-       return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
+        return User::where('users.roles','=','TEACHER')->get(['users.id','users.first_name','users.last_name','users.email','users.roles','users.gender','users.phone','users.profile']);
     }
 
     // Show only one user (Teacher)
@@ -120,7 +133,7 @@ class UserController extends Controller
     // Show only one user (student)
     public function showOneStudent($id) {
         $userData = User::where('users.student_id','=',$id)->get();
-        $studentData = Student::findOrFail($id);
+        $studentData = Student::join('class_batches','students.class_id','=','class_batches.id')->join('batches','batches.id','=','students.batch_id')->findOrFail($id);
         return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 
@@ -190,14 +203,14 @@ class UserController extends Controller
     // Update Profile user
     public function updateProfile(Request $request, $id) {
         $user = User::findOrFail($id);
-        $path = public_path('images/'.$user->profile);
+        $path = storage_path('images/'.$user->profile);
         if (File::exists($path)) {
             File::delete($path);
         }
 
-        $image = $request->profile;
+        $image = $request->file('profile');
         $newImageName = date('j-F-Y-H-i-s-A').$image->getClientOriginalName();
-        $image->move(public_path('images'),$newImageName);
+        $image->move(storage_path('/images'),$newImageName);
         $user->profile = $newImageName;
         $user->save();
 
@@ -221,16 +234,5 @@ class UserController extends Controller
         return $response;
     }
 
-    // Create New Password
-    public function createNewPassword(Request $request,$id) {
-        $user = User::findOrFail($id);
-        if($request->newPassword === $request->confirmPassword) {
-            $user->password = bcrypt($request->confirmPassword);
-            $user->save();
-            return response()->json(['message' => 'Password created!']);
-        }else {
-            return response()->json(['message' => 'Password not match!'],402);
-        }
-    }
 
 }
