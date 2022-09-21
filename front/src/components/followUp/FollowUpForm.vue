@@ -21,7 +21,7 @@
               v-for:="(student, i ) in filterStudent" @click="clickStudent(student)">
               <li class="ml-2"><img :src="getProfile(student.profile)"
                   class="w-12 h-12 rounded-full border-2 border-primary "></li>
-              <li class="p-3 ml-2 " :class="i==0?'font-bold':''">{{student.first_name}} {{student.last_name}}</li>
+              <li class="p-3 ml-2 " :class="i==0?'font-bold':''">{{student.first_name}} {{student.last_name}} {{student.student_id}}</li>
             </div>
           </ul>
         </div>

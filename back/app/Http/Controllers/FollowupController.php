@@ -13,7 +13,7 @@ class FollowupController extends Controller
     public function index()
     {
 
-        return Followup::join('students','students.id','=','followups.student_id')->join('users','users.student_id','=','students.id')->join('class_batches','class_batches.id','=','students.class_id')->join('batches','students.batch_id','=','batches.id')->where('followups.status','=',1)->get(['followups.*','students.*','users.*','class_batches.*','batches.id']);
+        return Followup::join('students','students.id','=','followups.student_id')->join('users','users.student_id','=','students.id')->join('class_batches','class_batches.id','=','students.class_id')->join('batches','students.batch_id','=','batches.id')->where('followups.status','=',1)->get(['followups.*','students.*','users.*','class_batches.*','batches.*']);
     }
 
     /**
@@ -34,8 +34,21 @@ class FollowupController extends Controller
             $followup->status = true;
 
             $followup->save();
-
             return response()->json(['message' => 'The student has added to follow up succesfully.'],201);
+        }elseif ($student != null) {
+            foreach($student as $oneStudent) {
+                if ($oneStudent['status'] == 0) {
+                    $followup = new Followup();
+                    $followup->student_id = $request->student_id;
+                    $followup->user_id = $request->user_id;
+                    $followup->type = $request->type;
+                    $followup->description = $request->description;
+                    $followup->status = true;
+                    $followup->save();
+                    return response()->json(['message' => 'Start follow up again!']);
+                }
+            }
+            return response()->json(['message' => 'canadd']);
         }
         else{
             return response()->json(['message' => 'Student has already added!'],402);

@@ -31,7 +31,7 @@
                 stroke-width="1.5"
                 stroke="currentColor"
                   class="add-people w-9 h-9  bg-white rounded-full cursor-pointer p-2 stroke-rose-600 shadow"
-                  @click="$emit('alertDelete', person.id,$event)"
+                  @click="$emit('alertDelete', person.student_id,$event)"
                 >
                   <path
                   stroke-linecap="round"

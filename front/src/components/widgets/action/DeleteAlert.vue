@@ -32,6 +32,7 @@ export default({
                 this.$emit('delete-batch');
 
             }else{
+                console.log(this.id)
                 axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
             }
         }
