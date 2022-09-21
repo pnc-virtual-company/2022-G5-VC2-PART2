@@ -32,7 +32,7 @@
       <div class="rounded shadow p-4 relative mt-2 bg-white">
         <searchbar-form @newKeyword="filterTeacher" placeholder="Search Name"/>
         <div class="flex justify-center mt-4">
-          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete"/>
+          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete" />
         </div>
         <div class="ml-[38vw] mt-3" v-if="loading">
           <span class="" id="wait">
@@ -101,6 +101,7 @@ export default {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
         this.listTeachers = res.data.reverse();
+        console.log(this.listTeachers);
       })
     },
     showTeacherForm(){
@@ -113,8 +114,9 @@ export default {
       this.getTeacherData();
       this.isDeleteAlert = false;
     },
-    alertDelete(id){
+    alertDelete(id,event){
       this.isDeleteAlert = true;
+      event.stopPropagation();
       this.userId = id;
     },
     createTeacher(userData,messageBack) {
@@ -136,7 +138,7 @@ export default {
     axiosHttp.get('/users/teachers').then(res => {
       this.listTeachers = res.data.filter((teacher) => teacher.first_name.toLowerCase().includes(keyword.toLowerCase()) || teacher.last_name.toLowerCase().includes(keyword.toLowerCase()));
     });
-  }
+  },
   },
   mounted(){
     setTimeout(() => {

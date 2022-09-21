@@ -10,31 +10,18 @@
     </thead>
     <tbody class="bg-slate-100">
 
-        <tr  class="text-center relative p-2 h-16 hover:bg-slate-200 group" v-for="person of peopleList"
-          :key="person.id">
-          <td class="text-center">  
+        <tr  class=" relative p-2 h-16 hover:bg-slate-200 group cursor-pointer" v-for="person of peopleList"
+          :key="person.id" @click="showStudentDetail(person)">
+          <td >  
             <div class="flex items-cener justify-center">
               <img  :src="getProfile(person.profile)" class="w-12 h-12 rounded-full border-2 border-primary" />
             </div>
           </td>
-          <td class="text-center">{{ person.first_name }}</td>
-          <td class="text-center">{{ person.last_name }}</td>
-          <td class="text-left flex justify-between mt-5">
+          <td >{{ person.first_name }}</td>
+          <td >{{ person.last_name }}</td>
+          <td>
             {{ person.email }}
             <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex ">
-              <router-link :to="{name:'peopleDetail', params:{id:person.id,role:person.roles}}">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="add-people w-9 bg-white h-9 rounded-full  cursor-pointer p-2 stroke-blue-600 shadow mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-              </svg>
-              <div id="view-detail" class="add-button absolute -top-10 z-50 text-center opacity-0 right-1 text-sm w-32 bg-[#1596e0] rounded-full text-white p-1.5">
-                View Information
-              </div>
-              </router-link>
 
               <div class="relative">
                 <svg
@@ -44,7 +31,7 @@
                 stroke-width="1.5"
                 stroke="currentColor"
                   class="add-people w-9 h-9  bg-white rounded-full cursor-pointer p-2 stroke-rose-600 shadow"
-                  @click="$emit('alertDelete', person.id)"
+                  @click="$emit('alertDelete', person.id,$event)"
                 >
                   <path
                   stroke-linecap="round"
@@ -73,6 +60,9 @@ export default {
     getProfile(image) {
       return axios.defaults.baseURL + "storage/image/" + image;
     },
+    showStudentDetail(person){
+      this.$router.push({name:'peopleDetail', params:{id:person.id,role:person.roles}})
+    }
   },
 };
 </script>

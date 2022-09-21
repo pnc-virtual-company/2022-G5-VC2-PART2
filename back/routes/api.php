@@ -47,7 +47,7 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
         Route::post('/follow_ups',[FollowupController::class,'store']);
         Route::get('/follow_ups',[FollowupController::class,'index']);
         Route::get('/follow_ups/{id}',[FollowupController::class, 'show']);
-        Route::delete('/follow_ups/{id}',[FollowupController::class,'destroy']);
+        Route::delete('/follow_ups/{id}',[FollowupController::class,'removeFollowUp']);
     });
 
     // Route Batchs

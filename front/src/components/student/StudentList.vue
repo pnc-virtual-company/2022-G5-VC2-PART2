@@ -168,7 +168,8 @@ export default {
     deletedPerson(){
       this.isDeleteAlert = false;
     },
-    alertDelete(id){
+    alertDelete(id,event){
+      event.stopPropagation();
       this.isDeleteAlert = true;
       this.userId = id;
     },
