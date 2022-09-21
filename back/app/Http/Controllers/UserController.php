@@ -58,23 +58,7 @@ class UserController extends Controller
         return response()->json(['message' => 'User logout']);
     }
 
-    // Reset password
-    // public function resetPassword(Request $request, $id) {
-    //     $user = User::findOrFail($id);
-    //     if (Hash::check($request->currentPassword,$user->password)) {
-    //         if ($request->newPassword == $request->confirmPassword) {
-    //             $user->password = Hash::make($request->newPassword);
-    //             $user->save();
-    //             return response()->json(['message' => 'Password Updated!']);
-    //         }
-    //         else{
-    //             return response()->json(['message' => 'Confirm password does not match!']);
-    //         }
-    //     }
-    //     else {
-    //         return response()->json(['message' => 'Current password incorrect!']);
-    //     }
-    // }
+
     // Create New User 
     public function registerUser(Request $request) {
         // Validation sign Up user
