@@ -204,14 +204,14 @@ class UserController extends Controller
     // Update Profile user
     public function updateProfile(Request $request, $id) {
         $user = User::findOrFail($id);
-        $path = public_path('images/'.$user->profile);
+        $path = storage_path('images/'.$user->profile);
         if (File::exists($path)) {
             File::delete($path);
         }
 
-        $image = $request->profile;
+        $image = $request->file('profile');
         $newImageName = date('j-F-Y-H-i-s-A').$image->getClientOriginalName();
-        $image->move(public_path('images'),$newImageName);
+        $image->move(storage_path('/images'),$newImageName);
         $user->profile = $newImageName;
         $user->save();
 

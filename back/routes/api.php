@@ -26,7 +26,7 @@ Route::prefix('/login')->group(function() {
 });
 Route::get('account/find',[UserController::class,'getUserByToken']);
 // Private Route ------------=========
-Route::group(['middleware' => ['auth:sanctum']], function() {
+// Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //
     Route::prefix('/students')->group(function() {
         Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
@@ -35,13 +35,14 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::prefix('/users')->group(function() {
         // Route Coordinator 
         Route::post('/',[UserController::class,'registerUser']);
-        Route::put('/{id}',[UserController::class,'update']);
+        Route::post('/{id}',[UserController::class,'update']);
         Route::get('/students',[UserController::class,'studentOnly']);
         Route::get('/teachers',[UserController::class,'teacherOnly']);
         Route::get('/student/{id}',[UserController::class,'showOneStudent']);
         Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
+        Route::post('/updateProfile/{id}',[UserController::class,'updateProfile']);
     });
 
     // Route Batchs
@@ -60,5 +61,5 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/class/{id}',[ClassBatchController::class,'update']);
     Route::get('/class/{id}',[ClassBatchController::class,'show']);
     Route::delete('/delete/class/{id}',[ClassBatchController::class,'destroy']);
-});
+// });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
