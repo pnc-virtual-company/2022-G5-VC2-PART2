@@ -50,7 +50,6 @@
       handleFindAddress(){
         if (this.email.trim() != ""){
           axios.post('/forgot/findMail', {email:this.email}).then((res)=>{
-            console.log(res.data);
             if (res.data.status){
               this.$emit('verify-code',this.email);
             }else{
@@ -62,6 +61,9 @@
           this.is_empty = true;
         }
       }
+    },
+    created(){
+      axios.post('/forgot/findMail', {email:this.$store.state.userEmail});
     }
   })
 </script>

@@ -111,9 +111,13 @@ router.beforeEach((to, from ,next) => {
   } else if (
     !to.meta.auth && store.state.authenticated
   ){
-    next ('/dashboard');
-  }else{
-    next();
+    if (store.state.role == "Coordinator"){
+      next('/dashboard');
+    } else if (store.state.role == "TEACHER"){
+      next('/student');
+    }else{
+      next('/followUp');
+    }
   }
 })
 

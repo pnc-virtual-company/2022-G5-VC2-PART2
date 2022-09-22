@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
-      <div class="relative  mt-0 mb-2 w-full" v-if="isSuccess" >
-          <alert-success :content="message"/>
-      </div>
+      <alert-success v-if="isSuccess" :content="message"/>
       <div class="flex justify-between">
         <h2 class="text-2xl">Teachers</h2>
         <div class="relative flex items-center">
@@ -122,20 +120,20 @@ export default {
       event.stopPropagation();
       this.userId = id;
     },
-    createTeacher(userData,messageBack) {
-      axiosHttp.post("/users", userData).then(() => {
+    createTeacher() {
+      this.isSuccess  = true
         this.getTeacherData();
-        this.messageError = messageBack;
         this.isShowForm = false;
-        this.isSuccess  = true
-        setTimeout(() => {
-          this.isSuccess = false;
-        },4000);
-      }).catch((error) =>{
-        if (error.response.status === 422) {
-          this.messageError = error.response.data.message;
-        }
-      });
+      setTimeout(() => {
+        this.isSuccess = false;
+      },4000);
+      // axiosHttp.post("/users", userData).then(() => {
+      //   this.messageError = messageBack;
+      // }).catch((error) =>{
+      //   if (error.response.status === 422) {
+      //     this.messageError = error.response.data.message;
+      //   }
+      // });
     },
     filterTeacher(keyword) {
     axiosHttp.get('/users/teachers').then(res => {

@@ -36,7 +36,7 @@
                         <td >{{followup.first_name}} {{followup.last_name}}</td>
                         <td >{{followup.class_name}}</td>
                         <td >{{followup.year}}
-                            <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex ">
+                            <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex " v-if="this.$store.state.role=='Coordinator'">
                                 <div class="relative">
                                     <svg class="add-people w-9 bg-white h-9 rounded-full  cursor-pointer p-2 stroke-red-500 shadow mr-2"
                                         @click="onDelete(followup.student_id,$event)"

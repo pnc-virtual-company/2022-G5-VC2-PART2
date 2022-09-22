@@ -91,8 +91,8 @@
           </div>
         </div>
         <div class="mt-4">
-          <label>Description :</label>
-          <textarea v-model="description" class="mt-2 p-2 w-[95%] resize-none" name="" id="" cols="70" rows="4"
+          <label>Description</label>
+          <textarea v-model="description" class="mt-2 p-2 w-[95%] resize-none focus:outline-blue-500 focus:shadow-outline" name="" id="" cols="20" rows="2"
             placeholder="Description . . ." required></textarea>
         </div>
         <div class="flex justify-end p-2 mr-10 w-[98%]">
