@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
         Route::post('/updateProfile/{id}',[UserController::class,'updateProfile']);
+        Route::post('/reset-password/{id}',[UserController::class,'resetPassword']);
         // route to add student into the follow up list 
         Route::prefix('/follow_ups')->group(function() {
             Route::post('/',[FollowupController::class,'store']);
