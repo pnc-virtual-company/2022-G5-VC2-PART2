@@ -103,19 +103,21 @@
         </div>
         <div class="flex items-center justify-end">
           <div class="flex" v-if="isEdit">
-            <button-cancel @click="$emit('closeForm')">
+            <button-cancel @click="isEdit=false">
               <template v-slot:button_cancel>Cancel</template>
             </button-cancel>
             <button-create @click="saveEdit">
               <template v-slot:button_create>Save Change</template>
             </button-create>
           </div>
-          <button
-            class="bg-orange-400 shadow hover:bg-warning rounded p-2 text-white uppercase"
-            @click="showResetPassword(user.id)"
-          >
-            Reset password
-          </button>
+          <div v-else>
+            <button
+              class="bg-orange-400 shadow hover:bg-warning rounded p-2 text-white uppercase"
+              @click="showResetPassword(user.id)"
+            >
+              Reset password
+            </button>
+          </div>
         </div>
       </div>
     </div>

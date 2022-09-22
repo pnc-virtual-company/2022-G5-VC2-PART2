@@ -9,7 +9,7 @@
             <router-link
               class="p-3 px-4 ml-3"
               exact-active-class="exact-active-link"
-              to="/dashboard"
+              to="/"
               >Dashboard</router-link
             >
           </li>

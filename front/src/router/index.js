@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Admin/login&signout/LoginView";
-import ForgotPasswordView from "../views/Admin/login&signout/ForgotPasswordView"
+import ForgotPasswordView from "../views/Admin/login&signout/ForgotPasswordView";
 import DashboardView from '../views/Admin/dashboard/DashboardView.vue';
 import FollowUpView from '../views/Admin/followUp/FollowUpView.vue';
 import ProfileView from '../views/Admin/ProfileAdmin/ProfileView.vue';
@@ -12,7 +12,7 @@ import StudentDetailFollowUp from "../views/Admin/followUp/FollowUpDetailView.vu
 import { store } from '@/store/store';
 const routes = [
   {
-    path: '/dashboard',
+    path: '/',
     name: 'dashboard',
     component: DashboardView,
     meta: {
@@ -112,12 +112,14 @@ router.beforeEach((to, from ,next) => {
     !to.meta.auth && store.state.authenticated
   ){
     if (store.state.role == "Coordinator"){
-      next('/dashboard');
+      next('/');
     } else if (store.state.role == "TEACHER"){
       next('/student');
     }else{
       next('/followUp');
     }
+  }else{
+    next()
   }
 })
 
