@@ -121,7 +121,7 @@ class UserController extends Controller
 
             $user->save();
             $response = ['status'=>true];
-            Mail::to($user->email)->send(new SendMailVerification($user));
+            // Mail::to($user->email)->send(new SendMailVerification($user));
         }
 
         return response()->json($response);
