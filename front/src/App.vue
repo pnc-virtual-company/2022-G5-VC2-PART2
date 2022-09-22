@@ -26,6 +26,7 @@ export default {
       if(this.$store.state.authenticated){
           await axios.get('account/find').then((res)=>{
             this.user = res.data;
+            console.log(this.user);
             if (this.user == null){
                 this.$store.dispatch('logout')
                 this.$router.push('/login')
