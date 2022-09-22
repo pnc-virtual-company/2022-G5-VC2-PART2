@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="w-[90%] h-auto mt-24 m-auto bg-white flex justify-center items-center rounded shadow p-4 relative text-primary">
         <div class="w-full flex h-36 box-border justify-center items-center rounded shadow p-4 relative text-primary">  
             <div class="w-3/12">
@@ -39,6 +40,7 @@
             </router-link>
         </div>
     </div>
+</div>
 </template>
 
 <script>
