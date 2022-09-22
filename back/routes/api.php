@@ -40,13 +40,15 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
     Route::prefix('/users')->group(function() {
         // Route Coordinator 
         Route::post('/',[UserController::class,'registerUser']);
-        Route::put('/{id}',[UserController::class,'update']);
+        Route::post('/{id}',[UserController::class,'update']);
         Route::get('/students',[UserController::class,'studentOnly']);
         Route::get('/teachers',[UserController::class,'teacherOnly']);
         Route::get('/student/{id}',[UserController::class,'showOneStudent']);
         Route::get('/teacher/{id}',[UserController::class,'showOneTeacher']);
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
+        Route::post('/updateProfile/{id}',[UserController::class,'updateProfile']);
+        Route::post('/reset-password/{id}',[UserController::class,'resetPassword']);
         // route to add student into the follow up list 
         Route::prefix('/follow_ups')->group(function() {
             Route::post('/',[FollowupController::class,'store']);

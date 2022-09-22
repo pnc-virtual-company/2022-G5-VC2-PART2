@@ -21,16 +21,18 @@ export default {
       user: {}
     }
   },
+
   methods: {
     async findUserInfo(){
       if(this.$store.state.authenticated){
+        this.isLogin = true;
           await axios.get('account/find').then((res)=>{
             this.user = res.data;
+            localStorage.setItem('userId', this.user.id);
             if (this.user == null){
                 this.$store.dispatch('logout')
                 this.$router.push('/login')
             }
-            this.isLogin = true;
           });
       }
     }

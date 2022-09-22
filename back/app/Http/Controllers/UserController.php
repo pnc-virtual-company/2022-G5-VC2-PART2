@@ -218,28 +218,28 @@ class UserController extends Controller
             if ($request->newPassword == $request->confirmPassword) {
                 $user->password = Hash::make($request->newPassword);
                 $user->save();
-                return response()->json(['message' => 'Password Updated!']);
+                return response()->json(['message' => 'Password Updated!'],200);
             }
             else{
-                return response()->json(['message' => 'Confirm password does not match!']);
+                return response()->json(['message' => 'Confirm password does not match!'],402);
             }
         }
         else {
-            return response()->json(['message' => 'Current password incorrect!']);
+            return response()->json(['message' => 'Current password incorrect!'],401);
         }
     }
 
     // Update Profile user
     public function updateProfile(Request $request, $id) {
         $user = User::findOrFail($id);
-        $path = public_path('images/'.$user->profile);
+        $path = storage_path('images/'.$user->profile);
         if (File::exists($path)) {
             File::delete($path);
         }
 
-        $image = $request->profile;
+        $image = $request->file('profile');
         $newImageName = date('j-F-Y-H-i-s-A').$image->getClientOriginalName();
-        $image->move(public_path('images'),$newImageName);
+        $image->move(storage_path('/images'),$newImageName);
         $user->profile = $newImageName;
         $user->save();
 

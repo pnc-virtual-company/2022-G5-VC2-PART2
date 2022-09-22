@@ -1,5 +1,5 @@
 <template>
-    <list-student-follow-up/>
+    <list-student-follow-up />
 </template>
 <script>
 import listStudentFollowUp from '../../../components/followUp/ListStudentFollowUp.vue'
