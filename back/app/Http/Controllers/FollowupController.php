@@ -63,8 +63,7 @@ class FollowupController extends Controller
      */
     public function show($id)
     {
-        $followupInfo = Followup::where('followups.student_id','=',$id)->join()->first();
-        return response()->json([$followupInfo]);
+        return Followup::where('followups.student_id','=',$id)->get();
     }
 
     /**

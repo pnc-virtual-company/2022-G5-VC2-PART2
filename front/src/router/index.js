@@ -87,7 +87,7 @@ const routes = [
     }
   },
   {
-    path: '/studentDetailFollowUp',
+    path: '/studentDetailFollowUp/:role/:id',
     name: 'studentDetailFollowUp',
     component: StudentDetailFollowUp,
     props: true,

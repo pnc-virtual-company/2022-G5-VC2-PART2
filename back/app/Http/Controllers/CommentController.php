@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Redis;
 
 class CommentController extends Controller
 {
-    public function index() {
-        return Comment::with('user.student','student')->get();
+    public function getComment($id) {
+        return Comment::where('comments.user_id','=',$id)->get();
     }
 
     public function store(Request $request) {
@@ -24,7 +24,7 @@ class CommentController extends Controller
 
     public function update(Request $request,$id) {
         $comment = Comment::findOrFail($id);
-        $comment->text = $request->text;
+        $comment->comment = $request->comment;
 
         $comment->save();
         return response()->json(['message' => 'Comment updated!']);

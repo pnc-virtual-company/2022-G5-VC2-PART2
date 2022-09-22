@@ -25,7 +25,7 @@
                 </thead>
                 <tbody class="bg-slate-100">
 
-                    <tr v-for="followup in allFollowUp" :key="followup" @click="viewStudentDetail"
+                    <tr v-for="followup in allFollowUp" :key="followup" @click="viewStudentDetail(followup)"
                         class="text-center relative p-2 h-16 hover:bg-slate-200 group cursor-pointer">
                         <td >
                             <div class="flex items-cener justify-center">
@@ -102,8 +102,8 @@ export default {
                 console.log(res)
             }));
         },
-        viewStudentDetail(){
-            this.$router.push('/studentDetailFollowUp')
+        viewStudentDetail(followUp){
+            this.$router.push({name:'studentDetailFollowUp', params:{id:followUp.student_id,role:followUp.roles}});
         }
     },
 

@@ -52,7 +52,13 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
             Route::post('/',[FollowupController::class,'store']);
             Route::get('/',[FollowupController::class,'index']);
             Route::get('/{id}',[FollowupController::class, 'show']);
-            Route::delete('/{id}',[FollowupController::class,'destroy']);
+            Route::delete('/{id}',[FollowupController::class,'removeFollowUp']);
+        });
+        Route::prefix('/comments')->group(function () {
+            Route::get('/teacher/{id}',[CommentController::class,'getComment']);
+            Route::post('/',[CommentController::class,'store']);
+            Route::post('/{id}',[CommentController::class,'update']);
+            Route::delete('/delete/{id}',[CommentController::class,'destroy']);
         });
     });
 
@@ -74,8 +80,3 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
     });
 //  });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
-
-Route::get('/comments',[CommentController::class,'index']);
-Route::post('/comments',[CommentController::class,'store']);
-Route::post('/comment/{id}',[CommentController::class,'update']);
-Route::delete('/delete/comment/{id}',[CommentController::class,'destroy']);
