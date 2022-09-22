@@ -218,14 +218,14 @@ class UserController extends Controller
             if ($request->newPassword == $request->confirmPassword) {
                 $user->password = Hash::make($request->newPassword);
                 $user->save();
-                return response()->json(['message' => 'Password Updated!']);
+                return response()->json(['message' => 'Password Updated!'],200);
             }
             else{
-                return response()->json(['message' => 'Confirm password does not match!']);
+                return response()->json(['message' => 'Confirm password does not match!'],402);
             }
         }
         else {
-            return response()->json(['message' => 'Current password incorrect!']);
+            return response()->json(['message' => 'Current password incorrect!'],401);
         }
     }
 

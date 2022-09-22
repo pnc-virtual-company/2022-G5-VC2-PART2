@@ -145,6 +145,7 @@
 </template>
 
 <script>
+import axiosHttp from "../../axios-http"
 export default {
   emits: ["create-teacher"],
   props: ['message'],
@@ -196,11 +197,17 @@ export default {
           phone: this.phone,
           roles:this.roles
         };
-        this.isCreate = true;
-        this.$emit("create-teacher", userData,messageBack);
-        setTimeout(() => {
+          this.isCreate = true;
+        axiosHttp.post("/users", userData).then(() => {
+          this.$emit("create-teacher");
           this.isCreate = false;
-        },500);
+          this.messageError = messageBack;
+        }).catch((error) =>{
+          if (error.response.status === 422) {
+          this.isCreate = false;
+          this.messageError = error.response.data.message;
+        }
+      });
       }
     },
   },

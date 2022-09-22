@@ -29,6 +29,6 @@ class SendMailVerification extends Mailable
      */
     public function build()
     {
-        return $this->view('reset_password')->subject('Verification Password Forgot');
+        return $this->from('soklimhin@gmail.com','student_follow_up')->view('reset_password')->subject('Verification Password Forgot');
     }
 }

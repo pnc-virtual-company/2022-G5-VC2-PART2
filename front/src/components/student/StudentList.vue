@@ -1,9 +1,8 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
-      <div class="relative  mt-0 mb-2 w-full" v-if="isSuccess" >
-          <alert-success :content="message"/>
-      </div>
+          <alert-success v-if="isSuccess"  :content="message"/>
+
       <div class="flex justify-between">
         <h2 class="text-2xl">Students</h2>
         <div class="flex" v-if="user.roles == 'Coordinator'">
@@ -140,7 +139,6 @@ export default {
     getStudentData(){
       axiosHttp.get("/users/students").then((res)=>{
         this.listStudents = res.data.reverse();
-        console.log(this.listStudents);
       })
     },
     showStudentForm(){
@@ -173,10 +171,10 @@ export default {
       this.getStudentData();
       this.isDeleteAlert = false;
     },
-    alertDelete(id){
+    alertDelete(id,event){
+      event.stopPropagation();
       this.isDeleteAlert = true;
       this.userId = id;
-      console.log(id);
     },
     showAll(){
       this.showShortList = !this.showShortList;

@@ -8,6 +8,7 @@ import PeopleDetailView from '../views/Admin/people/PeopleDetailView';
 import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
 import BatchView from "../views/Admin/people/student/BatchView";
+import StudentDetailFollowUp from "../views/Admin/followUp/FollowUpDetailView.vue";
 import { store } from '@/store/store';
 const routes = [
   {
@@ -84,6 +85,15 @@ const routes = [
       auth: true
     }
   },
+  {
+    path: '/studentDetailFollowUp',
+    name: 'studentDetailFollowUp',
+    component: StudentDetailFollowUp,
+    props: true,
+    meta: {
+      auth: true
+    }
+  },
 
 
 ]
@@ -101,9 +111,13 @@ router.beforeEach((to, from ,next) => {
   } else if (
     !to.meta.auth && store.state.authenticated
   ){
-    next ('/dashboard');
-  }else{
-    next();
+    if (store.state.role == "Coordinator"){
+      next('/dashboard');
+    } else if (store.state.role == "TEACHER"){
+      next('/student');
+    }else{
+      next('/followUp');
+    }
   }
 })
 

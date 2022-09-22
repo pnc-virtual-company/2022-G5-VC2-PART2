@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ClassBatchController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::delete('/delete/{id}',[UserController::class,'destroy']);
         Route::post('/logout',[UserController::class,'logout']);
         Route::post('/updateProfile/{id}',[UserController::class,'updateProfile']);
+        Route::post('/reset-password/{id}',[UserController::class,'resetPassword']);
         // route to add student into the follow up list 
         Route::prefix('/follow_ups')->group(function() {
             Route::post('/',[FollowupController::class,'store']);
@@ -74,3 +76,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     });
  });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
+
+Route::get('/comments',[CommentController::class,'index']);
+Route::post('/comments',[CommentController::class,'store']);
+Route::post('/comment/{id}',[CommentController::class,'update']);
+Route::delete('/delete/comment/{id}',[CommentController::class,'destroy']);

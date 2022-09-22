@@ -54,7 +54,7 @@
         if (this.code.trim() != ''){
           console.log(this.code);
           console.log(this.email);
-          axios.post('forgot/confirmCode', {code:this.code,email:this.email}).then((res)=>{
+          axios.post('forgot/confirmCode', {code:this.code,email:this.$store.state.userEmail}).then((res)=>{
             if (res.data.status){
               this.$emit('confirmed-code');
             }else{
@@ -65,6 +65,9 @@
           this.is_empty = true;
         }
       }
+    },
+    created(){
+      axios.post('/forgot/findMail', {email:this.$store.state.userEmail});
     }
   })
 </script>
