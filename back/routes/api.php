@@ -31,7 +31,7 @@ Route::prefix('/forgot')->group(function (){
 });
 Route::get('account/find',[UserController::class,'getUserByToken']);
 // Private Route ------------=========
-Route::group(['middleware' => ['auth:sanctum']], function() {
+// Route::group(['middleware' => ['auth:sanctum']], function() {
     // route students //
     Route::prefix('/students')->group(function() {
         Route::get('/getLastStudent',[StudentController::class, 'getLastStudent']);
@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         Route::get('/{id}',[ClassBatchController::class,'show']);
         Route::delete('/delete/{id}',[ClassBatchController::class,'destroy']);
     });
- });
+//  });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
 
 Route::get('/comments',[CommentController::class,'index']);

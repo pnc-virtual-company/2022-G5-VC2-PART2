@@ -9,6 +9,7 @@ import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
 import BatchView from "../views/Admin/people/student/BatchView";
 import StudentDetailFollowUp from "../views/Admin/followUp/FollowUpDetailView.vue";
+import NotifycationView from "../views/notifycation/NotifycationView.vue"
 import { store } from '@/store/store';
 const routes = [
   {
@@ -90,6 +91,14 @@ const routes = [
     name: 'studentDetailFollowUp',
     component: StudentDetailFollowUp,
     props: true,
+    meta: {
+      auth: true
+    }
+  },
+  {
+    path: '/notifycation',
+    name: 'notifycation',
+    component: NotifycationView,
     meta: {
       auth: true
     }

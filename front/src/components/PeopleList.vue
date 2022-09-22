@@ -22,7 +22,7 @@
           <td>
             {{ person.email }}
             <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex " v-if="this.$store.state.role !='STUDENT'">
-              <router-link :to="{name:'peopleDetail', params:{id:person.id,role:person.roles}}">
+              <!-- <router-link :to="{name:'peopleDetail', params:{id:person.id,role:person.roles}}">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -34,7 +34,7 @@
                 <div id="view-detail" class="add-button absolute -top-10 z-50 text-center opacity-0 right-1 text-sm w-32 bg-[#1596e0] rounded-full text-white p-1.5">
                   View Information
                 </div>
-              </router-link>
+              </router-link> -->
               <div class="relative"  v-if="this.$store.state.role !='TEACHER'">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ export default {
       return axios.defaults.baseURL + "storage/image/" + image;
     },
     showStudentDetail(person){
-      this.$router.push({name:'peopleDetail', params:{id:person.id,role:person.roles}})
+      this.$router.push({name:'peopleDetail', params:{id:person.student_id,role:person.roles}})
     }
   },
 };
