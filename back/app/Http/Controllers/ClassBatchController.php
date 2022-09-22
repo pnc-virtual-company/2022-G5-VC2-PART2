@@ -37,9 +37,9 @@ class ClassBatchController extends Controller
 
     // Delete Only one
     public function destroy($id) {
-        $student = Student::where('students.class_id','=',$id)->get(['students.id']);
-        User::where('users.student_id','=',$student[0]->id)->delete();
-        Student::where('students.class_id','=',$id)->delete();
+        // $student = Student::where('students.class_id','=',$id)->get(['students.id']);
+        // User::where('users.student_id','=',$student[0]->id)->delete();
+        // Student::where('students.class_id','=',$id)->delete();
         ClassBatch::destroy($id);
         return response()->json(['message' => 'Deleted']);
     }
