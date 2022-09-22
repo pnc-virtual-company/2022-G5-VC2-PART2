@@ -11,7 +11,6 @@ class Followup extends Model
 
     protected $hidden = [
         'remember_token',
-        'updated_at',
         'email_verified_at',
         'remember_token',
         'password',
@@ -22,7 +21,7 @@ class Followup extends Model
     ];
 
     public function students() {
-        return $this->hasMany(Student::class,'id');
+        return $this->hasMany(Student::class,'student_id');
     }
 
     public function totor() {

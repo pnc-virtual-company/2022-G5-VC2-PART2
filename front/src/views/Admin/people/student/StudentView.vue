@@ -1,5 +1,5 @@
 <template>
-  <student-list />
+  <student-list :user="user"/>
 </template>
 
 <script>
@@ -9,6 +9,9 @@ export default {
   components: {
     "student-list": StudentList,
   },
+  props: {
+    user: Object
+  }
 };
 </script>
 

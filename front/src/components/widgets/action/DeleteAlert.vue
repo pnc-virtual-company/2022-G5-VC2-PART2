@@ -1,5 +1,5 @@
 <template>
-    <div  class="fixed top-0 w-full h-[100vh] bg-black flex items-center justify-center bg-opacity-50 z-50 left-0">
+    <div  class="fixed top-0 w-full h-[100vh] bg-black flex items-center justify-center bg-opacity-30 z-50 left-0">
         <div class="bg-gray-200 rounded p-4 w-[30%]" >
             <div class="flex items-center border-[3px] border-red-500 justify-center w-24  h-24  rounded-full text-red-500 m-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
@@ -30,16 +30,9 @@ export default({
     methods:{
         handleDelete(){
             if (this.content == "batch"){
-                axiosHttp.delete('batch/delete/'+ this.id).then((res)=>{
-                    console.log(res.data);
-                    this.$emit('delete-batch');
-                });
+                axiosHttp.delete('batches/delete/'+ this.id).then(this.$emit('delete-batch'));
             }else if(this.content == 'classCard') {
-                console.log(this.classId)
-                axiosHttp.delete('/delete/class/' + this.classId).then(res => {
-                    console.log(res.data);
-                    this.$emit('delete-class');
-                });
+                axiosHttp.delete('classes/delete/' + this.classId).then(this.$emit('delete-class'));
             }else{
                 axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
             }

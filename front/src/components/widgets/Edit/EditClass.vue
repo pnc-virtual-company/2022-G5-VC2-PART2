@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-full h-full bg-black left-0 z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
+  <div class="min-w-full h-full bg-black left-0 z-50 bg-opacity-30 flex items-center justify-center fixed top-0">
     <div class="main-form w-[30%]">
       <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
         <p class="ml-3">UPDATE CLASS</p>
@@ -50,12 +50,12 @@ export default {
           class_name: this.newName,
           batch_id: this.batchId
         };
-        axiosHttp.post('/class/' + this.classId,newClassUpdated);
+        axiosHttp.post('classes/' + this.classId,newClassUpdated);
         this.$emit('closeForm');
       }
     },
     getOneClass() {
-      axiosHttp.get('/class/' + this.classId).then(res => {
+      axiosHttp.get('classes/' + this.classId).then(res => {
         this.newName = res.data.class_name;
         this.batchId = res.data.batch_id;
       })

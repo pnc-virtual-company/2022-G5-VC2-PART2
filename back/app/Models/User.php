@@ -30,6 +30,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'code',
         'remember_token',
         'created_at',
         'updated_at',
@@ -51,5 +52,9 @@ class User extends Authenticatable
 
     public function followups() {
         return $this->hasMany(Followup::class,'followup_id');
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class,'id');
     }
 }

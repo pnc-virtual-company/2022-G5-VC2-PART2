@@ -1,7 +1,8 @@
 <template>
-  <div class="min-w-full h-full bg-black left-0 z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
-    <div class="main-form w-[30%]">
+  <div class="w-full h-full bg-black z-50 bg-opacity-30 flex justify-center fixed top-0">
+    <div class="w-[30%] mt-12">
       <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
+        <p></p>
         <p class="ml-3">CREATE NEW CLASS</p>
         <slot name="card-title"></slot> 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm')">
@@ -20,7 +21,7 @@
             :class="{'border-red-600' :error}"
           />
           <button-create>
-            <template v-slot:button_create>CREATE</template>
+            <template v-slot:button_create>Create</template>
           </button-create>
         </div>
       </form>

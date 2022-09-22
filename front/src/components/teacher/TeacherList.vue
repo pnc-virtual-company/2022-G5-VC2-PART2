@@ -1,19 +1,18 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
-      <div class="mb-3 bg-green-500" v-if="isSuccess">
-        <p class="text-center text-white rounded">Created Successfully</p>
-      </div>
+      <alert-success v-if="isSuccess" :content="message"/>
       <div class="flex justify-between">
         <h2 class="text-2xl">Teachers</h2>
-        <div class="relative">
+        <div class="relative flex items-center">
+        <searchbar-form @newKeyword="filterTeacher" placeholder="Search Name"/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="add-people w-14 h-10  rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
+            class="add-people w-14 h-10 ml-2  rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
             @click="showTeacherForm"
           >
             <path
@@ -28,11 +27,11 @@
             Add new teacher
           </div>
         </div>
+        
       </div>
       <div class="rounded shadow p-4 relative mt-2 bg-white">
-        <searchbar-form @newKeyword="filterTeacher" placeholder="Search Name"/>
         <div class="flex justify-center mt-4">
-          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete"/>
+          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete" />
         </div>
         <div class="ml-[38vw] mt-3" v-if="loading">
           <span class="" id="wait">
@@ -76,13 +75,14 @@ import peopleList from "../PeopleList.vue";
 import teacherForm from "../teacher/TeacherForm.vue";
 import deleteAlert from "../widgets/action/DeleteAlert.vue";
 import searchBar from '../search/SearchBar.vue';
-
+import alertSuccess from "../widgets/AlertSuccess.vue"
 export default {
   components:{
       "people-list": peopleList,
       "teacher-form":teacherForm,
       "delete-alert": deleteAlert,
       "searchbar-form": searchBar,
+      "alert-success" : alertSuccess
   },
   data(){
     return {
@@ -94,13 +94,15 @@ export default {
       dataToShow: 3,
       showShortList: true,
       isSuccess: false,
-      loading: true
+      loading: true,
+      message: "Created teacher successful"
     }
   },
   methods: {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
         this.listTeachers = res.data.reverse();
+        console.log(this.listTeachers);
       })
     },
     showTeacherForm(){
@@ -113,30 +115,31 @@ export default {
       this.getTeacherData();
       this.isDeleteAlert = false;
     },
-    alertDelete(id){
+    alertDelete(id,event){
       this.isDeleteAlert = true;
+      event.stopPropagation();
       this.userId = id;
     },
-    createTeacher(userData,messageBack) {
-      axiosHttp.post("/users", userData).then(() => {
+    createTeacher() {
+      this.isSuccess  = true
         this.getTeacherData();
-        this.messageError = messageBack;
         this.isShowForm = false;
-        this.isSuccess  = true
-        setTimeout(() => {
-          this.isSuccess = false;
-        },1000);
-      }).catch((error) =>{
-        if (error.response.status === 422) {
-          this.messageError = error.response.data.message;
-        }
-      });
+      setTimeout(() => {
+        this.isSuccess = false;
+      },4000);
+      // axiosHttp.post("/users", userData).then(() => {
+      //   this.messageError = messageBack;
+      // }).catch((error) =>{
+      //   if (error.response.status === 422) {
+      //     this.messageError = error.response.data.message;
+      //   }
+      // });
     },
     filterTeacher(keyword) {
     axiosHttp.get('/users/teachers').then(res => {
       this.listTeachers = res.data.filter((teacher) => teacher.first_name.toLowerCase().includes(keyword.toLowerCase()) || teacher.last_name.toLowerCase().includes(keyword.toLowerCase()));
     });
-  }
+  },
   },
   mounted(){
     setTimeout(() => {

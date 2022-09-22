@@ -2,7 +2,7 @@
   <div>
     <navbar-view v-if="isLogin" :user="user"/>
     <router-view v-slot="{ Component }" >
-      <transition name="fade">
+      <transition name="fade" :user="user">
         <component :is="Component" />
       </transition>
     </router-view>
@@ -21,12 +21,13 @@ export default {
       user: {}
     }
   },
+
   methods: {
     async findUserInfo(){
       if(this.$store.state.authenticated){
           await axios.get('account/find').then((res)=>{
             this.user = res.data;
-            console.log(this.user);
+            localStorage.setItem('userId', this.user.id);
             if (this.user == null){
                 this.$store.dispatch('logout')
                 this.$router.push('/login')
