@@ -34,7 +34,6 @@ export default({
             }else if(this.content == 'classCard') {
                 axiosHttp.delete('classes/delete/' + this.classId).then(this.$emit('delete-class'));
             }else{
-                console.log(this.id);
                 axiosHttp.delete('/users/delete/'+ this.id).then(this.$emit('delete-user'));
             }
         }

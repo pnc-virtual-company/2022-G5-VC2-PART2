@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="w-[90%] m-auto mt-20 mb-5  p-4 rounded">
-      <div class="relative  mt-0 mb-2 w-full" v-if="isSuccess" >
-          <alert-success :content="message"/>
-      </div>
+      <alert-success v-if="isSuccess" :content="message"/>
       <div class="flex justify-between">
         <h2 class="text-2xl">Teachers</h2>
         <div class="relative flex items-center">
@@ -33,7 +31,7 @@
       </div>
       <div class="rounded shadow p-4 relative mt-2 bg-white">
         <div class="flex justify-center mt-4">
-          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete"/>
+          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete" />
         </div>
         <div class="ml-[38vw] mt-3" v-if="loading">
           <span class="" id="wait">
@@ -104,6 +102,7 @@ export default {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
         this.listTeachers = res.data.reverse();
+        console.log(this.listTeachers);
       })
     },
     showTeacherForm(){
@@ -116,30 +115,31 @@ export default {
       this.getTeacherData();
       this.isDeleteAlert = false;
     },
-    alertDelete(id){
+    alertDelete(id,event){
       this.isDeleteAlert = true;
+      event.stopPropagation();
       this.userId = id;
     },
-    createTeacher(userData,messageBack) {
-      axiosHttp.post("/users", userData).then(() => {
+    createTeacher() {
+      this.isSuccess  = true
         this.getTeacherData();
-        this.messageError = messageBack;
         this.isShowForm = false;
-        this.isSuccess  = true
-        setTimeout(() => {
-          this.isSuccess = false;
-        },4000);
-      }).catch((error) =>{
-        if (error.response.status === 422) {
-          this.messageError = error.response.data.message;
-        }
-      });
+      setTimeout(() => {
+        this.isSuccess = false;
+      },4000);
+      // axiosHttp.post("/users", userData).then(() => {
+      //   this.messageError = messageBack;
+      // }).catch((error) =>{
+      //   if (error.response.status === 422) {
+      //     this.messageError = error.response.data.message;
+      //   }
+      // });
     },
     filterTeacher(keyword) {
     axiosHttp.get('/users/teachers').then(res => {
       this.listTeachers = res.data.filter((teacher) => teacher.first_name.toLowerCase().includes(keyword.toLowerCase()) || teacher.last_name.toLowerCase().includes(keyword.toLowerCase()));
     });
-  }
+  },
   },
   mounted(){
     setTimeout(() => {

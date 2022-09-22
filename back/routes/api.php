@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ClassBatchController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -74,3 +75,8 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     });
  });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
+
+Route::get('/comments',[CommentController::class,'index']);
+Route::post('/comments',[CommentController::class,'store']);
+Route::post('/comment/{id}',[CommentController::class,'update']);
+Route::delete('/delete/comment/{id}',[CommentController::class,'destroy']);
