@@ -118,9 +118,10 @@ export default {
       this.isDeleteAlert = false;
     },
     alertDelete(id,event){
-      this.isDeleteAlert = true;
       event.stopPropagation();
+      this.isDeleteAlert = true;
       this.userId = id;
+      console.log(this.userId)
     },
     createTeacher(userData,messageBack) {
       axiosHttp.post("/users", userData).then(() => {
