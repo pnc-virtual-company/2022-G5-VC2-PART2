@@ -84,7 +84,7 @@
       </li>
 
     </nav>
-    <loading-logout v-if="isLogout"></loading-logout>
+    <loading-logout v-if="isLogout" :content="sms"></loading-logout>
   </div>
 </template>
 
@@ -103,6 +103,7 @@ export default {
       show: false,
       isLogout: false,
       isClickShow: false,
+      sms: "Logout..."
     };
   },
   methods: {

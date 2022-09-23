@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full bg-black z-50 bg-opacity-60 flex items-center justify-center fixed top-0">
     <div class="main-form w-[50%] bg-gray-200 rounded">
-      <div class="p-2  text-center flex justify-between text-lg uppercase">
+      <div class="p-2  text-center flex justify-between text-lg uppercase bg-primary text-white rounded-t">
         <p></p>
         <h2>add student to follow up</h2>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

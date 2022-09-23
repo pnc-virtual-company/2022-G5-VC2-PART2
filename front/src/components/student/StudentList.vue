@@ -92,7 +92,7 @@
           </div>
       </div>
     </div>
-      <student-form v-if="isShowForm" @closeForm="isShowForm=false,errorMessage='',errorIdStudent=''" @create-student="createStudent" :userData="user" :messageError="errorMessage" :errorIdStudent="errorIdStudent"/>
+      <student-form v-if="isShowForm" @closeForm="isShowForm=false" @create-student="createStudent" :userData="user" />
       <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :id="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
 </template>
@@ -119,7 +119,6 @@ export default {
   data() {
       return {
         isShowForm: false,
-        errorMessage: "",
         listStudents:[],
         isDeleteAlert:false,
         userId:null,
@@ -147,25 +146,13 @@ export default {
     showDetail(){
       this.$emit('show-detail');
     },  
-    createStudent(userData,errorMessageBack) {
-      axiosHttp.post('/users',userData).then(() => {
-        this.errorMessage = errorMessageBack;
-        this.errorIdStudent = errorMessageBack;
-        this.isSuccess  = true
-        this.isShowForm = false;
-        this.getStudentData();
-        setTimeout(() => {
-          this.isSuccess = false;
-        },4000);
-      }).catch((error) =>{
-        if (error.response.status === 422) {
-          this.errorMessage = error.response.data.message;
-        }
-        if (error.response.status === 402) {
-          this.errorMessage = '';
-          this.errorIdStudent = error.response.data.message;
-        }
-      });
+    createStudent() {
+      this.isSuccess  = true
+      this.isShowForm = false;
+      this.getStudentData();
+      setTimeout(() => {
+        this.isSuccess = false;
+      },4000);
     },
     deletedPerson(){
       this.getStudentData();
