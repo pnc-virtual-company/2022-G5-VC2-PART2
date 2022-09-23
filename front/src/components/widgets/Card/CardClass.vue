@@ -1,11 +1,30 @@
 <template>
   <div class="w-[30%] mt-4">
     <div
-      class="w-[95%] bg-gray-100 shadow rounded group h-[28vh]"
+      class="w-4/12 m-3 mt-10 items-center justify-center shadow rounded bg-white"
+      v-for="card of classes"
+      :key="card"
+      @click="removeClass"
     >
       <div
         class="flex bg-blue-400 shadow p-2 relative"
       >
+        <div class="flex justify-end text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+            @click="greet(card)"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+            />
+          </svg>
         <h1
           class="text-center justify-center rounded uppercase text-white text-lg font-bold"
         >
@@ -66,14 +85,9 @@
         </div>
       </div>
     </div>
-      <edit-class @click="editClass" v-if="iseditClass" @closeForm ="closeForm" :classId="classId"/>
-      <delete-alert
-        v-if="isDeleteAlert"
-        @click="isDeleteAlert"
-        @cancelDelete="isDeleteAlert = false"
-        :classId="classId"
-        @delete-class ="isDeleteAlert = false"
-      > </delete-alert>
+    <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" />
+    </div>
+  <edit-class v-if="iseditClass" />
   </div>
 </template>
 
@@ -94,6 +108,15 @@ export default {
     },
   data() {
     return {
+      dropDown: false,
+      displayIndex: null,
+      classes: [
+        { name: " web a", students: { number: 12 } },
+        { name: "web b", students: { number: 22 } },
+        { name: "web b", students: { number: 22 } },
+        { name: "web b", students: { number: 22 } },
+      ],
+      isRemoveClass: false,
       isDeleteAlert: false,
       iseditClass: false,
       isCreateClass: false

@@ -21,8 +21,8 @@
           <td >{{ person.last_name }}</td>
           <td>
             {{ person.email }}
-            <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex " v-if="this.$store.state.role !='STUDENT'">
-              <div class="relative"  v-if="this.$store.state.role !='TEACHER'">
+            <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex " v-if="this.$store.state.role =='Coordinator'">
+              <div class="relative">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                 fill="none"
