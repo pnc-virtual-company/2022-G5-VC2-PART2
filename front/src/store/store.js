@@ -7,7 +7,7 @@ export const store = new createStore({
     authenticated: aesDecrypt(getDataCookie('token'), 'my_token'),
     role: aesDecrypt(getDataCookie('role'), 'my_role'),
     userEmail: null,
-    userId: null
+    userId: null,
   },
   actions: {
     logout(){

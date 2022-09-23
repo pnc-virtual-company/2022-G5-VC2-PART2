@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         addNewClass() {
-            if(this.newClass === '') {
+            if(this.newClass.trim() == '') {
                 this.error = true;
             }else{
                 this.$emit('addNewClass',this.newClass);

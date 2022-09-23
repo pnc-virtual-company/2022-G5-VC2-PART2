@@ -1,11 +1,6 @@
 <template>
   <div class="w-[30%] mt-4">
-    <div
-      class="w-4/12 m-3 mt-10 items-center justify-center shadow rounded bg-white"
-      v-for="card of classes"
-      :key="card"
-      @click="removeClass"
-    >
+
       <div
         class="flex bg-blue-400 shadow p-2 relative"
       >
@@ -86,7 +81,6 @@
       </div>
     </div>
     <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" />
-    </div>
   <edit-class v-if="iseditClass" />
   </div>
 </template>

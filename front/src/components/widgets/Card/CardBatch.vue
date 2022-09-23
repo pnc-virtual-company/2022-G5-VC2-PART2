@@ -95,23 +95,21 @@ export default {
             this.id = id;
         },
         confirmDelete(){
-            axiosHttp.delete('batch/delete/'+ this.id).then((res)=>{
+            axiosHttp.delete('batch/delete/'+ this.id).then(()=>{
                 this.isShowForm = false;
                 this.isDeleteAlert = false;
                 this.getAllBatches();
-                console.log(res.data);
             });
         },
         createBatch(newBatch){
             let findBatch = this.batches.find((batch)=>batch == newBatch);
             if (findBatch == undefined){
-                axiosHttp.post('/batches',newBatch)  
-                this.isShowForm=false; 
-                this.getAllBatches();
+                axiosHttp.post('/batches',newBatch).then(()=>{
+                    this.isShowForm=false; 
+                    this.getAllBatches();
+                })
             }
-            else{
-                alert('dsdfdlsfjj')
-            }
+
         },
         showActions(){     
             this.isRemoveBatch=true;
@@ -128,12 +126,12 @@ export default {
             })
         },
         createNewClass(newClass) {
+            console.log(this.storeBatchId);
             let makeNewClass = {
                 batch_id: this.storeBatchId,
                 class_name: newClass
             }
-            axiosHttp.post('/classes',makeNewClass).then(res => {
-                console.log(res.data);
+            axiosHttp.post('/classes',makeNewClass).then(() => {
                 this.isCreateClass = false;
                 this.getAllBatches();
             });
@@ -144,9 +142,10 @@ export default {
             this.year = this.batches.find((batch)=>batch.id = id).year;
         },
         updateBatches() {
-            axiosHttp.put('/batches/' + this.id,{year:this.year});
-            this.isEditBatch = false;
-            this.getAllBatches();
+            axiosHttp.put('/batches/' + this.id,{year:this.year}).then(()=>{
+                this.isEditBatch = false;
+                this.getAllBatches();
+            });
         },
     },
     mounted() {

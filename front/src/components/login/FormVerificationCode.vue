@@ -1,6 +1,6 @@
 <template>
     <div class="flex items-center justify-center w-[40%]">
-      <form class="w-full m-auto p-4 rounded bg-gray-100 px-12 shadow" @submit.prevent="handleSubmit">
+      <form class="w-full m-auto p-4 rounded bg-gray-100 px-12 shadow" >
         <h1 class="text-xl font-semibold text-center p-1 uppercase mt-6 text-primary border-b">
             Enter Security Code
         </h1>
@@ -18,17 +18,12 @@
                 type="text"
                 placeholder="Email your code ..."
                 v-model="code"
-                @input="is_empty=false"
+                @input="handleSubmit"
                 maxlength="6"
               />
           </div>
         </div>
         <div class="text-red-500 text-sm" v-if="is_not_found_code">Not match the verification code</div>
-        <div class="flex items-center justify-end mt-12">
-            <button-create>
-              <template v-slot:button_create>Submit</template>      
-            </button-create>
-        </div>
       </form>
     </div>
 
@@ -45,29 +40,33 @@
     data(){
       return {
         is_empty: false,
-        code:   ''
+        code:   '',
+        is_not_found_code:false
       }
     },
 
     methods: {
       handleSubmit(){
-        if (this.code.trim() != ''){
-          console.log(this.code);
-          console.log(this.email);
+        this.is_empty = false;
+        this.is_not_found_code = false;
+        if (this.code.length== 6){
           axios.post('forgot/confirmCode', {code:this.code,email:this.$store.state.userEmail}).then((res)=>{
             if (res.data.status){
               this.$emit('confirmed-code');
             }else{
               this.is_empty = true;
+              this.is_not_found_code = true;
             }
           })
-        }else{
-          this.is_empty = true;
         }
       }
     },
     created(){
-      axios.post('/forgot/findMail', {email:this.$store.state.userEmail});
+      if (this.$store.state.userEmail != null){
+        axios.post('/forgot/findMail', {email:this.$store.state.userEmail});
+      }else{
+        this.$router.push('/login');
+      }
     }
   })
 </script>

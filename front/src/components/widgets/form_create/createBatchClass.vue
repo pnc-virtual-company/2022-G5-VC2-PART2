@@ -1,8 +1,9 @@
 <template>
     <div class="w-full h-full bg-black ease-in-out duration-500 z-50 bg-opacity-30 flex justify-center fixed top-0">
         <div class="w-[30%] bg-white h-auto rounded shadow  m-auto mt-12">
-            <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
-                <p class="ml-28">Create New Batch</p>
+            <div class="p-2 bg-primary text-center flex justify-between text-white text-lg rounded-t">
+                <p></p>
+                <p>Create New Batch</p>
                 <!-- use v-slot to put your title of card -->
                 <slot name="card-title"></slot> 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm')">
