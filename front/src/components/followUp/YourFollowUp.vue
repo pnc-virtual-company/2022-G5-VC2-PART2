@@ -70,19 +70,30 @@
           <h1><b>Comments:</b></h1>
           <div class="">
             <div v-for="(comment,index) in comments" :key="index" class="bg-gray-50 m-3 rounded p-3 border-x-4">
-              <div class="flex ">
-                <span class="text-gray-500">{{formatDate(comment.created_at)}}</span>
+              <div class="flex justify-start items-center mb-3">
+                <!-- <img :src= getProfile(comment.profile) alt="" class="w-10 rounded-full"> -->
               </div>
-              <p class="text-start mr-10">{{comment.comment}}</p>
+              <div class="flex justify-end">
+                <span class="text-gray-500 ml-10">{{formatDate(comment.created_at)}}</span>
+              </div>
+              <p class="text-start ml-2">{{comment.comment}}</p>
+              <div class="flex justify-end">
+                <span class="text-gray-500 ml-10 cursor-pointer hover:underline" @click="clickReply(comment.id)">Reply</span>
+              </div>
+              <!-- Reply -->
               <div>
-                <div class="flex justify-start items-center">
-                  <!-- <img :src= getProfile() alt="" class="w-10 rounded-full"> -->
+                <div class="flex justify-end">
+                  <span class="text-gray-500 ml-10">{{formatDate(comment.reply_comment.created_at)}}</span>
+                </div>
+                <p class="text-start ml-2">{{comment.reply_comment.comment_reply}}</p>
+                <div class="flex justify-end items-center mb-3">
+                  <img :src= getProfile(userDataDetail.profile) alt="" class="w-10 rounded-full">
                 </div>
               </div>
             </div>
           </div>
-          <div class="mt-3 mb-10" v-if="followupDatailCurrent.length !== 0">
-            <form @submit.prevent="postComment">
+          <div class="mt-3 mb-10" v-if="isComment">
+            <form @submit.prevent="replyComment">
               <div class="flex">
                 <div class="flex items-start">
                   <img class="w-10 rounded-full " :src= getProfile(userDataDetail.profile) v-if="isComment">
@@ -121,7 +132,8 @@
       error: false,
       comments: [],
       loading: true,
-      teacher_id: null
+      comment_id: null,
+      teacher:{}
     }
   },
   methods:{
@@ -155,44 +167,41 @@
     formatDate(value) {
      return moment(String(value)).format('MM/DD/YYYY');
     },
-    clickComment() {
+    clickReply(comment_id) {
       this.isComment = true;
+      this.comment_id = comment_id;
     },
     cancel() {
       this.isComment = false;
       this.comment = '';
     },
-    postComment() {
+    replyComment() {
       if(this.comment == '') {
         this.error = true;
       }else{
         this.error = false;
         let newComment = {
-          comment: this.comment,
-          user_id: null,
-          student_id: localStorage.getItem('userId'),
+          comment_reply: this.comment,
+          comment_id: this.comment_id
         };
         axios.post('/comments/reply',newComment).then(() =>{
           this.comment = '';
-          this.getComment();
+          this.getTeacherComment();
         });
       }
     },
-    getComment() {
+    getTeacherComment() {
       axios.get('/comments/'+ localStorage.getItem('userId')).then (res => {
         this.comments = res.data;
-        this.teacher_id = this.comments[0].user_id;
+        console.log(this.comments)
+
       });
     },
-    getTeacher() {
-      axios.get('/comments/')
-    }
   },
   mounted() {
     this.getInfoDetail();
     this.getStudentFollowUpDetail();
-    this.getComment();
-    this.getTeacher();
+    this.getTeacherComment();
   }
   }
   </script>

@@ -54,6 +54,7 @@
         <div v-for="(followup,index) in followupDatailCurrent" :key="index" class="border-b-2">
           <h4>Started Date: <b>{{formatDate(followup.created_at)}} </b></h4>
           <h4>Description: {{followup.description}} </h4>
+          <h4>Tutor: {{tutor(followup.user_id)}} <b>{{tutorName}} </b></h4>
           <div class="flex">
             <h4 class="mr-2">Type of Follow up : </h4>
             <h4 v-for="typeOf of followup.type" :key="typeOf"> {{typeOf}}, </h4>
@@ -117,6 +118,7 @@ data(){
     comment: '',
     error: false,
     comments: [],
+    tutorName: ''
   }
 },
 methods:{
@@ -135,7 +137,7 @@ methods:{
         if (followup['status'] === 0) {
           this.followupDetailBefore.push(followup);
         }else{
-          this.followupDatailCurrent.push(followup)
+          this.followupDatailCurrent.push(followup);
         }
       }
     });
@@ -170,11 +172,17 @@ methods:{
     }
   },
   getComment() {
-    axios.get('/comments/'+ localStorage.getItem('userId')+ '/' + this.$route.params.id).then (res => {
+    axios.get('/comments/'+ this.$route.params.id).then (res => {
       this.comments = res.data;
-      console.log(this.comments)
     });
+  },
+  tutor(user_id) {
+    axios.get('/users/teacher/'+ user_id).then(res=>{
+      this.tutorName = res.data.userData.first_name+ ' ' + res.data.userData.last_name ;
+    })
+  
   }
+
 },
 mounted() {
   this.getInfoDetail();

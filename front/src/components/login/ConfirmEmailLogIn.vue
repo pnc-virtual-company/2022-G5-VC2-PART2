@@ -17,7 +17,7 @@
                 :class="{'border-red-500 bg-red-200':is_empty}"
                 type="email"
                 id="email"
-                placeholder="Email your email ..."
+                placeholder="Put your email ..."
                 v-model="email"
                 @input="is_empty=false"
               />

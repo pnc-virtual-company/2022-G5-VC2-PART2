@@ -168,7 +168,7 @@ export default {
                     gender: this.gender,
                     date_birth: this.date_birth
                 };
-                axios.put('/users/' + this.id, newDataUser).then((res => {
+                axios.post('/users/' + this.id, newDataUser).then((res => {
                     console.log(res.data);
                     // this.isOpen = false;
                     this.$emit('save-edit');

@@ -102,7 +102,7 @@ class UserController extends Controller
         }
 
         // Sending email to user
-        // Mail::to($request->email)->send(new NewUserMail($user));
+        Mail::to($request->email)->send(new NewUserMail($user));
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }

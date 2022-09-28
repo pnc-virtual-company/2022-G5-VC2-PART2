@@ -16,4 +16,8 @@ class ReplyComment extends Model
     public function student() {
         return $this->belongsTo(Student::class,'student_id');
     }
+
+    public function comment() {
+        return $this->belongsTo(Comment::class,'comment_id');
+    }
 }

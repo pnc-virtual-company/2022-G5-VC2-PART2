@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('reply_comments', function (Blueprint $table) {
             $table->id();
-            $table->text('comment');
-            $table->foreignId('student_id')->onDelete('CASCADE');
-            $table->foreignId('user_id')->onDelete('CASCADE');
+            $table->text('comment_reply');
+            $table->foreignId('comment_id')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Http\Controllers\FollowUpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ReplyCommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,7 +54,7 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
     });
 
     Route::prefix('/comments')->group(function () {
-            // Route::get('/{id}',[CommentController::class,'getComment']);
+            Route::get('/{student_id}',[CommentController::class,'getComment']);
             Route::post('/',[CommentController::class,'store']);
             Route::post('/reply',[ReplyCommentController::class,'store']);
             Route::delete('/delete/{id}',[CommentController::class,'destroy']);
@@ -84,5 +85,3 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
     });
 //  });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
-Route::get('/comments/{user_id}/{student_id}',[CommentController::class,'getComment']);
-Route::get('/comments/{student_id}',[CommentController::class,'getCommentFromTeacher']);

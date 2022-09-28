@@ -11,7 +11,8 @@
                 <div class="ml-5 leading-9 text-xl">
                     <b ><p class="capitalize text-[30px]">{{userDataDetail.first_name}} {{userDataDetail.last_name}}</p></b>
                     <p>{{userDataDetail.email}}</p>
-                    
+                    <p v-if="userDataDetail.roles == 'TEACHER'">{{userDataDetail.phone}}</p>
+                    <p v-if="userDataDetail.roles == 'TEACHER'">{{userDataDetail.gender}}</p>
                 </div>
             </div>
         </div>
@@ -82,7 +83,7 @@ export default {
         getPeopleDetail(){
             this.role = this.$route.params.role;
             let url = "/users/teacher/";
-            if (this.role == "STUDENT"){
+            if (this.role === "STUDENT"){
                 url = "/users/student/";
                 axios.get(url+this.$route.params.id).then((res)=>{
                     this.userDataDetail = res.data.userData[0];

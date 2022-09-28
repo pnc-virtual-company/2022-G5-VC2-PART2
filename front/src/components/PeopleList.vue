@@ -17,9 +17,9 @@
               <img  :src="getProfile(person.profile)" class="w-12 h-12 rounded-full border-2 border-primary" />
             </div>
           </td>
-          <td >{{ person.first_name }}</td>
-          <td >{{ person.last_name }}</td>
-          <td>
+          <td class="text-center">{{ person.first_name }}</td>
+          <td class="text-center">{{ person.last_name }}</td>
+          <td class="text-center">
             {{ person.email }}
             <div class="absolute top-2.5  justify-end right-2 z-50 hidden group-hover:flex " v-if="this.$store.state.role =='Coordinator'">
               <div class="relative">
@@ -61,7 +61,12 @@ export default {
       return axios.defaults.baseURL + "storage/image/" + image;
     },
     showStudentDetail(person){
-      this.$router.push({name:'peopleDetail', params:{id:person.student_id,role:person.roles}})
+      console.log(person)
+      if (person.roles === 'TEACHER') {
+        this.$router.push({name:'peopleDetail', params:{id:person.id,role:person.roles}});
+      }else{
+        this.$router.push({name:'peopleDetail', params:{id:person.student_id,role:person.roles}});
+      }
     }
   },
 };

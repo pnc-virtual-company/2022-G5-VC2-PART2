@@ -49,7 +49,7 @@
       <div class="text-center text-lg">
         <p class="text-4xl text-primary mt-12">{{numberStudent}}</p>
         
-        <div class="flex justify-end mt-2 text-primary">
+        <div class="flex justify-end mr-4 text-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
