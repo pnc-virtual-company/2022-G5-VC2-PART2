@@ -14,7 +14,7 @@
                 <p style="text-align: center;font-size: larger;color:black;">I am a Coordinator. I have added you get started in social affair follow up application. First, you need to confirm your account. This is your Email you need to confirm {{$user['email']}}. <b>Please press the button below.</b></p>
             </div>
             <div class="btn-confrim" style="margin-bottom: 70px;display: flex;justify-content: center;">
-                <a href="http://localhost:3001/login" style="text-decoration: none;background:rgb(68, 68, 252);padding: 12px;color: #fff;border-radius: 10px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;margin-left:15.5vw;cursor:pointer">Confirm Account</a>
+                <a href="http://localhost:3000/login" style="text-decoration: none;background:rgb(68, 68, 252);padding: 12px;color: #fff;border-radius: 10px;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;margin-left:15.5vw;cursor:pointer">Confirm Account</a>
             </div>
         </div>
     </div>

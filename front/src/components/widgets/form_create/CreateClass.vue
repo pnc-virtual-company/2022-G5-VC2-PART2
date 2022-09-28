@@ -2,8 +2,7 @@
   <div class="w-full h-full bg-black z-50 bg-opacity-30 flex justify-center fixed top-0">
     <div class="w-[30%] mt-12">
       <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
-        <p></p>
-        <p class="ml-3">CREATE NEW CLASS</p>
+        <h1 class="ml-3">CREATE NEW CLASS</h1>
         <slot name="card-title"></slot> 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm')">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -24,6 +23,7 @@
             <template v-slot:button_create>Create</template>
           </button-create>
         </div>
+        <p>{{messageErrorClass}}</p>
       </form>
     </div>
   </div>
@@ -31,15 +31,16 @@
 </template>
 <script>
 export default {
+    props:['messageErrorClass'],
     data() {
-        return {
-            newClass: '',
-            error: false
-        }
+      return {
+        newClass: '',
+        error: false
+      }
     },
     methods: {
         addNewClass() {
-            if(this.newClass.trim() == '') {
+            if(this.newClass === '') {
                 this.error = true;
             }else{
                 this.$emit('addNewClass',this.newClass);
@@ -48,3 +49,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+p{
+  color: red;
+  font-size: 13px;
+}
+</style>

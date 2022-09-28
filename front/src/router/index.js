@@ -9,8 +9,10 @@ import TeacherView from "../views/Admin/people/teacher/TeacherView.vue";
 import StudentView from "../views/Admin/people/student/StudentView.vue";
 import BatchView from "../views/Admin/people/student/BatchView";
 import StudentDetailFollowUp from "../views/Admin/followUp/FollowUpDetailView.vue";
-import NotifycationView from "../views/notifycation/NotifycationView.vue"
+import YourFollowUp from "../views/Admin/followUp/YourFollowUp.vue";
 import { store } from '@/store/store';
+import NotFound from '../views/Admin/NotFound.vue';
+import Notification from '../views/Admin/notification/NotificationView.vue'
 const routes = [
   {
     path: '/',
@@ -96,13 +98,28 @@ const routes = [
     }
   },
   {
-    path: '/notifycation',
-    name: 'notifycation',
-    component: NotifycationView,
+    path: '/notification',
+    name: 'notification',
+    component: Notification,
+    props: true,
     meta: {
       auth: true
     }
+    
   },
+  {
+    path: '/yourFollowup',
+    name: 'yourFollowup',
+    component: YourFollowUp,
+    props: true,
+    meta: {
+      auth: true
+    }
+  }, 
+  {
+    path: '/:pathMatch(.*)*',
+    component: NotFound,
+  }
 
 
 ]
@@ -123,9 +140,9 @@ router.beforeEach((to, from ,next) => {
     if (store.state.role == "Coordinator"){
       next('/');
     } else if (store.state.role == "TEACHER"){
-      next('/student');
+      next('/');
     }else{
-      next('/followUp');
+      next('/');
     }
   }else{
     next()

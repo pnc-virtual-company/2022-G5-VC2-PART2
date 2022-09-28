@@ -34,14 +34,16 @@
         <h3><b>Before :</b></h3>
         <div v-for="(followup,index) in followupDetailBefore" :key="index" class="border-b-2">
           <h4>Started Date: <b>{{formatDate(followup.created_at)}} </b></h4>
-          <h4>Description: {{followup.description}} </h4>
+          <h4 class="text-start">Description: {{followup.description}}.</h4>
           <div class="flex">
             <h4 class="mr-2">Type of Follow up : </h4>
-            <b><p v-for="type of followup.type" :key="type">{{type}},</p></b>
+            <b><p v-for="typeOf of followup.type" :key="typeOf"> {{typeOf}},</p></b>
           </div>
           <h4>End Date: <b>{{formatDate(followup.updated_at)}} </b></h4>
         </div>
-        
+        <div v-if="followupDetailBefore.length === 0">
+          <h1>No Follow Up</h1>
+        </div>
       </div>
     </div>
     <div class="p-4 ml-9">
@@ -54,30 +56,32 @@
           <h4>Description: {{followup.description}} </h4>
           <div class="flex">
             <h4 class="mr-2">Type of Follow up : </h4>
-            <h4 v-for="type of followup.type" :key="type"> {{type}}, </h4>
+            <h4 v-for="typeOf of followup.type" :key="typeOf"> {{typeOf}}, </h4>
           </div>
         </div>
       </div>
       <div class="mt-3 mb-3">
         <h1><b>Comments:</b></h1>
         <div class="">
-          <div v-for="(comment,index) in comments" :key="index" class="flex justify-end bg-gray-50 m-3 rounded-full">
-            <div class="flex justify-between">
-              <span class="mr-[25rem] text-gray-500">{{formatDate(comment.created_at)}}</span>
-              <div class="flex justify-center items-center">
-                <p class="mr-4">{{comment.comment}}</p>
-              </div>
+          <div v-for="(comment,index) in comments" :key="index" class="bg-gray-50 m-3 rounded p-3 border-x-4">
+            <div class="flex ">
+              <span class="text-gray-500">{{formatDate(comment.created_at)}}</span>
             </div>
+            <p class="text-end mr-10">{{comment.comment}}</p>
             <div>
-              <img :src= getProfile(user.profile) alt="" class="w-10 rounded-full">
+              <div class="flex justify-end items-center">
+                <img :src= getProfile(user.profile) alt="" class="w-10 rounded-full">
+              </div>
             </div>
           </div>
         </div>
-        <div class="mt-3">
+        <div class="mt-3 mb-10">
           <form @submit.prevent="postComment">
             <div class="flex">
-              <img class="w-10 rounded-full " :src= getProfile(user.profile) v-if="isComment">
-              <input type="text" placeholder="Comment...." class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline" @click="clickComment" v-model="comment" :class="{'border-red-500' :error}">
+              <div class="flex items-start">
+                <img class="w-10 rounded-full " :src= getProfile(user.profile) v-if="isComment">
+              </div>
+              <textarea cols="5" rows="5" placeholder="Comment...." class="shadow appearance-none border  rounded w-full px-2 p-2 text-gray-700 leading-tight focus:outline-blue-500 focus:shadow-outline" @click="clickComment" v-model="comment" :class="{'border-red-500' :error}"></textarea>
             </div>
             <div class="mt-3 flex justify-end" v-if="isComment">
               <button-cancel  @click="cancel">
@@ -124,9 +128,11 @@ methods:{
       this.userDataDetail = res.data.userData[0];
       this.studentDataDetail = res.data.studentData;
     });
-    axios.get('/users/follow_ups/' + this.$route.params.id).then(res => {
+  },
+  getStudentFollowUpDetail() {
+    axios.get('/follow_ups/' + this.$route.params.id).then(res => {
       for(let followup of res.data) {
-        if (followup['status'] == 0) {
+        if (followup['status'] === 0) {
           this.followupDetailBefore.push(followup);
         }else{
           this.followupDatailCurrent.push(followup)
@@ -135,8 +141,6 @@ methods:{
     });
   },
   getProfile(image) {
-    localStorage.setItem('userId',this.user.id);
-    this.getComment();
     return axios.defaults.baseURL + "storage/image/" + image;
   },
   formatDate(value) {
@@ -159,21 +163,22 @@ methods:{
         user_id: localStorage.getItem('userId'),
         student_id: this.$route.params.id,
       };
-      axios.post('/users/comments',newComment).then(res =>{
-        console.log(res.data);
+      axios.post('/comments',newComment).then(() =>{
         this.comment = '';
         this.getComment();
       });
     }
   },
   getComment() {
-    axios.get('/users/comments/teacher/'+ localStorage.getItem('userId')).then (res => {
+    axios.get('/comments/'+ localStorage.getItem('userId')+ '/' + this.$route.params.id).then (res => {
       this.comments = res.data;
+      console.log(this.comments)
     });
   }
 },
 mounted() {
   this.getInfoDetail();
+  this.getStudentFollowUpDetail();
   this.getComment();
 }
 }
@@ -182,5 +187,11 @@ mounted() {
 <style scoped>
   h4{
     margin: 4px 0;
+  }
+  span{
+    font-size: small;
+  }
+  #text{
+    text-align: left;
   }
 </style>

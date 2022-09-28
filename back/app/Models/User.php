@@ -50,9 +50,9 @@ class User extends Authenticatable
         return $this->belongsTo(Student::class);
     }
 
-    public function followups() {
-        return $this->hasMany(Followup::class,'followup_id');
-    }
+    // public function followups() {
+    //     return $this->hasMany(Followup::class,'followup_id');
+    // }
 
     public function comments() {
         return $this->hasMany(Comment::class,'id');

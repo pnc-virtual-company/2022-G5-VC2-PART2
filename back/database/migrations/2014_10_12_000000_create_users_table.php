@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreignId('student_id')->onDelete('CASCADE')->unsigned()->nullable();
             $table->string('profile')->nullable();
             $table->string('code')->nullable();
-            $table->foreignId('followup_id')->onDelete('CASCADE')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

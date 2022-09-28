@@ -16,6 +16,9 @@ class ClassBatchController extends Controller
     }
     // Create New Class
     public function store(Request $request) {
+        if (ClassBatch::where('class_batches.class_name','=',$request->class_name)->where('class_batches.batch_id','=',$request->batch_id)->first()) {
+            return response()->json(['message' => 'This class already exist!*'],422);
+        }
         $class = new ClassBatch();
         $class->class_name = $request->class_name;
         $class->batch_id = $request->batch_id;
@@ -26,6 +29,9 @@ class ClassBatchController extends Controller
     // Update Class
     public function update(Request $request, $id) {
         $class = ClassBatch::findOrFail($id);
+        if (ClassBatch::where('class_batches.class_name','=',$request->class_name)->first()) {
+            return response()->json(['message' => 'This class already exist!*'],422);
+        }
         $class->class_name = $request->class_name;
         $class->save();
         return response()->json(['message' => 'Class updated']);
@@ -37,9 +43,13 @@ class ClassBatchController extends Controller
 
     // Delete Only one
     public function destroy($id) {
-        // $student = Student::where('students.class_id','=',$id)->get(['students.id']);
-        // User::where('users.student_id','=',$student[0]->id)->delete();
-        // Student::where('students.class_id','=',$id)->delete();
+        $students = Student::where('students.class_id','=',$id)->get();
+        if ($students !== '[]') {
+            foreach ($students as $student) {
+                Student::destroy($student['id']);
+                User::where('users.student_id','=',$student['id'])->delete();
+            }
+        }
         ClassBatch::destroy($id);
         return response()->json(['message' => 'Deleted']);
     }

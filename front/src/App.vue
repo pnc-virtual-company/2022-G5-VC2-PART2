@@ -33,6 +33,13 @@ export default {
                 this.$store.dispatch('logout')
                 this.$router.push('/login')
             }
+            this.isLogin = true;
+            if (this.user.roles === 'STUDENT') {
+              localStorage.setItem('userId',this.user.student_id);
+            }else{
+              localStorage.setItem('userId',this.user.id);
+            }
+            localStorage.setItem('role',this.user.roles);
           });
       }
     }

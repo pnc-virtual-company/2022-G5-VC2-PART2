@@ -25,6 +25,7 @@ class FollowupController extends Controller
     public function store(Request $request)
     {
         $student = Followup::where('followups.student_id','=',$request->student_id)->get();
+        $lastIndex = $student->last();
         if ($student == '[]') {
             $followup = new Followup();
             $followup->student_id = $request->student_id;
@@ -35,26 +36,22 @@ class FollowupController extends Controller
 
             $followup->save();
             return response()->json(['message' => 'The student has added to follow up succesfully.'],201);
-        }elseif ($student != null) {
-            foreach($student as $oneStudent) {
-                if ($oneStudent['status'] == 0) {
-                    $followup = new Followup();
-                    $followup->student_id = $request->student_id;
-                    $followup->user_id = $request->user_id;
-                    $followup->type = $request->type;
-                    $followup->description = $request->description;
-                    $followup->status = true;
-                    $followup->save();
-                    return response()->json(['message' => 'Start follow up again!']);
-                }
-            }
-            return response()->json(['message' => 'canadd']);
+        }
+        elseif ($lastIndex['status'] === 0) {
+            $followup = new Followup();
+            $followup->student_id = $request->student_id;
+            $followup->user_id = $request->user_id;
+            $followup->type = $request->type;
+            $followup->description = $request->description;
+            $followup->status = true;
+            $followup->save();
+            return response()->json(['message' => 'Start follow up again!']);
         }
         else{
-            return response()->json(['message' => 'Student has already added!'],402);
+            return response()->json(['message' => 'This Student has already added!*'],422);
         }
     }
-
+    
     /**
      * Display the specified resource.
      *

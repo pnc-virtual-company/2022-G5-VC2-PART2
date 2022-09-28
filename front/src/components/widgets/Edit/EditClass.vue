@@ -2,7 +2,7 @@
   <div class="min-w-full h-full bg-black left-0 z-50 bg-opacity-30 flex items-center justify-center fixed top-0">
     <div class="main-form w-[30%]">
       <div class="p-2 bg-blue-500 text-center flex justify-between text-white text-lg uppercase rounded-t">
-        <p class="ml-3">UPDATE CLASS</p>
+        <h1 class="ml-3">UPDATE CLASS</h1>
         <slot name="card-title"></slot> 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer" @click="$emit('closeForm',false)">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -19,9 +19,10 @@
             :class="{'border-red-500' :error}"
           />
           <button-create>
-            <template v-slot:button_create>Changed</template>
+            <template v-slot:button_create>Change</template>
           </button-create>
         </div>
+        <p>{{errorUpdate}}</p>
       </form>
     </div>
   </div>
@@ -35,7 +36,8 @@ export default {
     return {
       newName: '',
       batchId: null,
-      error: false
+      error: false,
+      errorUpdate: '',
     }
   },
   props: ['classId'],
@@ -50,8 +52,14 @@ export default {
           class_name: this.newName,
           batch_id: this.batchId
         };
-        axiosHttp.post('classes/' + this.classId,newClassUpdated);
-        this.$emit('closeForm');
+        axiosHttp.post('classes/' + this.classId,newClassUpdated).then(() =>{
+          this.$emit('closeForm');
+
+        }).catch((error) =>{
+          if (error.response.status === 422) {
+            this.errorUpdate = error.response.data.message;
+          }
+        });
       }
     },
     getOneClass() {
@@ -66,3 +74,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+p{
+  color: red;
+  font-size: 13px;
+}
+</style>

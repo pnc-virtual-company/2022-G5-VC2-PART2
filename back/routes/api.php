@@ -50,18 +50,20 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
         Route::post('/updateProfile/{id}',[UserController::class,'updateProfile']);
         Route::post('/reset-password/{id}',[UserController::class,'resetPassword']);
         // route to add student into the follow up list 
-        Route::prefix('/follow_ups')->group(function() {
-            Route::post('/',[FollowupController::class,'store']);
-            Route::get('/',[FollowupController::class,'index']);
-            Route::get('/{id}',[FollowupController::class, 'show']);
-            Route::delete('/{id}',[FollowupController::class,'removeFollowUp']);
-        });
-        Route::prefix('/comments')->group(function () {
-            Route::get('/teacher/{id}',[CommentController::class,'getComment']);
+    });
+
+    Route::prefix('/comments')->group(function () {
+            // Route::get('/{id}',[CommentController::class,'getComment']);
             Route::post('/',[CommentController::class,'store']);
-            Route::post('/{id}',[CommentController::class,'update']);
+            Route::post('/reply',[ReplyCommentController::class,'store']);
             Route::delete('/delete/{id}',[CommentController::class,'destroy']);
-        });
+    });
+
+    Route::prefix('/follow_ups')->group(function() {
+        Route::post('/',[FollowupController::class,'store']);
+        Route::get('/',[FollowupController::class,'index']);
+        Route::get('/{id}',[FollowupController::class, 'show']);
+        Route::delete('/{id}',[FollowupController::class,'removeFollowUp']);
     });
 
     // Route Batchs
@@ -82,3 +84,5 @@ Route::get('account/find',[UserController::class,'getUserByToken']);
     });
 //  });
 Route::get('/storage/image/{image}', [UserController::class, 'getProfile']); /* The route to display a specific profile image */
+Route::get('/comments/{user_id}/{student_id}',[CommentController::class,'getComment']);
+Route::get('/comments/{student_id}',[CommentController::class,'getCommentFromTeacher']);

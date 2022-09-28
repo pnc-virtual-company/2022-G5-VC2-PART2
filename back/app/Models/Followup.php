@@ -24,7 +24,7 @@ class Followup extends Model
         return $this->hasMany(Student::class,'student_id');
     }
 
-    public function totor() {
-        return $this->belongsTo(User::class,'user_id');
-    }
+    // public function totor() {
+    //     return $this->belongsTo(User::class,'user_id');
+    // }
 }

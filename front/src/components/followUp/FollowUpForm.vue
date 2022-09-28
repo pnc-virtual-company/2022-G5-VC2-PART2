@@ -118,8 +118,8 @@ export default {
       isShowListStudent: false,
       isShowListTutor: false,
       description: "",
-      student_id: "",
-      tutor_id: "",
+      student_id: null,
+      tutor_id: null,
       type: [],
       searchStudent: "",
       searchTutor: "",
@@ -144,13 +144,11 @@ export default {
     clickTutor(tutor) {
       this.searchTutor = tutor.first_name + " " + tutor.last_name
       this.tutor_id = tutor.id;
-      console.log(tutor)
     },
 
     getStudentData() {
       axios.get("/users/students").then((res) => {
         this.listStudents = res.data.reverse();
-        console.log(this.listStudents);
       })
     },
     getTutorData() {
@@ -170,15 +168,13 @@ export default {
         type: this.type,
         user_id: this.tutor_id
       };
-      console.log(newFollowUpInfo);
-      axios.post('/users/follow_ups/', newFollowUpInfo).then(res => {
-        console.log(res.data)
+      axios.post('/follow_ups', newFollowUpInfo).then(() => {
         this.$emit('add-student');
       }).catch((error) => {
-        if (error.response.status == 402) {
+        if (error.response.status === 422) {
           this.messageError = error.response.data.message;
         } else {
-          this.messageError = error.response.data.message
+          this.messageError = error.response.data.message;
         }
       });
     }
@@ -207,6 +203,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+p{
+  color: red;
+  font-size: 13px;
+}
 </style>

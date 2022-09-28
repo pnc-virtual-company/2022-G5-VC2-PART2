@@ -12,7 +12,7 @@
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="add-people w-14 h-10 ml-2  rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2"
+            class="add-people w-14 h-10 ml-2  rounded shadow hover:bg-slate-200 bg-white cursor-pointer p-2 text-primary"
             @click="showTeacherForm"
           >
             <path
@@ -116,9 +116,10 @@ export default {
       this.isDeleteAlert = false;
     },
     alertDelete(id,event){
-      this.isDeleteAlert = true;
       event.stopPropagation();
+      this.isDeleteAlert = true;
       this.userId = id;
+      console.log(this.userId)
     },
     createTeacher() {
       this.isSuccess  = true
@@ -144,7 +145,7 @@ export default {
   mounted(){
     setTimeout(() => {
       this.loading = false;
-    },1000);
+    },1300);
     this.getTeacherData();
   },
   

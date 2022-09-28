@@ -102,7 +102,7 @@ class UserController extends Controller
         }
 
         // Sending email to user
-        Mail::to($request->email)->send(new NewUserMail($user));
+        // Mail::to($request->email)->send(new NewUserMail($user));
         $user->save();
         return response()->json(['message' => 'User created success!']);
     }
@@ -121,7 +121,7 @@ class UserController extends Controller
 
             $user->save();
             $response = ['status'=>true];
-            // Mail::to($user->email)->send(new SendMailVerification($user));
+            Mail::to($user->email)->send(new SendMailVerification($user));
         }
 
         return response()->json($response);
@@ -164,7 +164,7 @@ class UserController extends Controller
     public function showOneStudent($id) {
         $userData = User::where('users.student_id','=',$id)->get();
         $studentData = Student::join('class_batches','students.class_id','=','class_batches.id')->join('batches','batches.id','=','students.batch_id')->findOrFail($id);
-        return response()->json(['userData' => $userData,'studentData' => $studentData]);
+    return response()->json(['userData' => $userData,'studentData' => $studentData]);
     }
 
     // Update user
@@ -233,9 +233,6 @@ class UserController extends Controller
     public function updateProfile(Request $request, $id) {
         $user = User::findOrFail($id);
         $path = storage_path('images/'.$user->profile);
-        if (File::exists($path)) {
-            File::delete($path);
-        }
 
         $image = $request->file('profile');
         $newImageName = date('j-F-Y-H-i-s-A').$image->getClientOriginalName();

@@ -3,13 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\ReplyComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
 class CommentController extends Controller
 {
-    public function getComment($id) {
-        return Comment::where('comments.user_id','=',$id)->get();
+    public function getComment($user_id,$student_id) {
+        $commentTeacher = Comment::where('comments.user_id','=',$user_id)->get();
+        if ($commentTeacher !== '[]') {
+            return Comment::where('comments.user_id','=',$user_id)->where('comments.student_id','=',$student_id)->get();
+        }else
+        {
+            
+        }
+    }
+
+    public function getCommentFromTeacher ($student_id) {
+        $commentFromTeacher = Comment::where('comments.student_id','=',$student_id)->get();
+        foreach ($commentFromTeacher as $commentFrom) {
+            return Comment::where('comments.user_id','=',$commentFrom['user_id'])->where('comments.student_id','=',$commentFrom['student_id'])->get();
+        }
+        
     }
 
     public function store(Request $request) {
