@@ -31,7 +31,7 @@
       </div>
       <div class="rounded shadow p-4 relative mt-2 bg-white">
         <div class="flex justify-center mt-4">
-          <people-list :peopleList="listTeachers" @showDetail="showDetail" @alertDelete="alertDelete" />
+          <people-list :peopleList="listTeachers" :dataToShow="dataToShow"  @showDetail="showDetail" @alertDelete="alertDelete" />
         </div>
         <div class="ml-[38vw] mt-3" v-if="loading">
           <span class="" id="wait">
@@ -46,26 +46,26 @@
           <img class="w-40" src="./../../assets/noRequestFound.png" alt="Image not found">
           <h1 class="text-stone-500 mt-5">No Teacher</h1>
         </div>
-          <div class="rounded p-2 m-auto mt-4 w-full flex justify-center relative" v-if="listTeachers.length > 3"> 
-              <button class="flex items-center shadow p-2 px-3 rounded hover:bg-slate-200 absolute bg-white text-sm" @click="showAll"  >
-                <div v-if="showShortList" class="flex">
-                  <p class="text-sm">View All</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </div>
-                <div v-else class="flex">
-                  <p class="text-sm">Hide</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                  </svg>
-                </div>
-              </button>   
-          </div>
+        <div class="rounded m-auto w-full flex justify-end relative mt-4" v-if="listTeachers.length>4"> 
+            <button class="flex items-center border p-2 px-3 rounded hover:bg-slate-100 bg-white text-sm" @click="dataToShow = listTeachers.length" v-if="dataToShow==4">
+                <p class="text-sm">View all</p>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+            </button>
+            <button class="flex items-center border p-2 px-3 rounded hover:bg-slate-100 bg-white text-sm" @click="dataToShow=4" v-else>
+                <p class="text-sm">Hide</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                </svg>
+
+            </button>
+        </div>
       </div>
     </div>
       <teacher-form v-if="isShowForm" @closeForm="isShowForm=false,messageError=''" @create-teacher="createTeacher" :message="messageError"/>
-      <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :userId="userId" @cancelDelete="isDeleteAlert=false" />
+      <delete-alert v-if="isDeleteAlert" @delete-user="deletedPerson" :id="userId" @cancelDelete="isDeleteAlert=false" />
   </div>
 </template>
 
@@ -91,8 +91,7 @@ export default {
       messageError: '',
       isDeleteAlert:false,
       userId:null,
-      dataToShow: 3,
-      showShortList: true,
+      dataToShow: 4,
       isSuccess: false,
       loading: true,
       message: "Created teacher successful"
@@ -102,7 +101,7 @@ export default {
     getTeacherData(){
       axiosHttp.get("/users/teachers").then((res)=>{
         this.listTeachers = res.data.reverse();
-        console.log(this.listTeachers);
+        this.loading = false;
       })
     },
     showTeacherForm(){
@@ -128,24 +127,15 @@ export default {
       setTimeout(() => {
         this.isSuccess = false;
       },4000);
-      // axiosHttp.post("/users", userData).then(() => {
-      //   this.messageError = messageBack;
-      // }).catch((error) =>{
-      //   if (error.response.status === 422) {
-      //     this.messageError = error.response.data.message;
-      //   }
-      // });
     },
     filterTeacher(keyword) {
-    axiosHttp.get('/users/teachers').then(res => {
-      this.listTeachers = res.data.filter((teacher) => teacher.first_name.toLowerCase().includes(keyword.toLowerCase()) || teacher.last_name.toLowerCase().includes(keyword.toLowerCase()));
-    });
-  },
+      axiosHttp.get('/users/teachers').then(res => {
+        this.listTeachers = res.data.filter((teacher) => teacher.first_name.toLowerCase().includes(keyword.toLowerCase()) || teacher.last_name.toLowerCase().includes(keyword.toLowerCase()));
+      });
+    },
+
   },
   mounted(){
-    setTimeout(() => {
-      this.loading = false;
-    },1300);
     this.getTeacherData();
   },
   
